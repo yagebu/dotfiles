@@ -1,0 +1,16 @@
+! Render setting for cairo -> pango -> gtk
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.hinting:    true
+Xft.rgba:       rgb
+Xft.hintstyle:  hintslight
+
+urxvt.perl-ext-common: default,clipboard
+urxvt.keysym.M-c: perl:clipboard:copy
+urxvt.keysym.M-v: perl:clipboard:paste
+
+urxvt.scrollStyle:          rxvt
+urxvt.scrollBar:            false
+
+urxvt*font: xft:tamsyn:pixelsize=14,xft:Inconsolata\ for\ Powerline:pixelsize=14
+

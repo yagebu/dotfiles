@@ -1,0 +1,19 @@
+# initialise colors
+autoload -U colors
+colors
+
+eval $(dircolors ~/.config/dircolors)
+
+setopt PROMPT_SUBST
+
+PROMPT='%n@%m %{$fg[green]%}%~>%{$reset_color%} '
+
+# avoid duplicates in history
+setopt hist_ignore_all_dups
+
+# load private config
+source ~/.localrc
+
+# load some vars for fresh
+source ~/.fresh/build/shell.sh
+

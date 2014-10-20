@@ -1,0 +1,63 @@
+syntax enable
+colorscheme solarized
+
+" Do not use tabs and use 4 spaces for indentation
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set expandtab
+
+set autoindent
+set nobackup
+set number
+set wrap
+
+" So not abandon hidden buffers
+set hidden
+
+" Make search use normal regex
+nnoremap / /\v
+vnoremap / /\v
+set hlsearch       " highlight all search results
+set incsearch      " increment search
+set ignorecase     " case-insensitive search
+set smartcase      " uppercase causes case-sensitive search
+set gdefault       " apply substitutions globally by default
+" Clear search highlights easily
+nnoremap <leader><space> :noh<cr>
+
+" Move up/down by on-screen lines
+nnoremap j gj
+nnoremap k gk
+
+" Save one keystroke for commmands
+nnoremap ; :
+inoremap jk <ESC>
+
+" Quicker window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+noremap <tab> %
+
+" Make python formatting adhere to pep8
+au FileType python setlocal formatprg=autopep8\ -
+
+" Settings for latex files
+let g:LatexBox_latexmk_preview_continuously=1
+let g:LatexBox_viewer = "zathura"
+let g:tex_flavor='latex'               " Better syntax hightlighting
+autocmd FileType tex set tw=80         " wrap at 80 chars for LaTeX files
+" ys...c command to surround by latex command
+let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
+
+" Set powerline fonts and always display it
+let g:airline_powerline_fonts = 1
+set laststatus=2
+
+" Make ultisnips compatible with YouCompleteMe
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"

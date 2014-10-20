@@ -1,0 +1,107 @@
+#!/usr/bin/python2
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2012  Geekparadise.de
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Contact: http://geekparadise.de/contact/
+# Usage: ./reconnect.py
+# Version: 1.1
+# Only for Python 2.x!
+ 
+import re
+import pycurl  
+import StringIO 
+import sys
+import time
+ 
+def getIP():
+        b = StringIO.StringIO()
+        curl = pycurl.Curl()
+        curl.setopt(pycurl.TIMEOUT,10)
+        curl.setopt(pycurl.CONNECTTIMEOUT,10)
+        curl.setopt(pycurl.URL, "http://checkip.dyndns.org")
+        curl.setopt(pycurl.WRITEFUNCTION, b.write)
+        curl.perform()
+        ip = re.search(r'\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b',b.getvalue())
+        if ip:
+                return ip.group(0)
+        else:
+                return false  
+ 
+ 
+def post_data(data):
+        encoded_data = ["Content-Type: text/xml", \
+        "charset: utf-8", "SoapAction: urn:schemas-upnp-org:service:WANIPConnection:1#"+data]
+        encoded_data2=("""<?xml version="1.0" encoding="utf-8"?>
+        <s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+        <s:Body>
+        <u:"""+data+"""s xmlns:u="urn:schemas-upnp-org:service:WANIPConnection:1" />
+        </s:Body>
+        </s:Envelope>""")
+        try:
+                b = StringIO.StringIO()
+                curl = pycurl.Curl()
+                curl.setopt(pycurl.POSTFIELDS, encoded_data2)
+                curl.setopt(pycurl.HTTPHEADER,encoded_data)
+                curl.setopt(pycurl.TIMEOUT,10)
+                curl.setopt(pycurl.CONNECTTIMEOUT,10)
+                curl.setopt(pycurl.URL, "http://fritz.box:49000/upnp/control/WANIPConn1")
+                curl.setopt(pycurl.WRITEFUNCTION, b.write)
+                curl.perform()
+                return b.getvalue()
+        except:
+                print "Error: connection problems."
+                exit(-1)
+                 
+def reconnect():
+        # Query actual IP and show it
+        ip = re.split(r"<NewExternalIPAddress>",post_data("GetExternalIPAddress"))
+        if len(ip) > 1:
+                ip = re.split(r"</NewExternalIPAddress>",ip[1])
+        else:
+                print "Error: IP query failed."
+                exit(-1)
+        print "Actual IP: "+ip[0]
+        # Start reconnect
+        sys.stdout.write("Reconnect...")
+        sys.stdout.flush()
+        post_data("ForceTermination")
+        print "done."
+        # Query actual IP
+        ip2 = getIP()
+        if ip2 == False:
+                print "Error: IP query failed."
+                exit(-1)
+        if ip[0] != ip2:
+                print "New IP: "+ip2
+                return True
+        else:
+                return False
+         
+counter = 0
+bool = reconnect()
+while not bool and counter < 3:
+        print "Error: IP did not change."
+        time.sleep(2)
+        print "Trying again...."
+        bool = reconnect()
+        counter = counter + 1
+ 
+if counter >= 3:
+        print "Error: 3 failed attempts...abborting."
+        exit(-1)        
+exit(0)

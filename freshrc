@@ -1,0 +1,33 @@
+# vim: set ft=sh
+export FRESH_LOCAL="$HOME/dev/dotfiles"
+fresh freshshell/fresh bin/fresh --bin
+
+# bin
+fresh-options --bin
+    fresh bin/fritz-box-reconnect
+    fresh bin/pacman-disowned
+fresh-options
+
+# config
+fresh Xresources --file
+fresh altercation/solarized xresources/solarized --file=~/.Xresources
+fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/dircolors
+
+# zsh
+fresh-options --file=~/.zshrc --marker=#
+    fresh zsh/zshenv
+    fresh twe4ked/dotfiles shell/zsh/completion.zsh
+    fresh rupa/z z.sh
+    fresh robbyrussell/oh-my-zsh plugins/systemd/systemd.plugin.zsh
+    fresh zsh/aliases.sh
+    fresh zsh/functions.sh
+    fresh zsh/zshrc
+fresh-options
+
+# vim
+fresh-options --file=~/.vimrc --marker=\"
+    fresh twe4ked/dotfiles vim/vundle_before.vim
+    fresh vim/vundle.vim
+    fresh twe4ked/dotfiles vim/vundle_after.vim
+    fresh vim/vimrc
+fresh-options
