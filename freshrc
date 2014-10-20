@@ -10,7 +10,7 @@ fresh-options
 
 # config
 fresh Xresources --file
-fresh altercation/solarized xresources/solarized --file=~/.Xresources
+fresh solarized/xresources solarized --file=~/.Xresources
 fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/dircolors
 
 # zsh
