@@ -5,3 +5,5 @@ export SAVEHIST=$HISTSIZE
 [[ -z $XDG_CONFIG_HOME ]] && export XDG_CONFIG_HOME="$HOME/.config"
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
+export FRESH_RCFILE="$XDG_CONFIG_HOME/fresh/freshrc"
+export FRESH_PATH="$XDG_CONFIG_HOME/fresh"

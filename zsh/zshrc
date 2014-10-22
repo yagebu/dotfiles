@@ -15,5 +15,5 @@ setopt hist_ignore_all_dups
 source ~/.config/localrc
 
 # load some vars for fresh
-source ~/.fresh/build/shell.sh
+source ~/.config/fresh/build/shell.sh
 
