@@ -14,8 +14,8 @@ fresh solarized/xresources solarized --file=~/.Xresources
 fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/dircolors
 
 # zsh
-fresh-options --file=~/.zshrc --marker=#
-    fresh zsh/zshenv
+fresh zsh/zshenv --file=~/.config/zsh/.zshenv
+fresh-options --file=~/.config/zsh/.zshrc --marker=#
     fresh twe4ked/dotfiles shell/zsh/completion.zsh
     fresh rupa/z z.sh
     fresh robbyrussell/oh-my-zsh plugins/systemd/systemd.plugin.zsh
@@ -25,8 +25,8 @@ fresh-options --file=~/.zshrc --marker=#
 fresh-options
 
 # vim
-fresh-options --file=~/.vimrc --marker=\"
-    fresh twe4ked/dotfiles vim/vundle_before.vim
+fresh-options --file=~/.config/vim/vimrc --marker=\"
+    fresh vim/vundle_before.vim
     fresh vim/vundle.vim
     fresh twe4ked/dotfiles vim/vundle_after.vim
     fresh vim/vimrc
