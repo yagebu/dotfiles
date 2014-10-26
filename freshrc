@@ -4,13 +4,14 @@ fresh freshshell/fresh bin/fresh --bin
 
 # bin
 fresh-options --bin
+    fresh bin/backup
     fresh bin/fritz-box-reconnect
     fresh bin/pacman-disowned
 fresh-options
 
 # config
-fresh Xresources --file
-fresh solarized/xresources solarized --file=~/.Xresources
+fresh Xresources --file=~/.config/X11/Xresources
+fresh solarized/xresources solarized --file=~/.config/X11/Xresources
 fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/dircolors
 
 # zsh

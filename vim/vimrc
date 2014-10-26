@@ -44,6 +44,7 @@ noremap <tab> %
 
 " Make python formatting adhere to pep8
 au FileType python setlocal formatprg=autopep8\ -
+let g:pymode_rope=0
 
 " Settings for latex files
 let g:LatexBox_latexmk_preview_continuously=1
@@ -61,3 +62,16 @@ set laststatus=2
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+
+" Viminfo file behavior
+if has('viminfo')
+  " f1  store file marks
+  " '   # of previously edited files to remember marks for
+  " :   # of lines of command history
+  " /   # of lines of search pattern history
+  " <   max # of lines for each register to be saved
+  " s   max # of Kb for each register to be saved
+  " h   don't restore hlsearch behavior
+  let &viminfo = "f1,'1000,:1000,/1000,<1000,s100,h,r" . $TEMP . ",n" . $VIMINFO
+endif

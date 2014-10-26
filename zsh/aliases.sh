@@ -19,12 +19,12 @@ alias vi='vim'
 alias sudo='sudo '
 
 # pacman
-alias pac='sudo pacman'
-alias pacclean='sudo pacman -Rs $(pacman -Qqtd)'
-alias pacin='yaourt -S'
 alias pacman='sudo pacman'
-alias pacrm='pacman -Rs'
-alias pacup='yaourt -Syu --aur'
+alias pacclean='sudo pacman -Rs $(pacman -Qqtd)'
+alias paci='packer -S'
+alias pacr='pacman -Rs'
+alias pacs='packer'
+alias pacu='packer -Syu'
 
 # git
 alias gitad='git add'

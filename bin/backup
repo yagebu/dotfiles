@@ -7,4 +7,4 @@ while [[ $Q = "0" ]]; do
 done
 
 echo 'online'
-duply google backup_verify
+duply /home/jakob/.config/duply/google backup_verify
