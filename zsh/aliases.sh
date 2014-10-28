@@ -19,6 +19,7 @@ alias vi='vim'
 alias sudo='sudo '
 
 # pacman
+alias pacman='sudo pacman'
 alias pac='sudo pacman'
 alias pacclean='sudo pacman -Rs $(pacman -Qqtd)'
 alias paci='packer -S'
