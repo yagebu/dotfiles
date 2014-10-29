@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "checking if we're online..."
 Q="0"
-while [[ $Q = "0" ]]; do
+while [ $Q = "0" ]; do
    Q=$(ping -c1 www.google.com 2> /dev/null | grep -c google);
 done
 
