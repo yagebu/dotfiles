@@ -12,7 +12,7 @@ fresh-options
 # config
 fresh Xresources --file=~/.config/X11/Xresources
 fresh solarized/xresources solarized --file=~/.config/X11/Xresources
-fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/dircolors
+fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/zsh/dircolors
 
 # zsh
 fresh zsh/zshenv --file=~/.config/zsh/.zshenv

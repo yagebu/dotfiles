@@ -2,7 +2,7 @@
 autoload -U colors
 colors
 
-eval $(dircolors ~/.config/dircolors)
+eval $(dircolors ~/.config/zsh/dircolors)
 
 setopt PROMPT_SUBST
 
