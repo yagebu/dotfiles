@@ -10,6 +10,10 @@ if !exists('$XDG_CACHE_HOME')
   let $XDG_CACHE_HOME = $HOME . "/.cache"
 endif
 
+if !isdirectory(expand('$XDG_CACHE_HOME'))
+  call mkdir(expand('$XDG_CACHE_HOME'))
+endif
+
 if !isdirectory(expand('$XDG_CACHE_HOME/vim'))
   call mkdir(expand('$XDG_CACHE_HOME/vim'))
 endif
@@ -26,7 +30,7 @@ set backupdir=$XDG_CACHE_HOME/vim,/tmp,/var/tmp,$TEMP
 " Appropriate path for viminfo
 if has('viminfo')
   if !exists('$VIMINFO')
-    let $VIMINFO = $XDG_CACHE_HOME . "/vim/viminfo"
+    let $VIMINFO = $VIMDOTDIR . "/viminfo"
   endif
 endif
 
