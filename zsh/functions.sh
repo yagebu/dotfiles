@@ -9,18 +9,16 @@ c () {
 cleanup () {
 	echo -e "\e[1;34m::\e[0m Cleaning pacman cache..."
 	sudo rm /var/cache/pacman/pkg/* &> /dev/null
-	yaourt -Scc --noconfirm &> /dev/null
 
 	echo -e "\e[1;34m::\e[0m Deleting unneeded files..."
 	rm -rf ~/.adobe
+	rm -rf ~/.cache
 	rm -rf ~/.config/chromium/Default/Pepper\ Data/
+	rm -rf ~/.config/chromium/Default/Local\ Storage/http*
 	rm -rf ~/.macromedia
 	rm -rf ~/.mozilla
 	rm -rf ~/.muttator
 	rm -rf ~/.mpv
-	rm -rf ~/.cmus/command-history
-	rm -rf ~/.cmus/search-history
-	rm -rf ~/.lesshst
 	rm -rf ~/.local/share/Trash
 	rm -rf ~/.local/share/gvfs-metadata
 	rm -rf ~/.local/share/loliclip
