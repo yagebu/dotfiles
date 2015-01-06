@@ -23,3 +23,6 @@ Plugin 'klen/python-mode'
 
 " Fuzzy file finder
 Plugin 'kien/ctrlp.vim'
+
+" Vim-ledger
+Plugin 'ledger/vim-ledger'
