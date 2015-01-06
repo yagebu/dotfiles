@@ -18,6 +18,8 @@ alias svi='sudoedit'
 alias vi='vim'
 alias sudo='sudo '
 alias modeswitch='sudo usb_modeswitch -c /usr/share/usb_modeswitch/12d1:1446 -v 12d1 -p 1446'
+alias rs-start='systemctl --user start redshift.service'
+alias rs-stop='systemctl --user stop redshift.service'
 
 # pacman
 alias pacman='sudo pacman'
