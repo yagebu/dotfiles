@@ -28,10 +28,9 @@ alias gitrm='git rm'
 alias gitst='git status'
 
 # os specific things
-OS="$(uname -s)"
-if test "$OS" = "Darwin"; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
     alias ls='ls -G'
-else if test "$OS" = "Linux"; then
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias ls='ls --color=auto'
     alias log='sudo journalctl -r'
     alias rs-start='systemctl --user start redshift.service'
