@@ -9,8 +9,8 @@ fresh-options --bin
 fresh-options
 
 # config
-fresh Xresources --file=~/.config/X11/Xresources
-fresh solarized/xresources solarized --file=~/.config/X11/Xresources
+fresh Xresources --file=~/.config/Xresources
+fresh solarized/xresources solarized --file=~/.config/Xresources
 fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/zsh/dircolors
 
 # zsh
@@ -31,3 +31,9 @@ fresh-options --file=~/.config/vim/vimrc --marker=\"
     fresh twe4ked/dotfiles vim/vundle_after.vim
     fresh vim/vimrc
 fresh-options
+
+fresh copycat-killer/lain . --file=~/.config/awesome/lain/
+fresh copycat-killer/awesome-copycats menugen --file=~/.config/awesome/menugen/
+fresh copycat-killer/awesome-copycats scratchdrop --file=~/.config/awesome/scratchdrop/
+fresh copycat-killer/awesome-copycats themes/multicolor --file=~/.config/awesome/themes/multicolor/
+fresh awesome/rc.lua --file=~/.config/awesome/rc.lua
