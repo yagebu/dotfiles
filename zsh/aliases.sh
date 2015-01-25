@@ -11,24 +11,10 @@ alias free='free -m'
 alias grep='grep -n --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
-alias lla='ls -a -l'
-alias log='sudo journalctl -r'
-alias ls='ls --color=auto'
+alias lla='ls -la'
 alias svi='sudoedit'
 alias vi='vim'
 alias sudo='sudo '
-alias modeswitch='sudo usb_modeswitch -c /usr/share/usb_modeswitch/12d1:1446 -v 12d1 -p 1446'
-alias rs-start='systemctl --user start redshift.service'
-alias rs-stop='systemctl --user stop redshift.service'
-
-# pacman
-alias pacman='sudo pacman'
-alias pac='sudo pacman'
-alias pacclean='sudo pacman -Rs $(pacman -Qqtd)'
-alias paci='packer -S'
-alias pacr='pacman -Rs'
-alias pacs='packer'
-alias pacu='packer -Syu'
 
 # git
 alias gitad='git add'
@@ -40,3 +26,23 @@ alias gitpl='git pull'
 alias gitpu='git push -u origin master'
 alias gitrm='git rm'
 alias gitst='git status'
+
+# os specific things
+OS="$(uname -s)"
+if test "$OS" = "Darwin"; then
+    alias ls='ls -G'
+else if test "$OS" = "Linux"; then
+    alias ls='ls --color=auto'
+    alias log='sudo journalctl -r'
+    alias rs-start='systemctl --user start redshift.service'
+    alias rs-stop='systemctl --user stop redshift.service'
+    # pacman
+    alias pacman='sudo pacman'
+    alias pac='sudo pacman'
+    alias paci='packer -S'
+    alias pacr='pacman -Rs'
+    alias pacs='packer'
+    alias pacss='pacman -Ss'
+    alias pacu='packer -Syu'
+    alias ll='ls -lFA'
+fi
