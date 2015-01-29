@@ -1,11 +1,3 @@
-c () {
-	case $1 in
-		awm)		vim ~/.config/awesome/rc.lua ;;
-		pacman)		sudoedit /etc/pacman.conf ;;
-		local)		vim ~/.localrc && source ~/.localrc ;;
-	esac
-}
-
 cleanup () {
 	echo -e "\e[1;34m::\e[0m Cleaning pacman cache..."
 	sudo rm /var/cache/pacman/pkg/* &> /dev/null

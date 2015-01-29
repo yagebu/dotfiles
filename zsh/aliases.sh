@@ -6,13 +6,12 @@ alias :q='clear; exit'
 alias cl='clear'
 alias diff='colordiff'
 alias du='du -c -h'
-alias exit="clear; exit"
-alias free='free -m'
 alias grep='grep -n --color=auto'
+alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
-alias svi='sudoedit'
+alias svi='sudo -e'
 alias vi='vim'
 alias sudo='sudo '
 
@@ -29,9 +28,11 @@ alias gitst='git status'
 
 # os specific things
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    alias ls='ls -G'
+    alias paci='brew install'
+    alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup'
+    alias pacs='brew search'
+    alias pacr='brew uninstall'
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-    alias ls='ls --color=auto'
     alias log='sudo journalctl -r'
     alias rs-start='systemctl --user start redshift.service'
     alias rs-stop='systemctl --user stop redshift.service'

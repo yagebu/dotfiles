@@ -1,4 +1,3 @@
-# vim: set ft=sh
 export FRESH_LOCAL="$HOME/dev/dotfiles"
 fresh freshshell/fresh bin/fresh --bin
 
@@ -29,7 +28,6 @@ fresh-options --file=~/.config/vim/vimrc --marker=\"
     fresh twe4ked/dotfiles vim/vundle_after.vim
     fresh vim/vimrc
 fresh-options
-
 
 # os specific files
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
