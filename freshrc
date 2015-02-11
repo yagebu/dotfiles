@@ -1,12 +1,6 @@
 export FRESH_LOCAL="$HOME/dev/dotfiles"
 fresh freshshell/fresh bin/fresh --bin
 
-# bin
-fresh-options --bin
-    fresh bin/backup
-    fresh bin/pacman-disowned
-fresh-options
-
 # config
 fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/zsh/dircolors
 
@@ -31,6 +25,12 @@ fresh-options
 
 # os specific files
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
+# bin
+fresh-options --bin
+    fresh bin/backup
+    fresh bin/pacman-disowned
+fresh-options
+
 fresh Xresources --file=~/.config/Xresources
 fresh solarized/xresources solarized --file=~/.config/Xresources
 
