@@ -452,7 +452,17 @@ globalkeys = awful.util.table.join(
             awful.util.spawn("amixer -q set Master 5%-")
             volumewidget.update()
         end),
+    awful.key({}, "F11",
+        function ()
+            awful.util.spawn("amixer -q set Master 5%-")
+            volumewidget.update()
+        end),
     awful.key({}, "XF86AudioRaiseVolume",
+        function ()
+            awful.util.spawn("amixer -q set Master 5%+")
+            volumewidget.update()
+        end),
+    awful.key({}, "F12",
         function ()
             awful.util.spawn("amixer -q set Master 5%+")
             volumewidget.update()
@@ -462,9 +472,15 @@ globalkeys = awful.util.table.join(
             awful.util.spawn("amixer -q set Master playback toggle")
             volumewidget.update()
         end),
+    awful.key({}, "F10",
+        function ()
+            awful.util.spawn("amixer -q set Master playback toggle")
+            volumewidget.update()
+        end),
     awful.key({}, "XF86KbdBrightnessDown", function () awful.util.spawn("asus-kbd-backlight down") end),
     awful.key({}, "XF86KbdBrightnessUp"  , function () awful.util.spawn("asus-kbd-backlight up") end),
     awful.key({}, "XF86TouchpadToggle"   , function () awful.util.spawn_with_shell("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')") end),
+    awful.key({}, "F9"   , function () awful.util.spawn_with_shell("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')") end),
     awful.key({}, "F1",
         function ()
             if awful.tag.selected() == tags[1][6] then
