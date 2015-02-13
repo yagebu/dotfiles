@@ -9,7 +9,6 @@ fresh zsh/zshenv --file=~/.config/zsh/.zshenv
 fresh-options --file=~/.config/zsh/.zshrc --marker=#
     fresh twe4ked/dotfiles shell/zsh/completion.zsh
     fresh rupa/z z.sh
-    fresh robbyrussell/oh-my-zsh plugins/systemd/systemd.plugin.zsh
     fresh zsh/aliases.sh
     fresh zsh/functions.sh
     fresh zsh/zshrc

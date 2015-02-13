@@ -45,4 +45,5 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacss='pacman -Ss'
     alias pacu='packer -Syu'
     alias ll='ls -lFA'
+    alias sc='sudo systemctl'
 fi
