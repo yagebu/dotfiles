@@ -1,5 +1,8 @@
 syntax enable
+let g:solarized_termtrans=1
+let g:solarized_termcolors=256
 colorscheme solarized
+set background=dark
 
 " Do not use tabs and use 4 spaces for indentation
 set shiftwidth=4

@@ -6,7 +6,6 @@ Plugin 'tpope/vim-surround'
 
 " Color schemes
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'chriskempson/base16-vim'
 
 " Airline, lightweight vimscript only powerline alternative
 Plugin 'bling/vim-airline'
