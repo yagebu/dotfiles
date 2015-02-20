@@ -33,7 +33,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias pacs='brew search'
     alias pacr='brew uninstall'
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-    alias log='sudo journalctl -r'
+    alias log='journalctl -r'
+    alias ll='ls -lFA'
+    alias sc='sudo systemctl'
+    alias jc='journalctl'
     alias rs-start='systemctl --user start redshift.service'
     alias rs-stop='systemctl --user stop redshift.service'
     # pacman
@@ -44,6 +47,4 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacs='packer'
     alias pacss='pacman -Ss'
     alias pacu='packer -Syu'
-    alias ll='ls -lFA'
-    alias sc='sudo systemctl'
 fi
