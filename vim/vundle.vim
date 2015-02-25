@@ -25,3 +25,5 @@ Plugin 'kien/ctrlp.vim'
 
 " Vim-ledger
 Plugin 'ledger/vim-ledger'
+
+Plugin 'Valloric/YouCompleteMe'
