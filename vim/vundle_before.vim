@@ -6,26 +6,14 @@ let $MYVIMRC = expand('<sfile>:p')
 let $VIMDOTDIR = expand('<sfile>:p:h')
 let &runtimepath .= "," . $VIMDOTDIR
 
-if !exists('$XDG_CACHE_HOME')
-  let $XDG_CACHE_HOME = $HOME . "/.cache"
-endif
-
-if !isdirectory(expand('$XDG_CACHE_HOME'))
-  call mkdir(expand('$XDG_CACHE_HOME'))
-endif
-
-if !isdirectory(expand('$XDG_CACHE_HOME/vim'))
-  call mkdir(expand('$XDG_CACHE_HOME/vim'))
-endif
-
 " System temporary files
 if !exists('$TEMP')
   let $TEMP = '/tmp'
 endif
 
 " Backups and swap files
-set directory=$XDG_CACHE_HOME/vim,/tmp,/var/tmp,$TEMP
-set backupdir=$XDG_CACHE_HOME/vim,/tmp,/var/tmp,$TEMP
+set directory=$VIMDOTDIR/cache,/tmp,/var/tmp,$TEMP
+set backupdir=$VIMDOTDIR/cache,/tmp,/var/tmp,$TEMP
 
 " Appropriate path for viminfo
 if has('viminfo')
