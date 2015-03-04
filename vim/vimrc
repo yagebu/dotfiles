@@ -12,6 +12,7 @@ set autoindent
 set nobackup
 set number
 set wrap
+set backspace=2
 
 " So not abandon hidden buffers
 set hidden
