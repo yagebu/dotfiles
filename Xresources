@@ -5,4 +5,4 @@ urxvt.keysym.M-v: perl:clipboard:paste
 urxvt.scrollStyle:          rxvt
 urxvt.scrollBar:            false
 
-urxvt*font: xft:tamsyn:pixelsize=14,xft:Inconsolata\ for\ Powerline:pixelsize=14
+urxvt.font: xft:tamsyn:size=14,xft:Inconsolata\ for\ Powerline:size=14
