@@ -67,6 +67,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 let g:ctrlp_cache_dir = $VIMDOTDIR.'/ctrlp'
 
+let g:ledger_maxwidth = 120
+let g:ledger_fold_blanks = 1
+
 " Viminfo file behavior
 if has('viminfo')
   " f1  store file marks
