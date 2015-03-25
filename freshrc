@@ -16,9 +16,8 @@ fresh-options
 
 # vim
 fresh-options --file=~/.config/vim/vimrc --marker=\"
-    fresh vim/vundle_before.vim
-    fresh vim/vundle.vim
-    fresh twe4ked/dotfiles vim/vundle_after.vim
+    fresh vim/init.vim
+    fresh vim/plugins.vim
     fresh vim/vimrc
 fresh-options
 

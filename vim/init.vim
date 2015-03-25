@@ -1,5 +1,4 @@
 set nocompatible
-filetype off
 
 " Filesystem paths
 let $MYVIMRC = expand('<sfile>:p')
@@ -21,19 +20,15 @@ if has('viminfo')
     let $VIMINFO = $VIMDOTDIR . "/viminfo"
   endif
 endif
-
-let run_bundle_install = 0
-
-if !isdirectory(expand("$VIMDOTDIR/bundle/vundle/"))
-  silent !echo "Installing Vundle..."
-  silent !mkdir -p ~$VIMDOTDIR/bundle
-  silent !git clone https://github.com/gmarik/vundle $VIMDOTDIR/bundle/vundle
-  let run_bundle_install = 1
+"
+" Viminfo file behavior
+if has('viminfo')
+  " f1  store file marks
+  " '   # of previously edited files to remember marks for
+  " :   # of lines of command history
+  " /   # of lines of search pattern history
+  " <   max # of lines for each register to be saved
+  " s   max # of Kb for each register to be saved
+  " h   don't restore hlsearch behavior
+  let &viminfo = "f1,'1000,:1000,/1000,<1000,s100,h,r" . $TEMP . ",n" . $VIMINFO
 endif
-
-" Bundle setup
-let &runtimepath .= "," . $VIMDOTDIR . "/bundle/vundle"
-call vundle#rc("$VIMDOTDIR/bundle")
-
-" the plug-in manager for Vim
-Plugin 'gmarik/vundle'
