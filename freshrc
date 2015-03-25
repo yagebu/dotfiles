@@ -8,6 +8,7 @@ fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/zsh/dircolo
 fresh zsh/zshenv --file=~/.config/zsh/.zshenv
 fresh-options --file=~/.config/zsh/.zshrc --marker=#
     fresh twe4ked/dotfiles shell/zsh/completion.zsh
+    fresh junegunn/fzf shell/key-bindings.zsh
     fresh rupa/z z.sh
     fresh zsh/aliases.sh
     fresh zsh/functions.sh
@@ -24,10 +25,8 @@ fresh-options
 # os specific files
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 # bin
-fresh-options --bin
-    fresh bin/backup
-    fresh bin/pacman-disowned
-fresh-options
+fresh bin/backup-arch --bin=~/bin/backup
+fresh bin/pacman-disowned --bin
 
 fresh Xresources --file=~/.config/Xresources
 fresh solarized/xresources solarized --file=~/.config/Xresources
