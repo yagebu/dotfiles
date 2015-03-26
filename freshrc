@@ -11,7 +11,6 @@ fresh-options --file=~/.config/zsh/.zshrc --marker=#
     fresh junegunn/fzf shell/key-bindings.zsh
     fresh rupa/z z.sh
     fresh zsh/aliases.sh
-    fresh zsh/functions.sh
     fresh zsh/zshrc
 fresh-options
 
@@ -21,11 +20,14 @@ fresh-options --file=~/.config/vim/vimrc --marker=\"
     fresh vim/plugins.vim
     fresh vim/vimrc
 fresh-options
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
 fresh bin/backup-mac --bin=~/bin/backup
+
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-# bin
 fresh bin/backup-arch --bin=~/bin/backup
+fresh bin/backup-external --bin
+fresh bin/cleanup --bin
 fresh bin/pacman-disowned --bin
 
 fresh Xresources --file=~/.config/Xresources
