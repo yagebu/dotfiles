@@ -12,7 +12,7 @@ alias ll='ls -lh'
 alias la='ls -a'
 alias lla='ls -lha'
 alias svi='sudo -e'
-alias vi='vim'
+alias vi='nvim'
 alias sudo='sudo '
 
 # git
