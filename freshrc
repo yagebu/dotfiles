@@ -21,9 +21,9 @@ fresh-options --file=~/.config/vim/vimrc --marker=\"
     fresh vim/plugins.vim
     fresh vim/vimrc
 fresh-options
-
-# os specific files
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
+fresh bin/backup-mac --bin=~/bin/backup
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
 # bin
 fresh bin/backup-arch --bin=~/bin/backup
 fresh bin/pacman-disowned --bin
