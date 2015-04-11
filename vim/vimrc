@@ -33,7 +33,6 @@ nnoremap j gj
 nnoremap k gk
 
 " Save one keystroke for commmands
-nnoremap ; :
 inoremap jk <ESC>
 
 " Quicker window navigation
@@ -67,8 +66,6 @@ set laststatus=2
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-
-let g:ctrlp_cache_dir = $VIMDOTDIR.'/ctrlp'
 
 let g:ledger_maxwidth = 120
 let g:ledger_fold_blanks = 1

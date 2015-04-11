@@ -21,8 +21,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'klen/python-mode'
-Plug 'kien/ctrlp.vim'
 Plug 'ledger/vim-ledger'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'junegunn/fzf', { 'do': 'yes \| ./install' }
 
 call plug#end()
