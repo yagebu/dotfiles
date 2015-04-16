@@ -23,6 +23,6 @@ Plug 'honza/vim-snippets'
 Plug 'klen/python-mode'
 Plug 'ledger/vim-ledger'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': './install --bin' }
 
 call plug#end()
