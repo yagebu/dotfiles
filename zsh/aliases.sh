@@ -32,9 +32,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup'
     alias pacs='brew search'
     alias pacr='brew uninstall'
+    alias ll='ls -lFA'
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias log='journalctl -r'
-    alias ll='ls -lFA'
     alias sc='sudo systemctl'
     alias jc='journalctl'
     alias rs-start='systemctl --user start redshift.service'
