@@ -69,3 +69,5 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 let g:ledger_maxwidth = 120
 let g:ledger_fold_blanks = 1
+nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*?!')<CR>
+nnoremap <leader>c :call ledger#transaction_state_set(line('.'), '*')<CR>
