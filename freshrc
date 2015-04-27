@@ -31,7 +31,7 @@ fresh bin/cleanup --bin
 fresh bin/pacman-disowned --bin
 
 fresh Xresources --file=~/.config/Xresources
-fresh solarized/xresources solarized --file=~/.config/Xresources
+fresh solarized/xresources Xresources.dark --file=~/.config/Xresources
 
 fresh copycat-killer/lain . --file=~/.config/awesome/lain/
 fresh copycat-killer/awesome-copycats menugen --file=~/.config/awesome/menugen/
