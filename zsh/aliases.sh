@@ -29,7 +29,7 @@ alias gitst='git status'
 # os specific things
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias paci='brew install'
-    alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup && fresh update'
+    alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup'
     alias pacs='brew search'
     alias pacr='brew uninstall'
     alias ll='ls -lFA'
@@ -46,5 +46,5 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacr='pacman -Rs'
     alias pacs='packer'
     alias pacss='pacman -Ss'
-    alias pacu='packer -Syu && fresh update'
+    alias pacu='packer -Syu'
 fi
