@@ -32,7 +32,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup'
     alias pacs='brew search'
     alias pacr='brew uninstall'
-    alias ll='ls -lFA'
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias log='journalctl -r'
     alias sc='sudo systemctl'
