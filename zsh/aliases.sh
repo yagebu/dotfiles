@@ -40,11 +40,14 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias rs-start='systemctl --user start redshift.service'
     alias rs-stop='systemctl --user stop redshift.service'
     # pacman
-    alias pacman='sudo pacman'
-    alias pac='sudo pacman'
-    alias paci='packer -S'
-    alias pacr='pacman -Rs'
-    alias pacs='packer'
-    alias pacss='pacman -Ss'
-    alias pacu='packer -Syu'
+    alias aura='sudo aura'
+    alias pac='aura'
+    alias paci='aura -S'
+    alias paca='aura -A'
+    alias pacr='aura -Rs'
+    function pacs() {
+        aura -Ss $1; aura -As $1
+    }
+    alias pacu='aura -Syu && aura -Akua'
+    alias pacud='aura -Syu && aura -Akua --devel'
 fi
