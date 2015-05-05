@@ -18,8 +18,6 @@ set backspace=2
 set hidden
 
 " Make search use normal regex
-nnoremap / /\v
-vnoremap / /\v
 set hlsearch       " highlight all search results
 set incsearch      " increment search
 set ignorecase     " case-insensitive search
