@@ -1,6 +1,3 @@
-echo -e "\e[1;34m::\e[0m Cleaning pacman cache..."
-sudo rm /var/cache/pacman/pkg/* &> /dev/null
-
 echo -e "\e[1;34m::\e[0m Deleting unneeded files..."
 rm -rf ~/.adobe
 rm -rf ~/.cache/chromium
@@ -12,9 +9,11 @@ rm -rf ~/.macromedia
 rm -rf ~/.mozilla
 rm -rf ~/.muttator
 rm -rf ~/.mpv
+rm -f ~/.nviminfo ~/.nvimlog
 rm -rf ~/.local/share/gvfs-metadata
 rm -rf ~/.local/share/loliclip
 rm -rf ~/.local/share/recently-used.xbel
 rm -rf ~/.thumbnails
+rm -rf ~/.w3m
 
 echo -e "\e[1;34m::\e[0m Done."

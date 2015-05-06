@@ -26,6 +26,7 @@ attic create --stats                                \
     --exclude /home/jakob/.config/vim               \
     --exclude /home/jakob/.thunderbird              \
     --exclude /home/jakob/.VirtualBox               \
+    --exclude /home/jakob/dev/neovim                \
     --exclude /home/jakob/Movies                    \
     --exclude /home/jakob/Music                     \
     --exclude /home/jakob/Pictures                  \
