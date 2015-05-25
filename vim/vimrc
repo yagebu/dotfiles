@@ -40,9 +40,19 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 if has('nvim')
     nmap <BS> <C-W>h
+    tnoremap <C-h> <C-\><C-n><C-w>h
+    tnoremap <C-j> <C-\><C-n><C-w>j
+    tnoremap <C-k> <C-\><C-n><C-w>k
+    tnoremap <C-l> <C-\><C-n><C-w>l
 endif
 
+
 noremap <tab> %
+
+" For VIM help files
+nnoremap <silent> coc
+      \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
+      \ :set conceallevel?<CR>
 
 " Make python formatting adhere to pep8
 au FileType python setlocal formatprg=autopep8\ -
