@@ -8,13 +8,14 @@ while [ $Q = "0" ]; do
 done
 
 echo 'online'
+/home/jakob/bin/cleanup
 
 REPOSITORY=ks:backup/js-arch.attic
 
 # Backup all of /etc and /home except a few excluded directories
 attic create --stats                                \
     $REPOSITORY::`date +%Y-%m-%d`                   \
-    /home                                           \
+    /home/jakob                                     \
     /etc                                            \
     --exclude /etc/ca-certificates                  \
     --exclude /etc/udev                             \
@@ -22,8 +23,9 @@ attic create --stats                                \
     --exclude /home/jakob/.cache                    \
     --exclude /home/jakob/.config/chromium          \
     --exclude /home/jakob/.config/fresh             \
-    --exclude /home/jakob/.config/syncthing/index   \
+    --exclude /home/jakob/.config/syncthing         \
     --exclude /home/jakob/.config/vim               \
+    --exclude /home/jakob/.local                    \
     --exclude /home/jakob/.thunderbird              \
     --exclude /home/jakob/.VirtualBox               \
     --exclude /home/jakob/dev/neovim                \

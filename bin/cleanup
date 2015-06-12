@@ -5,11 +5,15 @@ rm -rf ~/.config/chromium/Default/Pepper\ Data/
 rm -rf ~/.config/chromium/Default/Local\ Storage/http*
 rm -rf ~/.config/chromium/Default/IndexedDB/http*
 rm -rf ~/.config/chromium/Default/databases/http*
+rm -rf ~/.config/libreoffice
+rm -rf ~/.config/pulse
+rm -rf ~/.kde4
 rm -rf ~/.macromedia
 rm -rf ~/.mozilla
 rm -rf ~/.muttator
 rm -rf ~/.mpv
-rm -f ~/.nviminfo ~/.nvimlog
+rm -rf ~/.pki
+rm -f ~/.nviminfo ~/.nvimlog ~/.xsession-errors ~/.esd_auth ~/ICEauthoriy
 rm -rf ~/.local/share/gvfs-metadata
 rm -rf ~/.local/share/loliclip
 rm -rf ~/.local/share/recently-used.xbel
