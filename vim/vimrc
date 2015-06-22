@@ -59,12 +59,9 @@ au FileType python setlocal formatprg=autopep8\ -
 let g:pymode_rope=0
 
 " Settings for latex files
-let g:LatexBox_latexmk_preview_continuously=1
-let g:LatexBox_viewer = "zathura"
+let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
 let g:tex_flavor='latex'               " Better syntax hightlighting
 autocmd FileType tex set tw=80         " wrap at 80 chars for LaTeX files
-" ys...c command to surround by latex command
-let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
 " Set powerline fonts and always display it
 let g:airline_powerline_fonts = 1

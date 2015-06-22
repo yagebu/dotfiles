@@ -13,7 +13,7 @@ endfunction
 
 call plug#begin("$VIMDOTDIR/plugged")
 
-Plug 'LaTeX-Box-Team/LaTeX-Box'
+Plug 'lervag/vimtex'
 Plug 'tpope/vim-surround'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
