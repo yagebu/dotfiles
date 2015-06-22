@@ -1,5 +1,6 @@
 echo -e "\e[1;34m::\e[0m Deleting unneeded files..."
 rm -rf ~/.adobe
+rm -f ~/.bzr.log
 rm -rf ~/.cache/chromium
 rm -rf ~/.config/chromium/Default/Pepper\ Data/
 rm -rf ~/.config/chromium/Default/Local\ Storage/http*
@@ -7,6 +8,8 @@ rm -rf ~/.config/chromium/Default/IndexedDB/http*
 rm -rf ~/.config/chromium/Default/databases/http*
 rm -rf ~/.config/libreoffice
 rm -rf ~/.config/pulse
+rm -rf ~/.filebot
+rm -rf ~/.java
 rm -rf ~/.kde4
 rm -rf ~/.macromedia
 rm -rf ~/.mozilla
