@@ -1,8 +1,9 @@
 ## These dotfiles are managed using fresh
 
-These dotfiles try to use $XDG_CONFIG_HOME as much as possible. The following
-should be added to /etc/zsh/zshenv so that zsh finds its config. The
-environment for most other programs are the set in ~.config/zsh/.zshenv.
+These dotfiles put most files in `.config` so that the home directory is nice
+and clean. following should be added to /etc/zsh/zshenv so that zsh finds its
+config. The environment for most other programs are the set in
+~.config/zsh/.zshenv.
 
     export ZDOTDIR="$HOME/.config/zsh/"
 
@@ -15,8 +16,7 @@ everything in ~/.config/ a manual installation is necessary.
 
 ## Desktop Environment
 
-I'm currently using Awesome WM as window manager. Used dwm before but AWM is
-easier to configure and more powerful out of the box. Current config is the
+I'm currently using Awesome WM as window manager. Current config is the
 mulitcolor theme from the awesome-copycats repo (slightly modified).
 Suspend/resume is handled by systemd and default settings.  TLP for energy
 saving.  NetworkManager for wifi.  GDM as login manager, since a (minimal)
@@ -24,11 +24,12 @@ GNOME is installed too. Slimlock provides the lockscreen and is started by
 systemd.
 
 ## Other programs
-* Browser: Chromium with vimium
-* Email: Thunderbird using muttator
-* Media player: mpv
-* PDF: zathura with mupdf backend
-* Music: cmus as player and beets for management
+
+* Browser: Chromium with vimium.
+* Email: mutt, offlineimap, and msmtp
+* Media player: mpv.
+* PDF: zathura with mupdf backend, Skim on OS X.
+* Music: cmus as player and beets for management.
 
 ## Keyboard layout
 
@@ -41,6 +42,7 @@ Capslock to be another Ctrl key.
     localectl set-x11-keymap us pc105 altgr-intl 'ctrl:nocaps'
 
 ## ASUS UX31A specific things
+
 * The fan turns on for short bursts frequently. Using asus-fancontrol with my
   custom control script. See its repository.
 * Use asus-kbd-backlight from the AUR to control the keyboard backlight. The
