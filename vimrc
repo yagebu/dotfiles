@@ -1,3 +1,68 @@
+set nocompatible
+
+" Filesystem paths
+let $MYVIMRC = expand('<sfile>:p')
+let $VIMDOTDIR = expand('<sfile>:p:h')
+let &runtimepath .= "," . $VIMDOTDIR
+
+" System temporary files
+if !exists('$TEMP')
+  let $TEMP = '/tmp'
+endif
+
+" Backups and swap files
+set directory=$VIMDOTDIR/cache,/tmp,/var/tmp,$TEMP
+set backupdir=$VIMDOTDIR/cache,/tmp,/var/tmp,$TEMP
+
+" Appropriate path for viminfo
+if has('viminfo')
+  if !exists('$VIMINFO')
+    let $VIMINFO = $VIMDOTDIR . "/viminfo"
+  endif
+endif
+"
+" Viminfo file behavior
+if has('viminfo')
+  " f1  store file marks
+  " '   # of previously edited files to remember marks for
+  " :   # of lines of command history
+  " /   # of lines of search pattern history
+  " <   max # of lines for each register to be saved
+  " s   max # of Kb for each register to be saved
+  " h   don't restore hlsearch behavior
+  let &viminfo = "f1,'1000,:1000,/1000,<1000,s100,h,r" . $TEMP . ",n" . $VIMINFO
+endif
+
+if empty(glob('$VIMDOTDIR/autoload/plug.vim'))
+  silent !echo "Installing vim-plug..."
+  silent !curl -fLo $VIMDOTDIR/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+
+function! BuildYCM(info)
+  if a:info.status == 'installed' || a:info.force
+    !./install.sh
+  endif
+endfunction
+
+call plug#begin("$VIMDOTDIR/plugged")
+
+Plug 'lervag/vimtex'
+Plug 'tpope/vim-surround'
+Plug 'altercation/vim-colors-solarized'
+Plug 'bling/vim-airline'
+Plug 'tpope/vim-fugitive'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'klen/python-mode'
+Plug 'ledger/vim-ledger'
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'junegunn/fzf', { 'do': './install --bin' }
+Plug 'junegunn/goyo.vim'
+
+call plug#end()
+
 syntax enable
 colorscheme solarized
 set background=dark

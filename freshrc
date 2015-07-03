@@ -16,11 +16,7 @@ fresh-options --file=~/.config/zsh/.zshrc --marker=#
 fresh-options
 
 # vim
-fresh-options --file=~/.config/vim/vimrc --marker=\"
-    fresh vim/init.vim
-    fresh vim/plugins.vim
-    fresh vim/vimrc
-fresh-options
+fresh vimrc --file=~/.config/vim/vimrc
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
 fresh bin/backup-mac --bin=~/bin/backup
