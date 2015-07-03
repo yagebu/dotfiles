@@ -24,5 +24,6 @@ Plug 'klen/python-mode'
 Plug 'ledger/vim-ledger'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 Plug 'junegunn/fzf', { 'do': './install --bin' }
+Plug 'junegunn/goyo.vim'
 
 call plug#end()

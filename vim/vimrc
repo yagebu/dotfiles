@@ -62,6 +62,12 @@ let g:pymode_rope=0
 let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
 let g:tex_flavor='latex'               " Better syntax hightlighting
 autocmd FileType tex set tw=80         " wrap at 80 chars for LaTeX files
+if !exists('g:ycm_semantic_triggers')
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = [
+      \ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
+      \ ]
 
 " Set powerline fonts and always display it
 let g:airline_powerline_fonts = 1
@@ -76,3 +82,25 @@ let g:ledger_maxwidth = 120
 let g:ledger_fold_blanks = 1
 nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*?!')<CR>
 nnoremap <leader>c :call ledger#transaction_state_set(line('.'), '*')<CR>
+
+" Make :q work in Goyo
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+
+function! s:goyo_leave()
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+
+autocmd User GoyoEnter call <SID>goyo_enter()
+autocmd User GoyoLeave call <SID>goyo_leave()
