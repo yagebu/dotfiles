@@ -26,14 +26,14 @@ fresh bin/backup-external --bin
 fresh bin/cleanup --bin
 fresh bin/pacman-disowned --bin
 
-fresh Xresources --file=~/.config/Xresources
+fresh arch-x11/xresources --file=~/.config/Xresources
 fresh solarized/xresources Xresources.dark --file=~/.config/Xresources
+fresh arch-x11/compton.conf --file=~/.config/compton.conf
 
 fresh copycat-killer/lain . --file=~/.config/awesome/lain/
 fresh copycat-killer/awesome-copycats menugen --file=~/.config/awesome/menugen/
 fresh copycat-killer/awesome-copycats scratchdrop --file=~/.config/awesome/scratchdrop/
 fresh copycat-killer/awesome-copycats themes/multicolor --file=~/.config/awesome/themes/multicolor/
-fresh awesome/rc.lua --file=~/.config/awesome/rc.lua
+fresh arch-x11/awesome-rc.lua --file=~/.config/awesome/rc.lua
 
-fresh compton.conf --file=~/.config/compton.conf
 fi
