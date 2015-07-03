@@ -1,3 +1,29 @@
+# initialise colors
+autoload -U colors
+colors
+
+eval $(dircolors ~/.config/zsh/dircolors)
+
+setopt PROMPT_SUBST
+
+PROMPT='%n@%m %{$fg[green]%}%~>%{$reset_color%} '
+
+# avoid duplicates in history
+setopt hist_ignore_all_dups
+
+# load private config
+if [ -f ~/Documents/.localrc ]
+then
+    source ~/Documents/.localrc
+fi
+
+# load some vars for fresh
+source ~/.config/fresh/build/shell.sh
+
+# use ag for fzf and ignore Library path on OS X
+export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 # aliases
 alias ....='cd ../../..'
 alias ...='cd ../..'
@@ -13,6 +39,7 @@ alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ls -a'
 alias lla='ls -lha'
+alias m='mutt -F ~/.config/mutt/muttrc'
 alias r='ranger'
 alias svi='sudo -e'
 alias vi='nvim'

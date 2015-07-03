@@ -5,14 +5,13 @@ fresh freshshell/fresh bin/fresh --bin
 fresh seebi/dircolors-solarized dircolors.ansi-dark --file=~/.config/zsh/dircolors
 
 # zsh
-fresh zsh/zshenv --file=~/.config/zsh/.zshenv
+fresh zshenv --file=~/.config/zsh/.zshenv
 fresh-options --file=~/.config/zsh/.zshrc --marker=#
     fresh twe4ked/dotfiles shell/zsh/completion.zsh
     fresh junegunn/fzf shell/key-bindings.zsh
     fresh junegunn/fzf shell/completion.zsh
     fresh rupa/z z.sh
-    fresh zsh/aliases.sh
-    fresh zsh/zshrc
+    fresh zshrc
 fresh-options
 
 # vim
