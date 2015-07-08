@@ -12,9 +12,9 @@ PROMPT='%n@%m %{$fg[green]%}%~>%{$reset_color%} '
 setopt hist_ignore_all_dups
 
 # load private config
-if [ -f ~/Documents/.localrc ]
+if [ -f ~/Documents/.config/localrc ]
 then
-    source ~/Documents/.localrc
+    source ~/Documents/.config/localrc
 fi
 
 # load some vars for fresh
