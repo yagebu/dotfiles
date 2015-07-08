@@ -34,5 +34,3 @@ attic create --stats                                \
     --exclude /home/jakob/Pictures                  \
     --exclude /home/jakob/VMs                       \
     --exclude '*.pyc'
-
-attic prune -v $REPOSITORY --keep-daily=14 --keep-weekly=8 --keep-monthly=12 --keep-yearly=10
