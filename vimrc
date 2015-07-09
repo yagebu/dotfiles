@@ -66,6 +66,7 @@ Plug 'plasticboy/vim-markdown'
 
 " Color schemes
 Plug 'altercation/vim-colors-solarized'
+Plug 'chriskempson/base16-vim'
 Plug 'junegunn/seoul256.vim'
 
 call plug#end()
