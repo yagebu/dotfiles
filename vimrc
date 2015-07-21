@@ -83,9 +83,10 @@ set expandtab
 
 set autoindent
 set number
-set wrap
 set backspace=2
 set undofile
+
+set scrolloff=4
 
 " So not abandon hidden buffers
 set hidden
@@ -139,7 +140,6 @@ let g:pymode_rope=0
 " Settings for latex files
 let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
 let g:tex_flavor='latex'               " Better syntax hightlighting
-autocmd FileType tex set tw=80         " wrap at 80 chars for LaTeX files
 if !exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers = {}
 endif
