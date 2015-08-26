@@ -7,7 +7,7 @@
 [[ "$TERM" = "xterm" ]] && export TERM=xterm-256color
 
 export EDITOR="nvim"
-export HISTSIZE=2000
+export HISTSIZE=10000
 export HISTFILE="$XDG_CONFIG_HOME/zsh/history"
 export SAVEHIST=$HISTSIZE
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
