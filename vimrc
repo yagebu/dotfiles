@@ -14,6 +14,7 @@ endif
 set directory=$VIMDOTDIR/cache
 set backupdir=$VIMDOTDIR/cache
 set undodir=$VIMDOTDIR/cache
+set viewdir=$VIMDOTDIR/view
 
 if !isdirectory(&undodir)
     call mkdir(&undodir)
@@ -50,6 +51,7 @@ Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'kopischke/vim-stay'
 Plug 'mbbill/undotree'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
@@ -63,11 +65,13 @@ Plug 'klen/python-mode'
 Plug 'ledger/vim-ledger'
 Plug 'lervag/vimtex'
 Plug 'plasticboy/vim-markdown'
+Plug 'nathangrigg/vim-beancount'
 
 " Color schemes
 Plug 'altercation/vim-colors-solarized'
 Plug 'chriskempson/base16-vim'
 Plug 'junegunn/seoul256.vim'
+Plug 'jceb/vim-orgmode'
 
 call plug#end()
 
@@ -82,6 +86,7 @@ set softtabstop=4
 set expandtab
 
 set autoindent
+set relativenumber
 set number
 set backspace=2
 set undofile
@@ -100,6 +105,9 @@ set gdefault       " apply substitutions globally by default
 
 " ----------------------------------------------------------------------------
 " KEY BINDINGS
+
+nnoremap <Space> za
+vnoremap <Space> za
 
 " Clear search highlights easily
 nnoremap <leader><space> :noh<cr>
@@ -124,6 +132,9 @@ noremap <tab> %
 
 nnoremap U :UndotreeToggle<CR>
 nnoremap <silent> <leader><leader> :FZF -m<cr>
+
+" vim-stay
+set viewoptions=cursor,folds,slash,unix
 
 " ----------------------------------------------------------------------------
 " For VIM help files
@@ -159,14 +170,6 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " ----------------------------------------------------------------------------
-"  Setting for ledger
-let g:ledger_maxwidth = 120
-let g:ledger_fold_blanks = 1
-nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*?!')<CR>
-nnoremap <leader>c :call ledger#transaction_state_set(line('.'), '*')<CR>
-autocmd FileType ledger SpeedDatingFormat %Y/%m/%d
-
-" ----------------------------------------------------------------------------
 " Make :q work in Goyo
 function! s:goyo_enter()
   let b:quitting = 0
@@ -188,3 +191,23 @@ endfunction
 
 autocmd User GoyoEnter call <SID>goyo_enter()
 autocmd User GoyoLeave call <SID>goyo_leave()
+
+" ----------------------------------------------------------------------------
+" Custom folding for beancount according to Markdown-style headings
+autocmd FileType beancount call Beancount()
+autocmd FileType beancount SpeedDatingFormat %Y-%m-%d
+nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
+
+function! Beancount()
+    function! BeancountFold(lnum)
+        let l1 = getline(a:lnum)
+        if l1 =~ '^#'
+            return '>'.match(l1, '[^#]')
+        elseif match(l1, '[!*]')>0
+            return '>3'
+        endif
+        return '='
+    endfunction
+    setlocal foldmethod=expr
+    setlocal foldexpr=BeancountFold(v:lnum)
+endfunction
