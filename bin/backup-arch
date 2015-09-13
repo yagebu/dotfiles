@@ -16,10 +16,6 @@ REPOSITORY=ks:backup/js-arch.attic
 attic create --stats                                \
     $REPOSITORY::`date +%Y-%m-%d`                   \
     /home/jakob                                     \
-    /etc                                            \
-    --exclude /etc/ca-certificates                  \
-    --exclude /etc/udev                             \
-    --exclude /etc/ssl                              \
     --exclude /home/jakob/.cache                    \
     --exclude /home/jakob/.config/chromium          \
     --exclude /home/jakob/.config/fresh             \
