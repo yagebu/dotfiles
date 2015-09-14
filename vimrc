@@ -56,6 +56,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kopischke/vim-stay'
+Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
@@ -63,6 +64,8 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
 "
 " File type specific plugins
 Plug 'klen/python-mode'
@@ -135,6 +138,7 @@ noremap <tab> %
 
 nnoremap U :UndotreeToggle<CR>
 nnoremap <silent> <leader><leader> :FZF -m<cr>
+nmap <F8> :TagbarToggle<CR>
 " }}}
 
 " vim-stay {{{
