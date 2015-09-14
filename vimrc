@@ -139,6 +139,7 @@ noremap <tab> %
 nnoremap U :UndotreeToggle<CR>
 nnoremap <silent> <leader><leader> :FZF -m<cr>
 nmap <F8> :TagbarToggle<CR>
+let g:easytags_file = $VIMDOTDIR . '/tags'
 " }}}
 
 " vim-stay {{{
