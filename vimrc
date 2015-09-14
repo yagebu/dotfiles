@@ -1,5 +1,7 @@
+" vim: set foldmethod=marker:
 set nocompatible
 
+" Paths {{{
 " Filesystem paths
 let $MYVIMRC = expand('<sfile>:p')
 let $VIMDOTDIR = expand('<sfile>:p:h')
@@ -25,7 +27,9 @@ if !exists('$VIMINFO')
   let $VIMINFO = $VIMDOTDIR . "/viminfo"
 endif
 let &viminfo = "f1,'1000,:1000,/1000,<1000,s100,h,r" . $TEMP . ",n" . $VIMINFO
+" }}}
 
+" Plugins {{{
 if empty(glob('$VIMDOTDIR/autoload/plug.vim'))
   silent !echo "Installing vim-plug..."
   silent !curl -fLo $VIMDOTDIR/autoload/plug.vim --create-dirs
@@ -74,7 +78,9 @@ Plug 'junegunn/seoul256.vim'
 Plug 'jceb/vim-orgmode'
 
 call plug#end()
+" }}}
 
+" Basic settings {{{
 syntax enable
 colorscheme solarized
 set background=dark
@@ -93,27 +99,24 @@ set undofile
 
 set scrolloff=4
 
-" So not abandon hidden buffers
-set hidden
-
-" Make search use normal regex
+set hidden         " So not abandon hidden buffers
 set hlsearch       " highlight all search results
 set incsearch      " increment search
 set ignorecase     " case-insensitive search
 set smartcase      " uppercase causes case-sensitive search
 set gdefault       " apply substitutions globally by default
+" }}}
 
-" ----------------------------------------------------------------------------
-" KEY BINDINGS
-
-nnoremap <Space> za
+" Key bindings {{{
+nnoremap <Space> za       " Space toggles folds
 vnoremap <Space> za
 
-" Clear search highlights easily
-nnoremap <leader><space> :noh<cr>
+nnoremap <leader><space> :noh<cr>  " Clear search highlights easily
 " Move up/down by on-screen lines
 nnoremap j gj
 nnoremap k gk
+nnoremap gj j
+nnoremap gk k
 " Save one keystroke for commmands
 inoremap jk <ESC>
 " Quicker window navigation
@@ -132,23 +135,24 @@ noremap <tab> %
 
 nnoremap U :UndotreeToggle<CR>
 nnoremap <silent> <leader><leader> :FZF -m<cr>
+" }}}
 
-" vim-stay
+" vim-stay {{{
 set viewoptions=cursor,folds,slash,unix
+" }}}
 
-" ----------------------------------------------------------------------------
-" For VIM help files
+" For VIM help files {{{
 nnoremap <silent> coc
       \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
       \ :set conceallevel?<CR>
+" }}}
 
-" ----------------------------------------------------------------------------
-" Make python formatting adhere to pep8
+" Python settings {{{
 au FileType python setlocal formatprg=autopep8\ -
 let g:pymode_rope=0
+" }}}
 
-" ----------------------------------------------------------------------------
-" Settings for latex files
+" Latex settings {{{
 let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
 let g:tex_flavor='latex'               " Better syntax hightlighting
 if !exists('g:ycm_semantic_triggers')
@@ -157,20 +161,20 @@ endif
 let g:ycm_semantic_triggers.tex = [
       \ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
       \ ]
+" }}}
 
-" ----------------------------------------------------------------------------
-" Set powerline fonts and always display it
+" Airline {{{
 let g:airline_powerline_fonts = 1
 set laststatus=2
+" }}}
 
-" ----------------------------------------------------------------------------
-" Make ultisnips compatible with YouCompleteMe
+" Make ultisnips compatible with YouCompleteMe {{{
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" }}}
 
-" ----------------------------------------------------------------------------
-" Make :q work in Goyo
+" Make :q work in Goyo"{{{
 function! s:goyo_enter()
   let b:quitting = 0
   let b:quitting_bang = 0
@@ -191,9 +195,9 @@ endfunction
 
 autocmd User GoyoEnter call <SID>goyo_enter()
 autocmd User GoyoLeave call <SID>goyo_leave()
+" }}}
 
-" ----------------------------------------------------------------------------
-" Custom folding for beancount according to Markdown-style headings
+" Custom folding for beancount according to Markdown-style headings {{{
 autocmd FileType beancount call Beancount()
 autocmd FileType beancount SpeedDatingFormat %Y-%m-%d
 nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
@@ -211,3 +215,4 @@ function! Beancount()
     setlocal foldmethod=expr
     setlocal foldexpr=BeancountFold(v:lnum)
 endfunction
+" }}}
