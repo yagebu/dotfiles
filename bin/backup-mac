@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 REPOSITORY=ks:backup/js-mba.attic
 
@@ -6,16 +6,11 @@ REPOSITORY=ks:backup/js-mba.attic
 /usr/local/bin/attic create --stats                  \
     $REPOSITORY::`date +%Y-%m-%d`                    \
     /Users/jakob                                     \
-    --exclude /Users/jakob/.bup                      \
     --exclude /Users/jakob/.cache                    \
-    --exclude /Users/jakob/.config/fresh             \
-    --exclude /Users/jakob/.config/vim               \
     --exclude /Users/jakob/.Trash                    \
-    --exclude /Users/jakob/dev/neovim                \
     --exclude /Users/jakob/Google\ Drive             \
     --exclude /Users/jakob/Library                   \
     --exclude /Users/jakob/Movies                    \
     --exclude /Users/jakob/Music                     \
     --exclude /Users/jakob/Pictures                  \
     --exclude /Users/jakob/VMs                       \
-    --exclude '*.pyc'
