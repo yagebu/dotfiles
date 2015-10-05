@@ -48,6 +48,7 @@ call plug#begin("$VIMDOTDIR/plugged")
 Plug 'bling/vim-airline'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-fnr'
@@ -134,10 +135,11 @@ if has('nvim')
     tnoremap <C-k> <C-\><C-n><C-w>k
     tnoremap <C-l> <C-\><C-n><C-w>l
 endif
-noremap <tab> %
+nmap <tab> %
 
 nnoremap U :UndotreeToggle<CR>
-nnoremap <silent> <leader><leader> :FZF -m<cr>
+nnoremap <silent> <leader><leader> :Files<cr>
+nnoremap <silent> <leader><Enter>  :Buffers<cr>
 nmap <F8> :TagbarToggle<CR>
 let g:easytags_file = $VIMDOTDIR . '/tags'
 " }}}
@@ -213,7 +215,7 @@ function! Beancount()
         if l1 =~ '^#'
             return '>'.match(l1, '[^#]')
         elseif match(l1, '[!*]')>0
-            return '>3'
+            return '>4'
         endif
         return '='
     endfunction
