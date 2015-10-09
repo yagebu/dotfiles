@@ -47,7 +47,7 @@ call plug#begin("$VIMDOTDIR/plugged")
 
 Plug 'bling/vim-airline'
 Plug 'honza/vim-snippets'
-Plug 'junegunn/fzf', { 'do': './install --bin' }
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
@@ -214,8 +214,8 @@ function! Beancount()
         let l1 = getline(a:lnum)
         if l1 =~ '^#'
             return '>'.match(l1, '[^#]')
-        elseif match(l1, '[!*]')>0
-            return '>4'
+"        elseif match(l1, '[!*]')>0
+"            return '>4'
         endif
         return '='
     endfunction
