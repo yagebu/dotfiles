@@ -74,6 +74,7 @@ Plug 'ledger/vim-ledger'
 Plug 'lervag/vimtex'
 Plug 'plasticboy/vim-markdown'
 Plug 'nathangrigg/vim-beancount'
+Plug 'rust-lang/rust.vim'
 
 " Color schemes
 Plug 'altercation/vim-colors-solarized'
