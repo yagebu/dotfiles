@@ -1,32 +1,27 @@
 " vim: set foldmethod=marker:
 set nocompatible
 
-" Paths {{{
-" Filesystem paths
-let $MYVIMRC = expand('<sfile>:p')
-let $VIMDOTDIR = expand('<sfile>:p:h')
-let &runtimepath .= "," . $VIMDOTDIR
+" Paths (only for vanilla VIM) {{{
+if !has('nvim')
+  " Filesystem paths
+  let $MYVIMRC = expand('<sfile>:p')
+  let $VIMDOTDIR = expand('<sfile>:p:h')
+  let &runtimepath .= "," . $VIMDOTDIR
 
-" System temporary files
-if !exists('$TEMP')
-  let $TEMP = '/tmp'
+  " Backups and swap files
+  set directory=$XDG_DATA_HOME/nvim/swap//
+  set backupdir=$XDG_DATA_HOME/nvim/backup
+  set undodir=$XDG_DATA_HOME/nvim/undo//
+  set viewdir=$XDG_DATA_HOME/nvim/view
+
+  " Appropriate path for viminfo
+  let $VIMINFO = $XDG_DATA_HOME . "/nvim/viminfo"
+  let &viminfo = "f1,'1000,:1000,/1000,<1000,s100,h,n" . $VIMINFO
 endif
-
-" Backups and swap files
-set directory=$VIMDOTDIR/cache
-set backupdir=$VIMDOTDIR/cache
-set undodir=$VIMDOTDIR/cache
-set viewdir=$VIMDOTDIR/view
 
 if !isdirectory(&undodir)
     call mkdir(&undodir)
 endif
-
-" Appropriate path for viminfo
-if !exists('$VIMINFO')
-  let $VIMINFO = $VIMDOTDIR . "/viminfo"
-endif
-let &viminfo = "f1,'1000,:1000,/1000,<1000,s100,h,r" . $TEMP . ",n" . $VIMINFO
 " }}}
 
 " Plugins {{{
@@ -43,7 +38,7 @@ function! BuildYCM(info)
   endif
 endfunction
 
-call plug#begin("$VIMDOTDIR/plugged")
+call plug#begin("$XDG_DATA_HOME/nvim/plugged")
 
 Plug 'bling/vim-airline'
 Plug 'honza/vim-snippets'
@@ -142,7 +137,7 @@ nnoremap U :UndotreeToggle<CR>
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader><Enter>  :Buffers<cr>
 nmap <F8> :TagbarToggle<CR>
-let g:easytags_file = $VIMDOTDIR . '/tags'
+let g:easytags_file = $XDG_DATA_HOME . '/nvim/tags'
 " }}}
 
 " vim-stay {{{
