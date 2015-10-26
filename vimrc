@@ -20,7 +20,10 @@ if !has('nvim')
 endif
 
 if !isdirectory(&undodir)
-    call mkdir(&undodir)
+    call mkdir(&undodir, "p")
+endif
+if !isdirectory(&backupdir)
+    call mkdir(&backupdir, "p")
 endif
 " }}}
 
