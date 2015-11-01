@@ -17,13 +17,10 @@ if !has('nvim')
   " Appropriate path for viminfo
   let $VIMINFO = $XDG_DATA_HOME . "/nvim/viminfo"
   let &viminfo = "f1,'1000,:1000,/1000,<1000,s100,h,n" . $VIMINFO
-endif
 
-if !isdirectory(&undodir)
+  if !isdirectory(&undodir)
     call mkdir(&undodir, "p")
-endif
-if !isdirectory(&backupdir)
-    call mkdir(&backupdir, "p")
+  endif
 endif
 " }}}
 
@@ -54,6 +51,8 @@ Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/vader.vim'
+Plug 'justinmk/vim-sneak'
 Plug 'kopischke/vim-stay'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
