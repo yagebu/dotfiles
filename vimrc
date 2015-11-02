@@ -10,8 +10,7 @@ if !has('nvim')
 
   " Backups and swap files
   set directory=$XDG_DATA_HOME/nvim/swap//
-  set backupdir=$XDG_DATA_HOME/nvim/backup
-  set undodir=$XDG_DATA_HOME/nvim/undo//
+  set undodir=$XDG_DATA_HOME/nvim/undo
   set viewdir=$XDG_DATA_HOME/nvim/view
 
   " Appropriate path for viminfo
