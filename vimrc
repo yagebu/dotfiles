@@ -156,6 +156,11 @@ au FileType python setlocal formatprg=autopep8\ -
 let g:pymode_rope=0
 " }}}
 
+" Mail settings {{{
+au FileType mail setlocal fo+=aw
+au FileType mail Goyo 80
+" }}}
+
 " Latex settings {{{
 let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
 let g:tex_flavor='latex'               " Better syntax hightlighting
