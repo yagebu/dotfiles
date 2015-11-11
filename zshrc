@@ -47,14 +47,11 @@ alias vi='nvim'
 alias sudo='sudo '
 
 # git
-alias gitad='git add'
 alias gitco='git commit'
 alias gitdi='git diff --color-words'
-alias gitig='vim .gitignore'
 alias gitlo='git log --pretty=format:"%h %s" --graph -20'
 alias gitpl='git pull'
-alias gitpu='git push -u origin master'
-alias gitrm='git rm'
+alias gitpu='git push'
 alias gitst='git status'
 
 # os specific things
