@@ -10,8 +10,7 @@ export EDITOR="nvim"
 export HISTSIZE=10000
 export HISTFILE="$XDG_CONFIG_HOME/zsh/history"
 export SAVEHIST=$HISTSIZE
-export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/nvim/init.vim" | source $MYVIMRC'
-export VIMDOTDIR="$XDG_CONFIG_HOME/nvim"
+#export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/nvim/init.vim" | source $MYVIMRC'
 export FRESH_RCFILE="$HOME/dev/dotfiles/freshrc"
 export FRESH_PATH="$XDG_CONFIG_HOME/fresh"
 export _Z_DATA="$XDG_CONFIG_HOME/zsh/z"

@@ -1,11 +1,12 @@
 " vim: set foldmethod=marker:
 set nocompatible
 
-" Paths (only for vanilla VIM) {{{
+" Paths (mostly for vanilla VIM) {{{
+let $VIMDOTDIR = expand('<sfile>:p:h')
+
 if !has('nvim')
   " Filesystem paths
-  let $MYVIMRC = expand('<sfile>:p')
-  let $VIMDOTDIR = expand('<sfile>:p:h')
+  "let $MYVIMRC = expand('<sfile>:p')
   let &runtimepath .= "," . $VIMDOTDIR
 
   " Backups and swap files
