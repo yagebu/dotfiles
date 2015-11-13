@@ -22,6 +22,8 @@ if !has('nvim')
     call mkdir(&undodir, "p")
   endif
 endif
+
+let g:gutentags_cache_dir = $XDG_DATA_HOME . '/nvim/tags'
 " }}}
 
 " Plugins {{{
@@ -54,6 +56,7 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vader.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'kopischke/vim-stay'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'SirVer/ultisnips'
@@ -62,8 +65,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'
 "
 " File type specific plugins
 Plug 'klen/python-mode'
@@ -139,7 +140,6 @@ nnoremap U :UndotreeToggle<CR>
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader><Enter>  :Buffers<cr>
 nmap <F8> :TagbarToggle<CR>
-let g:easytags_file = $XDG_DATA_HOME . '/nvim/tags'
 " }}}
 
 " vim-stay {{{
