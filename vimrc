@@ -114,14 +114,15 @@ set gdefault       " apply substitutions globally by default
 nnoremap <Space> za       " Space toggles folds
 vnoremap <Space> za
 
-nnoremap <leader><space> :noh<cr>  " Clear search highlights easily
 " Move up/down by on-screen lines
 nnoremap j gj
 nnoremap k gk
 nnoremap gj j
 nnoremap gk k
+
 " Save one keystroke for commmands
 inoremap jk <ESC>
+
 " Quicker window navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -129,17 +130,20 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 if has('nvim')
     nmap <BS> <C-W>h
+    " Terminal mappings
     tnoremap <C-h> <C-\><C-n><C-w>h
     tnoremap <C-j> <C-\><C-n><C-w>j
     tnoremap <C-k> <C-\><C-n><C-w>k
     tnoremap <C-l> <C-\><C-n><C-w>l
+    tnoremap <Esc> <C-\><C-n>
 endif
-nmap <tab> %
 
-nnoremap U :UndotreeToggle<CR>
+map <tab> %
+nnoremap <silent> <leader><space> :nohlsearch<cr>
+nnoremap <silent> U :UndotreeToggle<cr>
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader><Enter>  :Buffers<cr>
-nmap <F8> :TagbarToggle<CR>
+nnoremap <silent> <F8> :TagbarToggle<cr>
 " }}}
 
 " vim-stay {{{
