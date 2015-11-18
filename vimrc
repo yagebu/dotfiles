@@ -23,7 +23,7 @@ if !has('nvim')
   endif
 endif
 
-let g:gutentags_cache_dir = $XDG_DATA_HOME . '/nvim/tags'
+let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
 " }}}
 
 " Plugins {{{
@@ -44,6 +44,7 @@ call plug#begin("$XDG_DATA_HOME/nvim/plugged")
 
 Plug 'bling/vim-airline'
 Plug 'honza/vim-snippets'
+Plug 'jceb/vim-orgmode'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
@@ -78,7 +79,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'chriskempson/base16-vim'
 Plug 'junegunn/seoul256.vim'
-Plug 'jceb/vim-orgmode'
 
 call plug#end()
 " }}}
@@ -143,6 +143,8 @@ nnoremap <silent> <leader><space> :nohlsearch<cr>
 nnoremap <silent> U :UndotreeToggle<cr>
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader><Enter>  :Buffers<cr>
+nnoremap <silent> <leader>a  :Ag<cr>
+nnoremap <silent> <leader>h  :Helptags<cr>
 nnoremap <silent> <F8> :TagbarToggle<cr>
 " }}}
 
