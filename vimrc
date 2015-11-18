@@ -1,10 +1,9 @@
 " vim: set foldmethod=marker:
+
+" vanilla VIM compatibility {{{
 set nocompatible
-
-" Paths (mostly for vanilla VIM) {{{
-let $VIMDOTDIR = expand('<sfile>:p:h')
-
 if !has('nvim')
+  set backspace=2
   " Filesystem paths
   "let $MYVIMRC = expand('<sfile>:p')
   let &runtimepath .= "," . $VIMDOTDIR
@@ -22,11 +21,11 @@ if !has('nvim')
     call mkdir(&undodir, "p")
   endif
 endif
-
-let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
 " }}}
 
 " Plugins {{{
+let $VIMDOTDIR = expand('<sfile>:p:h')
+
 if empty(glob('$VIMDOTDIR/autoload/plug.vim'))
   silent !echo "Installing vim-plug..."
   silent !curl -fLo $VIMDOTDIR/autoload/plug.vim --create-dirs
@@ -79,13 +78,14 @@ Plug 'rust-lang/rust.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'chriskempson/base16-vim'
 Plug 'junegunn/seoul256.vim'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 " }}}
 
 " Basic settings {{{
 syntax enable
-colorscheme solarized
+colorscheme gruvbox
 set background=dark
 
 " Do not use tabs and use 4 spaces for indentation
@@ -97,7 +97,6 @@ set expandtab
 set autoindent
 set relativenumber
 set number
-set backspace=2
 set undofile
 
 set scrolloff=4
@@ -113,6 +112,12 @@ set gdefault       " apply substitutions globally by default
 " Key bindings {{{
 nnoremap <Space> za       " Space toggles folds
 vnoremap <Space> za
+
+" Save and quit
+inoremap <C-s> <C-O>:update<cr>
+nnoremap <C-s> :update<cr>
+inoremap <C-Q> <esc>:q<cr>
+nnoremap <C-Q> :q<cr>
 
 " Move up/down by on-screen lines
 nnoremap j gj
@@ -144,18 +149,22 @@ nnoremap <silent> U :UndotreeToggle<cr>
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader><Enter>  :Buffers<cr>
 nnoremap <silent> <leader>a  :Ag<cr>
+nnoremap <silent> <leader>c  :Colors<cr>
+nnoremap <silent> <leader>g  :Goyo<cr>
 nnoremap <silent> <leader>h  :Helptags<cr>
 nnoremap <silent> <F8> :TagbarToggle<cr>
-" }}}
 
-" vim-stay {{{
-set viewoptions=cursor,folds,slash,unix
-" }}}
-
-" For VIM help files {{{
 nnoremap <silent> coc
       \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
       \ :set conceallevel?<CR>
+" }}}
+
+" Misc {{{
+let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
+
+set viewoptions=cursor,folds,slash,unix
+
+let g:limelight_conceal_guifg = '#999999'
 " }}}
 
 " Python settings {{{
@@ -165,7 +174,7 @@ let g:pymode_rope=0
 
 " Mail settings {{{
 au FileType mail setlocal fo+=aw
-au FileType mail Goyo 80
+au FileType mail Goyo
 " }}}
 
 " Latex settings {{{
@@ -194,6 +203,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " Make :q work in Goyo"{{{
 function! s:goyo_enter()
+  Limelight
   let b:quitting = 0
   let b:quitting_bang = 0
   autocmd QuitPre <buffer> let b:quitting = 1
@@ -201,6 +211,7 @@ function! s:goyo_enter()
 endfunction
 
 function! s:goyo_leave()
+  Limelight!
   " Quit Vim if this is the only remaining buffer
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
     if b:quitting_bang

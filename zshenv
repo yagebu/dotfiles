@@ -15,6 +15,7 @@ export FRESH_RCFILE="$HOME/dev/dotfiles/freshrc"
 export FRESH_PATH="$XDG_CONFIG_HOME/fresh"
 export _Z_DATA="$XDG_CONFIG_HOME/zsh/z"
 export LESSHISTFILE="-"
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
