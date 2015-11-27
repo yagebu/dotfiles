@@ -3,6 +3,7 @@
 " vanilla VIM compatibility {{{
 set nocompatible
 if !has('nvim')
+  let $VIMDOTDIR = expand('<sfile>:p:h')
   set backspace=2
   " Filesystem paths
   "let $MYVIMRC = expand('<sfile>:p')
@@ -48,18 +49,20 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vader.vim'
 Plug 'justinmk/vim-sneak'
+Plug 'Konfekt/FastFold'
 Plug 'kopischke/vim-stay'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'SirVer/ultisnips'
+Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
@@ -67,7 +70,6 @@ Plug 'tpope/vim-surround'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 "
 " File type specific plugins
-Plug 'klen/python-mode'
 Plug 'ledger/vim-ledger'
 Plug 'lervag/vimtex'
 Plug 'plasticboy/vim-markdown'
@@ -161,10 +163,17 @@ nnoremap <silent> coc
 
 " Misc {{{
 let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
+let g:gutentags_exclude = ['/usr/local']
+let g:gutentags_ctags_executable = 'ctags --python-kinds=-i'
 
 set viewoptions=cursor,folds,slash,unix
 
 let g:limelight_conceal_guifg = '#999999'
+
+let g:syntastic_check_on_open = 1
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_always_populate_loc_list = 1
 " }}}
 
 " Python settings {{{
@@ -178,7 +187,9 @@ au FileType mail Goyo
 " }}}
 
 " Latex settings {{{
+au FileType tex setlocal norelativenumber
 let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
+let g:vimtex_fold_enabled = 1
 let g:tex_flavor='latex'               " Better syntax hightlighting
 if !exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers = {}
@@ -186,6 +197,7 @@ endif
 let g:ycm_semantic_triggers.tex = [
       \ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
       \ ]
+let g:syntastic_tex_chktex_args = '-n3' 
 " }}}
 
 " Airline {{{
