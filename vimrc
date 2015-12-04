@@ -44,17 +44,16 @@ call plug#begin("$XDG_DATA_HOME/nvim/plugged")
 
 Plug 'bling/vim-airline'
 Plug 'honza/vim-snippets'
-Plug 'jceb/vim-orgmode'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/vader.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'Konfekt/FastFold'
 Plug 'kopischke/vim-stay'
@@ -75,10 +74,11 @@ Plug 'lervag/vimtex'
 Plug 'plasticboy/vim-markdown'
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim'
+"Plug 'jceb/vim-orgmode'
 
 " Color schemes
 Plug 'altercation/vim-colors-solarized'
-Plug 'chriskempson/base16-vim'
+"Plug 'chriskempson/base16-vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 
@@ -89,6 +89,9 @@ call plug#end()
 syntax enable
 colorscheme gruvbox
 set background=dark
+
+let g:python_host_skip_check = 1
+let g:python3_host_skip_check = 1
 
 " Do not use tabs and use 4 spaces for indentation
 set shiftwidth=4
@@ -189,7 +192,6 @@ au FileType mail Goyo
 " Latex settings {{{
 au FileType tex setlocal norelativenumber
 let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
-let g:vimtex_fold_enabled = 1
 let g:tex_flavor='latex'               " Better syntax hightlighting
 if !exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers = {}
