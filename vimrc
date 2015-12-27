@@ -34,12 +34,6 @@ if empty(glob('$VIMDOTDIR/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 
-function! BuildYCM(info)
-  if a:info.status == 'installed' || a:info.force
-    !./install.sh
-  endif
-endfunction
-
 call plug#begin("$XDG_DATA_HOME/nvim/plugged")
 
 Plug 'bling/vim-airline'
@@ -66,9 +60,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'Valloric/YouCompleteMe'
 "
 " File type specific plugins
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'mitsuhiko/vim-jinja'
 Plug 'ledger/vim-ledger'
 Plug 'lervag/vimtex'
 Plug 'plasticboy/vim-markdown'
@@ -92,6 +88,7 @@ set background=dark
 
 let g:python_host_skip_check = 1
 let g:python3_host_skip_check = 1
+let g:loaded_python3_provider = 0
 
 " Do not use tabs and use 4 spaces for indentation
 set shiftwidth=4
@@ -158,6 +155,9 @@ nnoremap <silent> <leader>c  :Colors<cr>
 nnoremap <silent> <leader>g  :Goyo<cr>
 nnoremap <silent> <leader>h  :Helptags<cr>
 nnoremap <silent> <F8> :TagbarToggle<cr>
+
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 nnoremap <silent> coc
       \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
