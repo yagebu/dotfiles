@@ -10,7 +10,7 @@ done
 echo 'online'
 /home/jakob/bin/cleanup
 
-REPOSITORY=ks:backup/js-arch.attic
+REPOSITORY=ks:backup/js-arch
 
 # Backup all of /etc and /home except a few excluded directories
 attic create --stats                                \
