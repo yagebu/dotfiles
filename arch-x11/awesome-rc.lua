@@ -59,13 +59,12 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/multicolor/theme.lu
 -- common
 modkey     = "Mod4"
 altkey     = "Mod1"
-terminal   = "urxvt" or "xterm"
+terminal   = "st -f \"Source Code Pro:size=12\"" or "urxvt"
 editor     = os.getenv("EDITOR") or "nano" or "vi"
 editor_cmd = terminal .. " -e " .. editor
 
 -- user defined
 browser    = "chromium"
-gui_editor = "subl3"
 mail       = "thunderbird"
 
 local layouts = {
@@ -438,7 +437,7 @@ globalkeys = awful.util.table.join(
     -- User programs
     -- awful.key({ modkey }, "q", function () awful.util.spawn(browser) end),
     -- awful.key({ modkey }, "i", function () awful.util.spawn(browser2) end),
-    awful.key({ modkey }, "s", function () awful.util.spawn(gui_editor) end),
+    -- awful.key({ modkey }, "s", function () awful.util.spawn(gui_editor) end),
     -- awful.key({ modkey }, "g", function () awful.util.spawn(graphics) end),
 
         -- CUSTOM keys
@@ -692,6 +691,5 @@ for s = 1, screen.count() do screen[s]:connect_signal("arrange", function ()
 end
 -- }}}
 
-awful.util.spawn_with_shell("xrdb ~/.config/Xresources")
 awful.util.spawn_with_shell("compton -b")
 awful.util.spawn_with_shell("nm-applet")

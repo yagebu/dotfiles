@@ -1,8 +1,0 @@
-urxvt.perl-ext-common: default,clipboard
-urxvt.keysym.M-c: perl:clipboard:copy
-urxvt.keysym.M-v: perl:clipboard:paste
-
-urxvt.scrollStyle:          rxvt
-urxvt.scrollBar:            false
-
-urxvt.font: xft:tamsyn:size=12,xft:Inconsolata\ for\ Powerline:size=12

@@ -26,8 +26,6 @@ fresh bin/backup-external --bin
 fresh bin/cleanup --bin
 fresh bin/pacman-disowned --bin
 
-fresh arch-x11/xresources --file=~/.config/Xresources
-fresh solarized/xresources Xresources.dark --file=~/.config/Xresources
 fresh arch-x11/compton.conf --file=~/.config/compton.conf
 
 fresh copycat-killer/lain . --file=~/.config/awesome/lain/
