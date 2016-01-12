@@ -19,6 +19,7 @@ fresh vimrc --file=~/.config/nvim/init.vim
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
 fresh bin/backup-mac --bin=~/bin/backup
+fresh mhinz/neovim-remote nvr --bin
 
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
 fresh bin/backup-arch --bin=~/bin/backup

@@ -200,6 +200,15 @@ let g:ycm_semantic_triggers.tex = [
       \ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
       \ ]
 let g:syntastic_tex_chktex_args = '-n3' 
+
+let g:vimtex_latexmk_progname = 'nvr'
+let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+let g:vimtex_view_general_options = '@line @pdf @tex'
+let g:vimtex_latexmk_options = "-pdflatex='pdflatex -synctex=1'"
+augroup vimtex_config
+    au!
+    au User VimtexEventInitPost VimtexCompile
+augroup END
 " }}}
 
 " Airline {{{
