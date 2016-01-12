@@ -14,3 +14,4 @@ REPOSITORY=ks:backup/js-mba
     --exclude /Users/jakob/Music                     \
     --exclude /Users/jakob/Pictures                  \
     --exclude /Users/jakob/VMs                       \
+    --exclude '*.DS_Store'                           \
