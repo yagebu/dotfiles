@@ -165,6 +165,9 @@ nnoremap <silent> coc
 " }}}
 
 " Misc {{{
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
 let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
 let g:gutentags_exclude = ['/usr/local']
 let g:gutentags_ctags_executable = 'ctags --python-kinds=-i'
