@@ -54,7 +54,8 @@ alias sudo='sudo '
 
 # git
 alias gco='git commit'
-alias gd='git diff --color-words'
+alias gd='git diff'
+alias gdw='git diff --color-words'
 alias gl='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]" --graph -20'
 alias glo='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]" --graph'
 alias gpl='git pull'
