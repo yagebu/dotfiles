@@ -15,6 +15,11 @@ setopt PROMPT_SUBST
 
 PROMPT='%n@%m %{$fg[green]%}%~>%{$reset_color%} '
 
+if [ -n "$VIRTUAL_ENV" ]; then
+    PREFIX=$(basename $VIRTUAL_ENV)
+    PROMPT="%F{blue}(🐍 $PREFIX)%f $PROMPT"
+fi
+
 # avoid duplicates in history
 setopt hist_ignore_all_dups
 
@@ -47,7 +52,6 @@ alias lsa='ls -a'
 alias la='ls -lha'
 alias m='mutt -F ~/.config/mutt/muttrc'
 alias r='ranger'
-alias va='. venv/bin/activate'
 alias svi='sudo -e'
 alias vi='nvim'
 alias sudo='sudo '
