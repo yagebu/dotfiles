@@ -57,8 +57,10 @@ alias vi='nvim'
 alias sudo='sudo '
 
 # git
+alias g='git '
 alias gco='git commit'
 alias gd='git diff'
+alias gf='git fetch'
 alias gdw='git diff --color-words'
 alias gl='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]" --graph -20'
 alias glo='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]" --graph'

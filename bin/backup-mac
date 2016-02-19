@@ -7,6 +7,7 @@ REPOSITORY=ks:backup/js-mba
     $REPOSITORY::`date +%Y-%m-%d`                    \
     /Users/jakob                                     \
     --exclude /Users/jakob/.cache                    \
+    --exclude /Users/jakob/.npm                      \
     --exclude /Users/jakob/.Trash                    \
     --exclude /Users/jakob/Google\ Drive             \
     --exclude /Users/jakob/Library                   \
