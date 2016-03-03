@@ -170,7 +170,7 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 
 let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
 let g:gutentags_exclude = ['/usr/local']
-let g:gutentags_ctags_executable = 'ctags --python-kinds=-i'
+"let g:gutentags_ctags_executable = 'ctags --python-kinds=-i'
 
 set viewoptions=cursor,folds,slash,unix
 
@@ -200,10 +200,15 @@ if !exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers.tex = [
-      \ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
-      \ ]
-let g:syntastic_tex_chktex_args = '-n3' 
+    \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
+    \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
+    \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
+    \ 're!\\(include(only)?|input){[^}]*'
+    \ ]
+let g:syntastic_tex_chktex_args = '-n3'
 
+let g:vimtex_fold_enabled = 1
+let g:vimtex_motion_matchparen = 0
 let g:vimtex_latexmk_progname = 'nvr'
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '@line @pdf @tex'
@@ -212,6 +217,10 @@ augroup vimtex_config
     au!
     au User VimtexEventInitPost VimtexCompile
 augroup END
+aug QFClose
+  au!
+  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+aug END
 " }}}
 
 " Airline {{{
