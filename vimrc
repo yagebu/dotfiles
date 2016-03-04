@@ -210,9 +210,19 @@ let g:syntastic_tex_chktex_args = '-n3'
 let g:vimtex_fold_enabled = 1
 let g:vimtex_motion_matchparen = 0
 let g:vimtex_latexmk_progname = 'nvr'
+let g:vimtex_latexmk_options = "-pdflatex='pdflatex -synctex=1'"
+
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '@line @pdf @tex'
-let g:vimtex_latexmk_options = "-pdflatex='pdflatex -synctex=1'"
+let g:vimtex_view_general_callback = "SkimForwardSearch"
+function! SkimForwardSearch()
+  let out = b:vimtex.out()
+  if empty(out)
+    return
+  endif
+  call system("/Applications/Skim.app/Contents/SharedSupport/displayline -r ".line('.')." ".out)
+endfunction
+
 augroup vimtex_config
     au!
     au User VimtexEventInitPost VimtexCompile
