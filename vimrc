@@ -42,12 +42,14 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'junegunn/gv.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
+Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
 Plug 'Konfekt/FastFold'
 Plug 'kopischke/vim-stay'
@@ -88,7 +90,6 @@ set background=dark
 
 let g:python_host_skip_check = 1
 let g:python3_host_skip_check = 1
-let g:loaded_python3_provider = 0
 
 " Do not use tabs and use 4 spaces for indentation
 set shiftwidth=4
