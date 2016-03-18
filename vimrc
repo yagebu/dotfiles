@@ -110,6 +110,8 @@ set incsearch      " increment search
 set ignorecase     " case-insensitive search
 set smartcase      " uppercase causes case-sensitive search
 set gdefault       " apply substitutions globally by default
+
+set clipboard=unnamed
 " }}}
 
 " Key bindings {{{
@@ -228,10 +230,6 @@ augroup vimtex_config
     au!
     au User VimtexEventInitPost VimtexCompile
 augroup END
-aug QFClose
-  au!
-  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
-aug END
 " }}}
 
 " Airline {{{
@@ -272,7 +270,7 @@ autocmd User GoyoEnter call <SID>goyo_enter()
 autocmd User GoyoLeave call <SID>goyo_leave()
 " }}}
 
-" Custom folding for beancount according to Markdown-style headings {{{
+" Custom org-mode like folding for beancount {{{
 autocmd FileType beancount call Beancount()
 autocmd FileType beancount SpeedDatingFormat %Y-%m-%d
 nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
@@ -280,8 +278,8 @@ nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
 function! Beancount()
     function! BeancountFold(lnum)
         let l1 = getline(a:lnum)
-        if l1 =~ '^#'
-            return '>'.match(l1, '[^#]')
+        if l1 =~ '^*'
+            return '>'.match(l1, '[^*]')
 "        elseif match(l1, '[!*]')>0
 "            return '>4'
         endif
