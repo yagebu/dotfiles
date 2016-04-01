@@ -65,11 +65,13 @@ Plug 'tpope/vim-surround'
 Plug 'Valloric/YouCompleteMe'
 "
 " File type specific plugins
+Plug 'chrisbra/Colorizer'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'ledger/vim-ledger'
 Plug 'lervag/vimtex'
 Plug 'plasticboy/vim-markdown'
+Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim'
 "Plug 'jceb/vim-orgmode'
@@ -183,6 +185,8 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_always_populate_loc_list = 1
+
+let g:colorizer_auto_filetype='css,scss'
 " }}}
 
 " Python settings {{{
