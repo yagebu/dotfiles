@@ -203,31 +203,46 @@ au FileType mail Goyo
 au FileType tex setlocal norelativenumber
 let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
 let g:tex_flavor='latex'               " Better syntax hightlighting
+
 if !exists('g:ycm_semantic_triggers')
   let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers.tex = [
-    \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
-    \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
-    \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
-    \ 're!\\(include(only)?|input){[^}]*'
-    \ ]
+      \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
+      \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
+      \ 're!\\hyperref\[[^]]*',
+      \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
+      \ 're!\\(include(only)?|input){[^}]*',
+      \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
+      \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
+      \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
+      \ ]
 let g:syntastic_tex_chktex_args = '-n3'
 
 let g:vimtex_fold_enabled = 1
 let g:vimtex_motion_matchparen = 0
 let g:vimtex_latexmk_progname = 'nvr'
-let g:vimtex_latexmk_options = "-pdflatex='pdflatex -synctex=1'"
 
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '@line @pdf @tex'
-let g:vimtex_view_general_callback = "SkimForwardSearch"
-function! SkimForwardSearch()
-  let out = b:vimtex.out()
-  if empty(out)
-    return
+
+let g:vimtex_latexmk_callback_hooks = ['UpdateSkim']
+
+function! UpdateSkim(status)
+  if !a:status | return | endif
+
+  let l:out = b:vimtex.out()
+  let l:cmd = [g:vimtex_view_general_viewer, '-r']
+  if !empty(system('pgrep Skim'))
+    call extend(l:cmd, ['-g'])
   endif
-  call system("/Applications/Skim.app/Contents/SharedSupport/displayline -r ".line('.')." ".out)
+  if has('nvim')
+    call jobstart(l:cmd + [line('.'), l:out])
+  elseif has('job')
+    call job_start(l:cmd + [line('.'), l:out])
+  else
+    call system(join(l:cmd + [line('.'), shellescape(l:out)], ' '))
+  endif
 endfunction
 
 augroup vimtex_config
