@@ -14,3 +14,4 @@
     --exclude /Users/jakob/Pictures                  \
     --exclude /Users/jakob/VMs                       \
     --exclude '*.DS_Store'                           \
+    --exclude '*node_modules/*'                      \
