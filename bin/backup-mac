@@ -12,6 +12,6 @@
     --exclude /Users/jakob/Movies                    \
     --exclude /Users/jakob/Music                     \
     --exclude /Users/jakob/Pictures                  \
-    --exclude /Users/jakob/VMs                       \
+    --exclude /Users/jakob/var                       \
     --exclude '*.DS_Store'                           \
     --exclude '*node_modules/*'                      \
