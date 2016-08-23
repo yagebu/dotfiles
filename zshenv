@@ -16,5 +16,4 @@ export FRESH_PATH="$XDG_CONFIG_HOME/fresh"
 export _Z_DATA="$XDG_CONFIG_HOME/zsh/z"
 export LESSHISTFILE="-"
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export npm_config_cache="~/.cache/npm"

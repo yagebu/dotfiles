@@ -74,6 +74,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim'
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
 
 "Plug 'jceb/vim-orgmode'
 
@@ -88,6 +89,7 @@ call plug#end()
 
 " Basic settings {{{
 syntax enable
+set termguicolors
 colorscheme gruvbox
 set background=dark
 
