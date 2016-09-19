@@ -71,7 +71,8 @@ Plug 'mitsuhiko/vim-jinja'
 Plug 'ledger/vim-ledger'
 Plug 'lervag/vimtex'
 Plug 'plasticboy/vim-markdown'
-Plug 'JamshedVesuna/vim-markdown-preview'
+"Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'shime/vim-livedown'
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim'
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
@@ -193,17 +194,25 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:colorizer_auto_filetype='css,scss'
 " }}}
 
-" Python settings {{{
+" File types {{{
+" Javascript, CSS, SCSS {{{
+au FileType javascript setlocal sw=2 sts=2
+au FileType css setlocal sw=2 sts=2
+au FileType scss setlocal sw=2 sts=2
+" }}}
+" Python {{{
 au FileType python setlocal formatprg=autopep8\ -
 let g:pymode_rope=0
 " }}}
-
-" Mail settings {{{
+" Markdown {{{
+au FileType markdown nmap gm :LivedownToggle<CR>
+let g:vim_markdown_folding_style_pythonic = 1
+" }}}
+" Mail {{{
 au FileType mail setlocal fo+=aw
 au FileType mail Goyo
 " }}}
-
-" Latex settings {{{
+" Latex {{{
 au FileType tex setlocal norelativenumber
 let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
 let g:tex_flavor='latex'               " Better syntax hightlighting
@@ -254,6 +263,26 @@ augroup vimtex_config
     au User VimtexEventInitPost VimtexCompile
 augroup END
 " }}}
+" Beancount (custom org-mode folding) {{{
+autocmd FileType beancount call Beancount()
+autocmd FileType beancount SpeedDatingFormat %Y-%m-%d
+nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
+
+function! Beancount()
+    function! BeancountFold(lnum)
+        let l1 = getline(a:lnum)
+        if l1 =~ '^*'
+            return '>'.match(l1, '[^*]')
+"        elseif match(l1, '[!*]')>0
+"            return '>4'
+        endif
+        return '='
+    endfunction
+    setlocal foldmethod=expr
+    setlocal foldexpr=BeancountFold(v:lnum)
+endfunction
+" }}}
+" }}}
 
 " Airline {{{
 set laststatus=2
@@ -291,24 +320,4 @@ endfunction
 
 autocmd User GoyoEnter call <SID>goyo_enter()
 autocmd User GoyoLeave call <SID>goyo_leave()
-" }}}
-
-" Custom org-mode like folding for beancount {{{
-autocmd FileType beancount call Beancount()
-autocmd FileType beancount SpeedDatingFormat %Y-%m-%d
-nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
-
-function! Beancount()
-    function! BeancountFold(lnum)
-        let l1 = getline(a:lnum)
-        if l1 =~ '^*'
-            return '>'.match(l1, '[^*]')
-"        elseif match(l1, '[!*]')>0
-"            return '>4'
-        endif
-        return '='
-    endfunction
-    setlocal foldmethod=expr
-    setlocal foldexpr=BeancountFold(v:lnum)
-endfunction
 " }}}
