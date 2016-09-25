@@ -17,3 +17,4 @@ export _Z_DATA="$XDG_CONFIG_HOME/zsh/z"
 export LESSHISTFILE="-"
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 export npm_config_cache="~/.cache/npm"
+export HGRCPATH=${XDG_CONFIG_HOME}/hgrc

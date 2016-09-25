@@ -36,7 +36,8 @@ source ~/.config/fresh/build/shell.sh
 export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# aliases
+# Aliases {{{
+# General {{{
 alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
@@ -56,8 +57,8 @@ alias r='ranger'
 alias svi='sudo -e'
 alias vi='nvim'
 alias sudo='sudo '
-
-# git
+# }}}
+# git {{{
 alias g='git '
 alias gb='git branch'
 alias gco='git commit'
@@ -70,15 +71,19 @@ alias gpl='git pull'
 alias gpu='git push'
 alias gs='git status'
 alias go='git checkout'
-
-# os specific things
+# }}}
+# macOS {{{
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias paci='brew install'
     alias pacu='brew update && brew upgrade --all && brew cleanup && brew cask cleanup'
     alias pacs='brew search'
     alias pacr='brew uninstall'
+    alias pipu='pip2 install -U -r ~/dev/dotfiles/python2-packages && pip3 install -U -r ~/dev/dotfiles/python3-packages'
     alias hugin='open /Applications/Hugin.app'
-elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+fi
+# }}}
+# Linux {{{
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias log='journalctl -r'
     alias sc='sudo systemctl'
     alias jc='journalctl'
@@ -96,3 +101,5 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacu='aura -Syu && aura -Akua'
     alias pacud='aura -Syu && aura -Akua --devel'
 fi
+# }}}
+# }}}
