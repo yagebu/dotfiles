@@ -36,6 +36,15 @@ source ~/.config/fresh/build/shell.sh
 export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+function pew-update() {
+    for venvname ('nvim' 'bw'); do
+        pew rm $venvname
+        pew new $venvname -d -r "~/dev/dotfiles/python/$venvname"
+    done
+    pew in bw pip install -e ~/dev/beancount
+    pew in bw pip install -e ~/dev/fava
+}
+
 # Aliases {{{
 # General {{{
 alias ....='cd ../../..'
@@ -75,11 +84,11 @@ alias go='git checkout'
 # macOS {{{
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias paci='brew install'
-    alias pacu='brew update && brew upgrade --all && brew cleanup && brew cask cleanup'
+    alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup'
     alias pacs='brew search'
     alias pacr='brew uninstall'
-    alias pipu='pip2 install -U -r ~/dev/dotfiles/python2-packages && pip3 install -U -r ~/dev/dotfiles/python3-packages'
-    alias hugin='open /Applications/Hugin.app'
+    alias pipu='pip2 install -U -r ~/dev/dotfiles/python/python2-packages && pip3 install -U -r ~/dev/dotfiles/python/python3-packages'
+    alias pewu='pew-update'
 fi
 # }}}
 # Linux {{{

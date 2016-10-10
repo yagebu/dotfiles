@@ -1,5 +1,4 @@
 " vim: set foldmethod=marker:
-
 " vanilla VIM compatibility {{{
 set nocompatible
 if !has('nvim')
@@ -23,8 +22,8 @@ if !has('nvim')
   endif
 endif
 " }}}
-
 " Plugins {{{
+" setup {{{
 let $VIMDOTDIR = expand('<sfile>:p:h')
 
 if empty(glob('$VIMDOTDIR/autoload/plug.vim'))
@@ -35,7 +34,7 @@ if empty(glob('$VIMDOTDIR/autoload/plug.vim'))
 endif
 
 call plug#begin("$XDG_DATA_HOME/nvim/plugged")
-
+" }}}
 Plug 'bling/vim-airline'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf'
@@ -63,7 +62,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'Valloric/YouCompleteMe'
-"
+
 " File type specific plugins
 Plug 'chrisbra/Colorizer'
 Plug 'hynek/vim-python-pep8-indent'
@@ -77,17 +76,13 @@ Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim'
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
 
-"Plug 'jceb/vim-orgmode'
-
 " Color schemes
 Plug 'altercation/vim-colors-solarized'
-"Plug 'chriskempson/base16-vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 
 call plug#end()
 " }}}
-
 " Basic settings {{{
 syntax enable
 set termguicolors
@@ -119,7 +114,6 @@ set gdefault       " apply substitutions globally by default
 
 set clipboard=unnamed
 " }}}
-
 " Key bindings {{{
 nnoremap <Space> za       " Space toggles folds
 vnoremap <Space> za
@@ -172,7 +166,6 @@ nnoremap <silent> coc
       \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
       \ :set conceallevel?<CR>
 " }}}
-
 " Misc {{{
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
@@ -190,10 +183,10 @@ let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_scss_checkers = ['sass_lint']
 
 let g:colorizer_auto_filetype='css,scss'
 " }}}
-
 " File types {{{
 " Javascript, CSS, SCSS {{{
 au FileType javascript setlocal sw=2 sts=2
@@ -283,20 +276,17 @@ function! Beancount()
 endfunction
 " }}}
 " }}}
-
 " Airline {{{
 set laststatus=2
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline#extensions#tabline#enabled = 1
 " }}}
-
 " Make ultisnips compatible with YouCompleteMe {{{
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " }}}
-
 " Make :q work in Goyo"{{{
 function! s:goyo_enter()
   Limelight

@@ -1,10 +1,12 @@
 #!/bin/bash
 
 # Backup all of /etc and /home except a few excluded directories
-/usr/local/bin/borg create --stats                   \
+/usr/local/bin/borg create -p --stats                \
     ks:backup/js-mba::`date +%Y-%m-%d`               \
     /Users/jakob                                     \
     --exclude /Users/jakob/.cache                    \
+    --exclude /Users/jakob/.local/share/nvim/plugged \
+    --exclude /Users/jakob/.local/share/virtualenvs  \
     --exclude /Users/jakob/.npm                      \
     --exclude /Users/jakob/.Trash                    \
     --exclude /Users/jakob/Google\ Drive             \
@@ -14,4 +16,7 @@
     --exclude /Users/jakob/Pictures                  \
     --exclude /Users/jakob/var                       \
     --exclude '*.DS_Store'                           \
+    --exclude '*__pycache__'                         \
+    --exclude '*.lrdata/*'                           \
     --exclude '*node_modules/*'                      \
+    --exclude '*.tox/*'                              \
