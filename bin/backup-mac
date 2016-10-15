@@ -5,6 +5,7 @@
     ks:backup/js-mba::`date +%Y-%m-%d`               \
     /Users/jakob                                     \
     --exclude /Users/jakob/.cache                    \
+    --exclude /Users/jakob/.electron                 \
     --exclude /Users/jakob/.local/share/nvim/plugged \
     --exclude /Users/jakob/.local/share/virtualenvs  \
     --exclude /Users/jakob/.npm                      \

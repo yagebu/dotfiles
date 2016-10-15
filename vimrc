@@ -55,8 +55,8 @@ Plug 'kopischke/vim-stay'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
+Plug 'neomake/neomake'
 Plug 'SirVer/ultisnips'
-Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
@@ -178,12 +178,7 @@ set viewoptions=cursor,folds,slash,unix
 
 let g:limelight_conceal_guifg = '#999999'
 
-let g:syntastic_check_on_open = 1
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_warning_symbol = "⚠"
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_scss_checkers = ['sass_lint']
+autocmd BufEnter,BufWritePost * Neomake
 
 let g:colorizer_auto_filetype='css,scss'
 " }}}
@@ -223,7 +218,6 @@ let g:ycm_semantic_triggers.tex = [
       \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
       \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
       \ ]
-let g:syntastic_tex_chktex_args = '-n3'
 
 let g:vimtex_fold_enabled = 1
 let g:vimtex_motion_matchparen = 0
