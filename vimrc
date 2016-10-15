@@ -61,20 +61,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " File type specific plugins
-Plug 'chrisbra/Colorizer'
-Plug 'hynek/vim-python-pep8-indent'
+Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
+Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja'
-Plug 'ledger/vim-ledger'
-Plug 'lervag/vimtex'
-Plug 'plasticboy/vim-markdown'
-"Plug 'JamshedVesuna/vim-markdown-preview'
-Plug 'shime/vim-livedown'
-Plug 'nathangrigg/vim-beancount'
-Plug 'rust-lang/rust.vim'
+Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'ledger/vim-ledger', { 'for': 'beancount' }
+Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript', 'do': 'npm install -g tern' }
 
 " Color schemes
 Plug 'altercation/vim-colors-solarized'
@@ -166,10 +165,21 @@ nnoremap <silent> coc
       \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
       \ :set conceallevel?<CR>
 " }}}
-" Misc {{{
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
+" Completion {{{
+let g:deoplete#enable_at_startup = 1
 
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+" }}}
+" Misc {{{
 let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
 let g:gutentags_exclude = ['/usr/local']
 "let g:gutentags_ctags_executable = 'ctags --python-kinds=-i'
@@ -181,6 +191,7 @@ let g:limelight_conceal_guifg = '#999999'
 autocmd BufEnter,BufWritePost * Neomake
 
 let g:colorizer_auto_filetype='css,scss'
+autocmd BufWritePost */dev/dotfiles/* silent !fresh > /dev/null
 " }}}
 " File types {{{
 " Javascript, CSS, SCSS {{{
@@ -205,19 +216,16 @@ au FileType tex setlocal norelativenumber
 let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
 let g:tex_flavor='latex'               " Better syntax hightlighting
 
-if !exists('g:ycm_semantic_triggers')
-  let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers.tex = [
-      \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
-      \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
-      \ 're!\\hyperref\[[^]]*',
-      \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
-      \ 're!\\(include(only)?|input){[^}]*',
-      \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
-      \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
-      \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
-      \ ]
+let g:deoplete#omni#input_patterns.tex = '\\(?:'
+      \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+      \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
+      \ . '|hyperref\s*\[[^]]*'
+      \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+      \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
+      \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+      \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
+      \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
+      \ .')'
 
 let g:vimtex_fold_enabled = 1
 let g:vimtex_motion_matchparen = 0
@@ -250,10 +258,12 @@ augroup vimtex_config
     au User VimtexEventInitPost VimtexCompile
 augroup END
 " }}}
-" Beancount (custom org-mode folding) {{{
+" Beancount (with custom org-mode folding) {{{
 autocmd FileType beancount call Beancount()
 autocmd FileType beancount SpeedDatingFormat %Y-%m-%d
 nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
+
+let g:deoplete#omni#input_patterns.beancount = '^\s+\w*|#\w*|"\w*'
 
 function! Beancount()
     function! BeancountFold(lnum)
@@ -275,11 +285,6 @@ set laststatus=2
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline#extensions#tabline#enabled = 1
-" }}}
-" Make ultisnips compatible with YouCompleteMe {{{
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " }}}
 " Make :q work in Goyo"{{{
 function! s:goyo_enter()
