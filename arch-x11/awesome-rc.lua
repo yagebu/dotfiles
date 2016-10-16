@@ -13,7 +13,7 @@ awful.rules     = require("awful.rules")
 local wibox     = require("wibox")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
-local drop      = require("scratchdrop")
+--local drop      = require("scratchdrop")
 local lain      = require("lain")
 -- }}}
 
@@ -59,13 +59,13 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/multicolor/theme.lu
 -- common
 modkey     = "Mod4"
 altkey     = "Mod1"
-terminal   = "st -f \"Source Code Pro:size=12\"" or "urxvt"
+terminal   = "st -f \"Source Code Pro:size=11\"" or "urxvt"
 editor     = os.getenv("EDITOR") or "nano" or "vi"
 editor_cmd = terminal .. " -e " .. editor
 
 -- user defined
 browser    = "chromium"
-mail       = "thunderbird"
+mail       = terminal .. " -e mutt"
 
 local layouts = {
     awful.layout.suit.floating,
@@ -402,7 +402,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "q",      awesome.quit),
 
     -- Dropdown terminal
-    awful.key({ modkey,	          }, "z",      function () drop(terminal) end),
+    --awful.key({ modkey,	          }, "z",      function () drop(terminal) end),
 
     -- Widgets popups
     --awful.key({ altkey,           }, "c",      function () lain.widgets.calendar:show(7) end),
