@@ -1,34 +1,9 @@
 " vim: set foldmethod=marker:
-" vanilla VIM compatibility {{{
-set nocompatible
-if !has('nvim')
-  let $VIMDOTDIR = expand('<sfile>:p:h')
-  set backspace=2
-  " Filesystem paths
-  "let $MYVIMRC = expand('<sfile>:p')
-  let &runtimepath .= "," . $VIMDOTDIR
-
-  " Backups and swap files
-  set directory=$XDG_DATA_HOME/nvim/swap//
-  set undodir=$XDG_DATA_HOME/nvim/undo
-  set viewdir=$XDG_DATA_HOME/nvim/view
-
-  " Appropriate path for viminfo
-  let $VIMINFO = $XDG_DATA_HOME . "/nvim/viminfo"
-  let &viminfo = "f1,'1000,:1000,/1000,<1000,s100,h,n" . $VIMINFO
-
-  if !isdirectory(&undodir)
-    call mkdir(&undodir, "p")
-  endif
-endif
-" }}}
 " Plugins {{{
 " setup {{{
-let $VIMDOTDIR = expand('<sfile>:p:h')
-
-if empty(glob('$VIMDOTDIR/autoload/plug.vim'))
+if empty(glob('$XDG_CONFIG_HOME/nvim/autoload/plug.vim'))
   silent !echo "Installing vim-plug..."
-  silent !curl -fLo $VIMDOTDIR/autoload/plug.vim --create-dirs
+  silent !curl -fLo $XDG_CONFIG_HOME/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
@@ -76,14 +51,12 @@ Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript', 'do': 'npm install -g tern' }
 
 " Color schemes
-Plug 'altercation/vim-colors-solarized'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 
 call plug#end()
 " }}}
 " Basic settings {{{
-syntax enable
 set termguicolors
 colorscheme gruvbox
 set background=dark
@@ -97,7 +70,6 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 
-set autoindent
 set relativenumber
 set number
 set undofile
@@ -129,6 +101,18 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
+" Quickfix
+nnoremap ]q :cnext<cr>zz
+nnoremap [q :cprev<cr>zz
+nnoremap ]l :lnext<cr>zz
+nnoremap [l :lprev<cr>zz
+" Buffers
+nnoremap ]b :bnext<cr>
+nnoremap [b :bprev<cr>
+" Tabs
+nnoremap ]t :tabn<cr>
+nnoremap [t :tabp<cr>
+
 " Save one keystroke for commmands
 inoremap jk <ESC>
 
@@ -137,23 +121,20 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-if has('nvim')
-    nmap <BS> <C-W>h
-    " Terminal mappings
-    tnoremap <C-h> <C-\><C-n><C-w>h
-    tnoremap <C-j> <C-\><C-n><C-w>j
-    tnoremap <C-k> <C-\><C-n><C-w>k
-    tnoremap <C-l> <C-\><C-n><C-w>l
-    tnoremap <Esc> <C-\><C-n>
-endif
 
-map <tab> %
+nmap <BS> <C-W>h
+" Terminal mappings
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <Esc> <C-\><C-n>
+
 nnoremap <silent> <leader><space> :nohlsearch<cr>
 nnoremap <silent> U :UndotreeToggle<cr>
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader><Enter>  :Buffers<cr>
 nnoremap <silent> <leader>a  :Ag<cr>
-nnoremap <silent> <leader>c  :Colors<cr>
 nnoremap <silent> <leader>g  :Goyo<cr>
 nnoremap <silent> <leader>h  :Helptags<cr>
 nnoremap <silent> <F8> :TagbarToggle<cr>
@@ -167,6 +148,7 @@ nnoremap <silent> coc
 " }}}
 " Completion {{{
 let g:deoplete#enable_at_startup = 1
+autocmd CompleteDone * pclose!
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
