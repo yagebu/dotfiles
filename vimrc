@@ -181,10 +181,6 @@ au FileType javascript setlocal sw=2 sts=2
 au FileType css setlocal sw=2 sts=2
 au FileType scss setlocal sw=2 sts=2
 " }}}
-" Python {{{
-au FileType python setlocal formatprg=autopep8\ -
-let g:pymode_rope=0
-" }}}
 " Markdown {{{
 au FileType markdown nmap gm :LivedownToggle<CR>
 let g:vim_markdown_folding_style_pythonic = 1
