@@ -1,5 +1,12 @@
+autopep8
+beancount
+flake8
 keyring
 neovim
 neovim-remote
 pew
+pyinstaller
+pylint
+pytest
+sphinx
 tox
