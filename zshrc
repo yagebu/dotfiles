@@ -37,7 +37,7 @@ export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 function pew-update() {
-    for venvname ('nvim' 'bw'); do
+    for venvname ('bw'); do
         pew rm $venvname
         pew new $venvname -d -r "~/dev/dotfiles/python/$venvname"
     done
@@ -87,8 +87,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup && vi +PlugUpgrade +PlugUpdate +qa'
     alias pacs='brew search'
     alias pacr='brew uninstall'
-    alias pipu='pip2 install -U -r ~/dev/dotfiles/python/python2-packages && pip3 install -U -r ~/dev/dotfiles/python/python3-packages'
-    alias pewu='pew-update'
+    alias pipu='pip2 install -U -r ~/dev/dotfiles/python/python2-packages && pip3 install -U -r ~/dev/dotfiles/python/python3-packages && pew-update'
 fi
 # }}}
 # Linux {{{

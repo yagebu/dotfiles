@@ -1,4 +1,10 @@
 " vim: set foldmethod=marker:
+" Directories {{{
+set backupdir-=.
+if !isdirectory(&backupdir)
+  call mkdir(&backupdir, "p")
+endif
+" }}}
 " Plugins {{{
 " setup {{{
 if empty(glob('$XDG_CONFIG_HOME/nvim/autoload/plug.vim'))
@@ -25,6 +31,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
+Plug 'jreybert/vimagit'
 Plug 'Konfekt/FastFold'
 Plug 'kopischke/vim-stay'
 Plug 'ludovicchabant/vim-gutentags'
@@ -41,6 +48,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " File type specific plugins
 Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja'
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -82,12 +90,14 @@ set incsearch      " increment search
 set ignorecase     " case-insensitive search
 set smartcase      " uppercase causes case-sensitive search
 set gdefault       " apply substitutions globally by default
+set inccommand=nosplit
 
 set clipboard=unnamed
 " }}}
 " Key bindings {{{
 nnoremap <Space> za       " Space toggles folds
 vnoremap <Space> za
+noremap <tab> %
 
 " Save and quit
 inoremap <C-s> <C-O>:update<cr>
@@ -148,6 +158,7 @@ nnoremap <silent> coc
 " }}}
 " Completion {{{
 let g:deoplete#enable_at_startup = 1
+inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
 autocmd CompleteDone * pclose!
 
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -177,7 +188,7 @@ autocmd BufWritePost */dev/dotfiles/* silent !fresh > /dev/null
 " }}}
 " File types {{{
 " Javascript, CSS, SCSS {{{
-au FileType javascript setlocal sw=2 sts=2
+au FileType javascript setlocal sw=2 sts=2 fdm=syntax
 au FileType css setlocal sw=2 sts=2
 au FileType scss setlocal sw=2 sts=2
 " }}}
@@ -241,15 +252,15 @@ autocmd FileType beancount call Beancount()
 autocmd FileType beancount SpeedDatingFormat %Y-%m-%d
 nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
 
-let g:deoplete#omni#input_patterns.beancount = '^\s+\w*|#\w*|"\w*'
+"call deoplete#enable_logging('INFO', '/Users/jakob/deoplete')
+" let g:deoplete#omni#input_patterns.beancount = '^\s+.*|#\S*|"[^"]*'
+autocmd FileType beancount inoremap . .<C-O>:AlignCommodity<CR>
 
 function! Beancount()
     function! BeancountFold(lnum)
         let l1 = getline(a:lnum)
         if l1 =~ '^*'
             return '>'.match(l1, '[^*]')
-"        elseif match(l1, '[!*]')>0
-"            return '>4'
         endif
         return '='
     endfunction
