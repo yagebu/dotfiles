@@ -1,5 +1,7 @@
 #!/bin/bash
 
+/Users/jakob/bin/cleanup
+
 # Backup all of /etc and /home except a few excluded directories
 /usr/local/bin/borg create -p --stats                \
     ks:backup/js-mba::`date +%Y-%m-%d`               \

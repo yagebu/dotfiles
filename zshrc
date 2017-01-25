@@ -37,10 +37,8 @@ export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 function pew-update() {
-    for venvname ('bw'); do
-        pew rm $venvname
-        pew new $venvname -d -r "~/dev/dotfiles/python/$venvname"
-    done
+    pew rm bw
+    pew new bw -d
     pew in bw pip install -e ~/dev/beancount
     pew in bw pip install -e ~/dev/fava
 }
@@ -78,6 +76,7 @@ alias gl='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%an]" --
 alias glo='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%an]" --graph'
 alias gpl='git pull'
 alias gpu='git push'
+alias gre='git rebase -i'
 alias gs='git status'
 alias go='git checkout'
 # }}}

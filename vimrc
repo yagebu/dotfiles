@@ -198,7 +198,7 @@ let g:vim_markdown_folding_style_pythonic = 1
 " }}}
 " Mail {{{
 au FileType mail setlocal fo+=aw
-au FileType mail Goyo
+"au FileType mail Goyo
 " }}}
 " Latex {{{
 au FileType tex setlocal norelativenumber

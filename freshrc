@@ -17,13 +17,14 @@ fresh-options
 # vim
 fresh vimrc --file=~/.config/nvim/init.vim
 
+fresh bin/cleanup --bin
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
 fresh bin/backup-mac --bin=~/bin/backup
 
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
 fresh bin/backup-arch --bin=~/bin/backup
 fresh bin/backup-external --bin
-fresh bin/cleanup --bin
 fresh bin/pacman-disowned --bin
 
 fresh arch-x11/compton.conf --file=~/.config/compton.conf

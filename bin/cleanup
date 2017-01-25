@@ -1,4 +1,4 @@
-echo -e "\e[1;34m::\e[0m Deleting unneeded files..."
+echo "Deleting unneeded files..."
 rm -rf ~/.adobe
 rm -f ~/.bzr.log
 rm -rf ~/.cache/chromium
@@ -16,11 +16,12 @@ rm -rf ~/.mozilla
 rm -rf ~/.muttator
 rm -rf ~/.mpv
 rm -rf ~/.pki
+rm -rf ~/.pylint.d
 rm -f ~/.nviminfo ~/.nvimlog ~/.xsession-errors ~/.esd_auth ~/ICEauthoriy
 rm -rf ~/.local/share/gvfs-metadata
 rm -rf ~/.local/share/loliclip
 rm -rf ~/.local/share/recently-used.xbel
 rm -rf ~/.thumbnails
 rm -rf ~/.w3m
-
-echo -e "\e[1;34m::\e[0m Done."
+rm -rf ~/.tox
+echo "Done."
