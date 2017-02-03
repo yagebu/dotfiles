@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo cp arch/sway-kb /usr/bin/sway-kb
+sudo cp arch/sway-kb.desktop /usr/share/wayland-sessions/sway-kb.desktop

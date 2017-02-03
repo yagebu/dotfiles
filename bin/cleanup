@@ -8,6 +8,7 @@ rm -rf ~/.config/chromium/Default/IndexedDB/http*
 rm -rf ~/.config/chromium/Default/databases/http*
 rm -rf ~/.config/libreoffice
 rm -rf ~/.config/pulse
+rm -rf ~/.electron
 rm -rf ~/.filebot
 rm -rf ~/.java
 rm -rf ~/.kde4

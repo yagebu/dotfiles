@@ -1,0 +1,8 @@
+#!/bin/sh
+export XKB_DEFAULT_LAYOUT=us
+export XKB_DEFAULT_VARIANT=altgr-intl
+export XKB_DEFAULT_MODEL=pc105
+export XKB_DEFAULT_OPTIONS=ctrl:nocaps
+export WLC_REPEAT_RATE=60
+export WLC_REPEAT_DELAY=350
+sway

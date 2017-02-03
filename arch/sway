@@ -39,6 +39,8 @@ output * bg /usr/share/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 # Read `man 5 sway-input` for more information about this section.
 
 input "2:14:ETPS/2_Elantech_Touchpad" {
+    accel_profile adaptive
+    pointer_accel 1
     dwt enabled
     tap enabled
 }
