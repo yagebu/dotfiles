@@ -191,6 +191,8 @@ autocmd BufWritePost */dev/dotfiles/* silent !fresh > /dev/null
 au FileType javascript setlocal sw=2 sts=2 fdm=syntax
 au FileType css setlocal sw=2 sts=2
 au FileType scss setlocal sw=2 sts=2
+au FileType html setlocal sw=2 sts=2
+au FileType htmljinja setlocal sw=2 sts=2
 " }}}
 " Markdown {{{
 au FileType markdown nmap gm :LivedownToggle<CR>
