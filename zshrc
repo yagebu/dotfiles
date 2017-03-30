@@ -1,22 +1,22 @@
 if [[ "$OSTYPE" == "darwin"* ]]; then
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-export LANG=en_US.UTF-8
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+    export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+    export LANG=en_US.UTF-8
 fi
 
 # initialise colors
 autoload -U colors
 colors
 
-eval $(dircolors ~/.config/zsh/dircolors)
+eval "$(dircolors ~/.config/zsh/dircolors)"
 
 setopt PROMPT_SUBST
 
 PROMPT='%n@%m %{$fg[green]%}%~>%{$reset_color%} '
 
 if [ -n "$VIRTUAL_ENV" ]; then
-    PREFIX=$(basename $VIRTUAL_ENV)
+    PREFIX=$(basename "$VIRTUAL_ENV")
     PROMPT="%F{blue}(🐍 $PREFIX)%f $PROMPT"
 fi
 
@@ -24,8 +24,7 @@ fi
 setopt hist_ignore_all_dups
 
 # load private config
-if [ -f ~/Documents/.config/localrc ]
-then
+if [ -f ~/Documents/.config/localrc ]; then
     source ~/Documents/.config/localrc
 fi
 
@@ -35,13 +34,6 @@ source ~/.config/fresh/build/shell.sh
 # use ag for fzf and ignore Library path on OS X
 export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-function pew-update() {
-    pew rm bw
-    pew new bw -d
-    pew in bw pip install -e ~/dev/beancount
-    pew in bw pip install -e ~/dev/fava
-}
 
 # Aliases {{{
 # General {{{
@@ -62,6 +54,7 @@ alias la='ls -lha'
 alias m='mutt -F ~/.config/mutt/muttrc'
 alias r='ranger'
 alias svi='sudo -e'
+alias ta='tmux attach'
 alias vi='nvim'
 alias sudo='sudo '
 # }}}
@@ -71,12 +64,14 @@ alias gb='git branch'
 alias gco='git commit'
 alias gd='git diff'
 alias gf='git fetch'
+alias gfu='git commit -a --fixup=HEAD'
 alias gdw='git diff --color-words'
 alias gl='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%an]" --graph -20'
 alias glo='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%an]" --graph'
 alias gpl='git pull'
 alias gpu='git push'
-alias gre='git rebase -i'
+alias gr='git rebase'
+alias gri='git rebase -i'
 alias gs='git status'
 alias go='git checkout'
 # }}}
@@ -86,7 +81,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup && vi +PlugUpgrade +PlugUpdate +qa'
     alias pacs='brew search'
     alias pacr='brew uninstall'
-    alias pipu='pip2 install -U -r ~/dev/dotfiles/python/python2-packages && pip3 install -U -r ~/dev/dotfiles/python/python3-packages && pew-update'
+
+    function pipu() {
+        pip2 install -U -r ~/dev/dotfiles/python/python2-packages
+        pip3 install -U -r ~/dev/dotfiles/python/python3-packages
+        pip3 install -e ~/dev/beancount
+        pip3 install -e ~/dev/fava
+    }
 fi
 # }}}
 # Linux {{{
@@ -103,7 +104,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias paca='aura -A'
     alias pacr='aura -Rs'
     function pacs() {
-        aura -Ss $1; aura -As $1
+        aura -Ss "$1"; aura -As "$1"
     }
     alias pacu='aura -Syu && aura -Akua'
     alias pacud='aura -Syu && aura -Akua --devel'

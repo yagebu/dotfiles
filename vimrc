@@ -24,6 +24,7 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-oblique'
@@ -37,7 +38,7 @@ Plug 'kopischke/vim-stay'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -53,7 +54,7 @@ Plug 'mitsuhiko/vim-jinja'
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
-Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
+Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript', 'do': 'npm install -g tern' }
@@ -73,7 +74,7 @@ let g:python_host_skip_check = 1
 let g:python3_host_skip_check = 1
 
 " Do not use tabs and use 4 spaces for indentation
-set shiftwidth=4
+set shiftwidth=18446744073709551620
 set tabstop=4
 set softtabstop=4
 set expandtab
@@ -93,6 +94,8 @@ set gdefault       " apply substitutions globally by default
 set inccommand=nosplit
 
 set clipboard=unnamed
+
+"au TermOpen * setlocal scrollback=100000
 " }}}
 " Key bindings {{{
 nnoremap <Space> za       " Space toggles folds
@@ -174,14 +177,18 @@ endif
 " }}}
 " Misc {{{
 let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
-let g:gutentags_exclude = ['/usr/local']
+let g:gutentags_ctags_exclude = ['/usr/local']
 "let g:gutentags_ctags_executable = 'ctags --python-kinds=-i'
 
 set viewoptions=cursor,folds,slash,unix
 
 let g:limelight_conceal_guifg = '#999999'
 
-autocmd BufEnter,BufWritePost * Neomake
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_sign_error = '⨉'
+let g:ale_sign_warning = '⚠'
+let g:ale_sign_column_always = 1
 
 let g:colorizer_auto_filetype='css,scss'
 autocmd BufWritePost */dev/dotfiles/* silent !fresh > /dev/null
@@ -193,6 +200,10 @@ au FileType css setlocal sw=2 sts=2
 au FileType scss setlocal sw=2 sts=2
 au FileType html setlocal sw=2 sts=2
 au FileType htmljinja setlocal sw=2 sts=2
+" }}}
+" C, Lua {{{
+au FileType c setlocal sw=2 sts=2
+au FileType lua setlocal sw=2 sts=2
 " }}}
 " Markdown {{{
 au FileType markdown nmap gm :LivedownToggle<CR>
@@ -256,7 +267,7 @@ nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
 
 "call deoplete#enable_logging('INFO', '/Users/jakob/deoplete')
 " let g:deoplete#omni#input_patterns.beancount = '^\s+.*|#\S*|"[^"]*'
-autocmd FileType beancount inoremap . .<C-O>:AlignCommodity<CR>
+autocmd FileType beancount inoremap . .<C-\><C-O>:AlignCommodity<CR>
 
 function! Beancount()
     function! BeancountFold(lnum)
@@ -277,7 +288,7 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline#extensions#tabline#enabled = 1
 " }}}
-" Make :q work in Goyo"{{{
+" Make :q work in Goyo {{{
 function! s:goyo_enter()
   Limelight
   let b:quitting = 0
@@ -301,3 +312,35 @@ endfunction
 autocmd User GoyoEnter call <SID>goyo_enter()
 autocmd User GoyoLeave call <SID>goyo_leave()
 " }}}
+" Terminal colors {{{
+" dark0 + gray
+let g:terminal_color_0 = "#282828"
+let g:terminal_color_8 = "#928374"
+
+" neurtral_red + bright_red
+let g:terminal_color_1 = "#cc241d"
+let g:terminal_color_9 = "#fb4934"
+
+" neutral_green + bright_green
+let g:terminal_color_2 = "#98971a"
+let g:terminal_color_10 = "#b8bb26"
+
+" neutral_yellow + bright_yellow
+let g:terminal_color_3 = "#d79921"
+let g:terminal_color_11 = "#fabd2f"
+
+" neutral_blue + bright_blue
+let g:terminal_color_4 = "#458588"
+let g:terminal_color_12 = "#83a598"
+
+" neutral_purple + bright_purple
+let g:terminal_color_5 = "#b16286"
+let g:terminal_color_13 = "#d3869b"
+
+" neutral_aqua + faded_aqua
+let g:terminal_color_6 = "#689d6a"
+let g:terminal_color_14 = "#8ec07c"
+
+" light4 + light1
+let g:terminal_color_7 = "#a89984"
+let g:terminal_color_15 = "#ebdbb2"
