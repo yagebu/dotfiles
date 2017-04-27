@@ -28,9 +28,6 @@ if [ -f ~/Documents/.config/localrc ]; then
     source ~/Documents/.config/localrc
 fi
 
-# load some vars for fresh
-source ~/.config/fresh/build/shell.sh
-
 # use ag for fzf and ignore Library path on OS X
 export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -57,6 +54,7 @@ alias svi='sudo -e'
 alias ta='tmux attach'
 alias vi='nvim'
 alias sudo='sudo '
+alias backup-raw='borg create -vp ks:backup/raw::`date +%Y-%m-%d` ~/var/RAW ~/var/panoramas'
 # }}}
 # git {{{
 alias g='git '

@@ -1,18 +1,12 @@
-## These dotfiles are managed using fresh
-
-These dotfiles put most files in `.config` so that the home directory is nice
-and clean. following should be added to /etc/zsh/zshenv so that zsh finds its
-config. The environment for most other programs are the set in
-~.config/zsh/.zshenv.
+These dotfiles put most files in `~/.config` so that the home directory is nice
+and clean. The following should be added to `/etc/zsh/zshenv` so that zsh finds
+its config.
 
     export ZDOTDIR="$HOME/.config/zsh/"
 
-Since the install script that fresh provides doesn't properly work with keeping
-everything in ~/.config/ a manual installation is necessary.
-
-    git clone https://github.com/yagebu/dotfiles.git ~/dev/dotfiles
-    git clone https://github.com/freshshell/fresh.git ~/.config/fresh/source/freshshell/fresh
-    FRESH_RCFILE=~/dev/dotfiles/freshrc FRESH_PATH=~/.config/fresh ~/.config/fresh/source/freshshell/fresh/bin/fresh
+To install the files, run `./install download` (which dowloads some
+dependencies from Github). On changes, run `install` to copy over the changes
+files.
 
 ## Desktop Environment
 

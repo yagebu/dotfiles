@@ -51,7 +51,7 @@ Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja'
-Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+Plug 'lervag/vimtex'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'nathangrigg/vim-beancount'
@@ -191,7 +191,7 @@ let g:ale_sign_warning = '⚠'
 let g:ale_sign_column_always = 1
 
 let g:colorizer_auto_filetype='css,scss'
-autocmd BufWritePost */dev/dotfiles/* silent !fresh > /dev/null
+autocmd BufWritePost */dev/dotfiles/* silent !~/dev/dotfiles/install > /dev/null
 " }}}
 " File types {{{
 " Javascript, CSS, SCSS {{{
@@ -215,7 +215,9 @@ au FileType mail setlocal fo+=aw
 " }}}
 " Latex {{{
 au FileType tex setlocal norelativenumber
-let g:vimtex_latexmk_build_dir=expand("$HOME/.cache/latex-build")
+let g:vimtex_compiler_latexmk = {
+      \ 'build_dir': expand("$HOME/.cache/latex-build"),
+      \ }
 let g:tex_flavor='latex'               " Better syntax hightlighting
 
 let g:deoplete#omni#input_patterns.tex = '\\(?:'
@@ -230,13 +232,14 @@ let g:deoplete#omni#input_patterns.tex = '\\(?:'
       \ .')'
 
 let g:vimtex_fold_enabled = 1
-let g:vimtex_motion_matchparen = 0
-let g:vimtex_latexmk_progname = 'nvr'
+let g:vimtex_motion_enabled = 1
+let g:vimtex_matchparen_enabled = 0
 
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '@line @pdf @tex'
 
-let g:vimtex_latexmk_callback_hooks = ['UpdateSkim']
+let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_compiler_callback_hooks = ['UpdateSkim']
 function! UpdateSkim(status)
   if !a:status | return | endif
 
