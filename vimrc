@@ -57,7 +57,13 @@ Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript', 'do': 'npm install -g tern' }
+function InstallTern()
+    let s:uname = system('uname -s')
+    if s:uname == 'Darwin'
+        system('npm install -g tern')
+    endif
+endfunction
+Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript', 'do': function('InstallTern') }
 
 " Color schemes
 Plug 'junegunn/seoul256.vim'

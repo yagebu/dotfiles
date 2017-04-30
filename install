@@ -32,6 +32,9 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     cp arch/sway ~/.config/sway/config
     cp arch/i3status ~/.config/i3status/config
 
-    sudo cp arch/sway-kb /usr/bin/sway-kb
-    sudo cp arch/sway-kb.desktop /usr/share/wayland-sessions/sway-kb.desktop
+
+    if [[ $1 == "sudo" ]]; then
+        sudo cp arch/sway-kb /usr/bin/sway-kb
+        sudo cp arch/sway-kb.desktop /usr/share/wayland-sessions/sway-kb.desktop
+    fi
 fi
