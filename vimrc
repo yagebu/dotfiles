@@ -57,6 +57,7 @@ Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'tweekmonster/nvimdev.nvim'
 function InstallTern()
     let s:uname = system('uname -s')
     if s:uname == 'Darwin'
@@ -76,6 +77,7 @@ set termguicolors
 colorscheme gruvbox
 set background=dark
 
+set gcr=
 let g:python_host_skip_check = 1
 let g:python3_host_skip_check = 1
 
