@@ -1,5 +1,7 @@
+export PATH="$HOME/bin:$PATH"
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH="$HOME/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     export HOMEBREW_CASK_OPTS="--appdir=/Applications"
     export LANG=en_US.UTF-8
