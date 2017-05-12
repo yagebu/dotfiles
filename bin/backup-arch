@@ -26,5 +26,7 @@ borg create --stats                                 \
     --exclude /home/jakob/Movies                    \
     --exclude /home/jakob/Music                     \
     --exclude /home/jakob/Pictures                  \
-    --exclude /home/jakob/VMs                       \
+    --exclude /home/jakob/var                       \
+    --exclude '*__pycache__'                        \
+    --exclude '*node_modules/*'                     \
     --exclude '*.pyc'
