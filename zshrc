@@ -56,7 +56,6 @@ alias svi='sudo -e'
 alias ta='tmux attach'
 alias vi='nvim'
 alias sudo='sudo '
-alias backup-raw='borg create -vp ks:backup/raw::`date +%Y-%m-%d` ~/var/RAW ~/var/panoramas'
 # }}}
 # git {{{
 alias g='git '

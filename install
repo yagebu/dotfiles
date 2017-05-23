@@ -18,6 +18,7 @@ cp zshenv ~/.config/zsh/.zshenv
 cat deps/completion deps/fzf-keys deps/fzf-completion deps/z zshrc > ~/.config/zsh/.zshrc
 
 cp bin/cleanup ~/bin/cleanup
+cp bin/bak ~/bin/bak
 cp vimrc ~/.config/nvim/init.vim
 
 if [[ "$OSTYPE" == "darwin"* ]]; then

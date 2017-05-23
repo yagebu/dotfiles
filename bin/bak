@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ $1 == "raw" ]]; then
+    borg create -vp ks:backup/raw::`date +%Y-%m-%d` ~/var/RAW ~/var/panoramas
+fi
+
+if [[ $1 == "vm" ]]; then
+    borg create -vp ks:backup/vm::`date +%Y-%m-%d` -C zlib ~/var/VMs
+fi
