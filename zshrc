@@ -107,6 +107,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     }
     alias pacu='aura -Syu && aura -Akua'
     alias pacud='aura -Syu && aura -Akua --devel'
+
+    function pipu() {
+        pip install --user -e ~/dev/beancount
+        pip install --user -e ~/dev/fava
+    }
 fi
 # }}}
 # }}}
