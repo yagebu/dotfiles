@@ -11,16 +11,20 @@ rm -rf ~/.config/libreoffice
 rm -rf ~/.config/pulse
 rm -rf ~/.electron
 rm -rf ~/.filebot
+rm -rf ~/.gem
+rm -rf ~/.gnome2
 rm -rf ~/Documents/Adobe
+rm -rf ~/.idlerc
 rm -rf ~/.java
 rm -rf ~/.kde4
 rm -rf ~/.macromedia
 rm -rf ~/.mozilla
 rm -rf ~/.muttator
 rm -rf ~/.mpv
+rm -rf ~/.node-gyp
 rm -rf ~/.pki
 rm -rf ~/.pylint.d
-rm -f ~/.nviminfo ~/.nvimlog ~/.xsession-errors ~/.esd_auth ~/ICEauthoriy
+rm -f ~/.viminfo ~/.nviminfo ~/.nvimlog ~/.xsession-errors ~/.esd_auth ~/ICEauthoriy
 rm -rf ~/.local/share/gvfs-metadata
 rm -rf ~/.local/share/loliclip
 rm -rf ~/.local/share/recently-used.xbel

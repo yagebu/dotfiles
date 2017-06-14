@@ -9,6 +9,18 @@ if [[ $1 == "vm" ]]; then
 fi
 
 if [[ $1 == "prune" ]]; then
-    # keep 2 VM backups
-    borg prune --list -v -H2 ks:backup/vm
+    # Keep 2 VM backups
+    borg prune -v --list --prefix 20 -H2 ks:backup/vm
+
+    # Keep 100 daily backups and unlimited weekly ones.
+    # The prefix ensures that only the usual daily backups are pruned.
+    borg prune -v --list --prefix 20 -d100 -w-1 ks:backup/js-arch
+    borg prune -v --list --prefix 20 -d100 -w-1 ks:backup/js-mba
+fi
+
+if [[ $1 == "check" ]]; then
+    borg check -v ks:backup/js-arch
+    borg check -v ks:backup/js-mba
+    borg check -v ks:backup/vm
+    borg check -v ks:backup/raw
 fi
