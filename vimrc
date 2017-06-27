@@ -7,9 +7,9 @@ endif
 " }}}
 " Plugins {{{
 " setup {{{
-if empty(glob('$XDG_CONFIG_HOME/nvim/autoload/plug.vim'))
+if empty(glob('$XDG_DATA_HOME/nvim/site/autoload/plug.vim'))
   silent !echo "Installing vim-plug..."
-  silent !curl -fLo $XDG_CONFIG_HOME/nvim/autoload/plug.vim --create-dirs
+  silent !curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
@@ -57,7 +57,7 @@ Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'tweekmonster/nvimdev.nvim'
+"Plug 'tweekmonster/nvimdev.nvim'
 function InstallTern()
     let s:uname = system('uname -s')
     if s:uname == 'Darwin'
@@ -83,7 +83,7 @@ let g:python3_host_skip_check = 1
 set shm+=F
 
 " Do not use tabs and use 4 spaces for indentation
-set shiftwidth=18446744073709551620
+set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set expandtab

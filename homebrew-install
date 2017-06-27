@@ -1,0 +1,41 @@
+#!/bin/bash
+
+brew install --HEAD cmus
+brew install --HEAD universal-ctags
+
+brew install \
+    borgbackup \
+    colordiff \
+    coreutils \
+    curl \
+    exiftool \
+    findutils \
+    fzf \
+    git \
+    gnupg \
+    gnutls \
+    imagemagick \
+    isync \
+    khal \
+    mercurial \
+    mpv \
+    msmtp \
+    mutt \
+    neovim \
+    node \
+    ntfs-3g \
+    openssh \
+    perl \
+    python \
+    python3 \
+    ranger \
+    ripgrep \
+    rsync \
+    shellcheck \
+    sshfs \
+    syncthing \
+    the_silver_searcher \
+    tmux \
+    tree \
+    urlview \
+    wget \
