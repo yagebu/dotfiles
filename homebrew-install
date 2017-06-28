@@ -22,6 +22,7 @@ brew install \
     msmtp \
     mutt \
     neovim \
+    ninja \
     node \
     ntfs-3g \
     openssh \
