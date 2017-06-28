@@ -16,8 +16,8 @@ endif
 
 call plug#begin("$XDG_DATA_HOME/nvim/plugged")
 " }}}
-Plug 'bling/vim-airline'
-Plug 'honza/vim-snippets'
+Plug 'itchyny/lightline.vim'
+"Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
@@ -39,7 +39,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'w0rp/ale'
-Plug 'SirVer/ultisnips'
+"Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
@@ -50,8 +50,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-Plug 'mitsuhiko/vim-jinja'
-Plug 'lervag/vimtex'
+Plug 'mitsuhiko/vim-jinja', { 'for': ['html', 'htmljinja'] }
+Plug 'lervag/vimtex', { 'for': 'latex' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'nathangrigg/vim-beancount'
@@ -88,7 +88,7 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 
-set relativenumber
+"set relativenumber
 set number
 set undofile
 
@@ -170,7 +170,9 @@ nnoremap <silent> coc
 " }}}
 " Completion {{{
 let g:deoplete#enable_at_startup = 1
-inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
+"let g:deoplete#enable_at_startup = 0
+"autocmd InsertEnter * call deoplete#enable()
+"inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
 autocmd CompleteDone * pclose!
 
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -274,11 +276,18 @@ function! Beancount()
 endfunction
 " }}}
 " }}}
-" Airline {{{
+" Lightline {{{
 set laststatus=2
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-let g:airline#extensions#tabline#enabled = 1
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+	  \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+	  \             [ 'readonly', 'filename', 'modified', 'gitbranch' ] ],
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 " }}}
 " Make :q work in Goyo {{{
 function! s:goyo_enter()
