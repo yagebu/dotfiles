@@ -50,8 +50,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-Plug 'mitsuhiko/vim-jinja', { 'for': ['html', 'htmljinja'] }
-Plug 'lervag/vimtex', { 'for': 'latex' }
+Plug 'mitsuhiko/vim-jinja'
+Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'nathangrigg/vim-beancount'

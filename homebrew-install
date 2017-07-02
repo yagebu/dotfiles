@@ -1,6 +1,7 @@
 #!/bin/bash
 
-brew install --HEAD cmus
+brew install --HEAD --with-opusfile cmus
+brew install --with-bundle mpv
 brew install --HEAD universal-ctags
 
 brew install \
@@ -17,8 +18,8 @@ brew install \
     imagemagick \
     isync \
     khal \
+    lynx \
     mercurial \
-    mpv \
     msmtp \
     mutt \
     neovim \

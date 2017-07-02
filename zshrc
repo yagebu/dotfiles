@@ -77,7 +77,7 @@ alias go='git checkout'
 # macOS {{{
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias paci='brew install'
-    alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup && vi +PlugUpgrade +PlugUpdate +qa'
+    alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup && pipu && vi +PlugUpgrade +PlugUpdate +qa'
     alias pacs='brew search'
     alias pacr='brew uninstall'
 

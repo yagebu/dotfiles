@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ $1 == "pictures" ]]; then
+    cd ~ || exit
+    borg create -vp "ks:backup/pictures::$(date +%Y-%m-%d)" Pictures
+fi
+
 if [[ $1 == "raw" ]]; then
     borg create -vp "ks:backup/raw::$(date +%Y-%m-%d)" ~/var/RAW ~/var/panoramas
 fi
@@ -22,5 +27,6 @@ if [[ $1 == "check" ]]; then
     borg check -v ks:backup/js-arch
     borg check -v ks:backup/js-mba
     borg check -v ks:backup/vm
+    borg check -v ks:backup/pictures
     borg check -v ks:backup/raw
 fi
