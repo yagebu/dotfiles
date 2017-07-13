@@ -39,10 +39,13 @@ def prune():
 
 
 @cli.command()
-def check():
+@click.argument('repos', nargs=-1)
+def check(repos):
     """Check backups."""
+    if not repos:
+        repos = ['js-arch', 'js-mba', 'vm', 'pictures', 'raw']
 
-    for repo in ['js-arch', 'js-mba', 'vm', 'pictures', 'raw']:
+    for repo in repos:
         click.secho(f'Checking {repo}', fg='green')
         run(f'borg check -v ks:backup/{repo}')
 

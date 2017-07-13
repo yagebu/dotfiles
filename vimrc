@@ -26,7 +26,6 @@ Plug 'junegunn/gv.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
@@ -59,8 +58,7 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
 "Plug 'tweekmonster/nvimdev.nvim'
 function InstallTern()
-    let s:uname = system('uname -s')
-    if s:uname == 'Darwin'
+    if has('mac')
         system('npm install -g tern')
     endif
 endfunction
@@ -78,8 +76,13 @@ colorscheme gruvbox
 set background=dark
 
 set gcr=
-let g:python_host_skip_check = 1
-let g:python3_host_skip_check = 1
+if has('mac')
+    let g:python_host_prog = '/usr/local/bin/python2'
+    let g:python3_host_prog = '/usr/local/bin/python3'
+else
+    let g:python_host_prog = '/usr/bin/python2'
+    let g:python3_host_prog = '/usr/bin/python3'
+endif
 set shm+=F
 
 " Do not use tabs and use 4 spaces for indentation
@@ -169,9 +172,8 @@ nnoremap <silent> coc
       \ :set conceallevel?<CR>
 " }}}
 " Completion {{{
-let g:deoplete#enable_at_startup = 1
-"let g:deoplete#enable_at_startup = 0
-"autocmd InsertEnter * call deoplete#enable()
+"let g:deoplete#enable_at_startup = 1
+autocmd InsertEnter * call deoplete#enable()
 "inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
 autocmd CompleteDone * pclose!
 
