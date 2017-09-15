@@ -17,6 +17,7 @@ endif
 call plug#begin("$XDG_DATA_HOME/nvim/plugged")
 " }}}
 Plug 'itchyny/lightline.vim'
+Plug 'ap/vim-buftabline'
 "Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -125,6 +126,10 @@ nnoremap j gj
 nnoremap k gk
 nnoremap gj j
 nnoremap gk k
+
+" Tab to switch to next buffer, Shift-Tab to the previous one.
+nnoremap <Tab> :bn<CR>|
+nnoremap <S-Tab> :bp<CR>|
 
 " Quickfix
 nnoremap ]q :cnext<cr>zz

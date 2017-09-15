@@ -12,3 +12,4 @@ pytest
 sphinx
 tox
 vim-vint
+yapf

@@ -1,5 +1,6 @@
 echo "Deleting unneeded files..."
 find ~ -depth -name ".DS_Store" -exec rm {} \;
+find $HOME/.local/share/nvim -ctime +60 -exec rm -f {} \;
 rm -rf ~/.adobe
 rm -f ~/.bzr.log
 rm -rf ~/.cache/chromium
@@ -22,9 +23,10 @@ rm -rf ~/.mozilla
 rm -rf ~/.muttator
 rm -rf ~/.mpv
 rm -rf ~/.node-gyp
+rm -rf ~/.oracle_jre_usage
 rm -rf ~/.pki
 rm -rf ~/.pylint.d
-rm -f ~/.viminfo ~/.nviminfo ~/.nvimlog ~/.xsession-errors ~/.esd_auth ~/ICEauthoriy
+rm -f ~/.viminfo ~/.nviminfo ~/.python_history ~/.nvimlog ~/.xsession-errors ~/.esd_auth ~/ICEauthoriy
 rm -rf ~/.local/share/gvfs-metadata
 rm -rf ~/.local/share/loliclip
 rm -rf ~/.local/share/recently-used.xbel
