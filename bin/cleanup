@@ -20,7 +20,6 @@ rm -rf ~/.idlerc
 rm -rf ~/.java
 rm -rf ~/.kde4
 rm -rf ~/.macromedia
-rm -rf ~/.mozilla
 rm -rf ~/.muttator
 rm -rf ~/.mpv
 rm -rf ~/.node-gyp

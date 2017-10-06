@@ -52,7 +52,7 @@ input "2:14:ETPS/2_Elantech_Touchpad" {
     # start a terminal
     bindsym $mod+Return exec $term
     # start a browser
-    bindsym $mod+c exec chromium
+    bindsym $mod+c exec firefox-beta
 
     # kill focused window
     bindsym $mod+Shift+q kill
