@@ -38,7 +38,7 @@ Plug 'kopischke/vim-stay'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
-Plug 'w0rp/ale'
+Plug 'neomake/neomake'
 "Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -49,6 +49,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " File type specific plugins
 Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja'
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
@@ -202,11 +203,7 @@ set viewoptions=cursor,folds,slash,unix
 
 let g:limelight_conceal_guifg = '#999999'
 
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
-let g:ale_sign_error = '⨉'
-let g:ale_sign_warning = '⚠'
-let g:ale_sign_column_always = 1
+call neomake#configure#automake('rw')
 
 let g:colorizer_auto_filetype='css,scss'
 autocmd BufWritePost */dev/dotfiles/* silent !~/dev/dotfiles/install > /dev/null
@@ -255,6 +252,7 @@ let g:vimtex_matchparen_enabled = 0
 
 let g:vimtex_view_method = 'skim'
 let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_imaps_list = []
 
 augroup vimtex_config
     au!
