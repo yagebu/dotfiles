@@ -72,6 +72,7 @@ alias gpu='git push'
 alias gr='git rebase'
 alias gri='git rebase -i'
 alias gs='git status'
+alias cgo=$(which go)
 alias go='git checkout'
 # }}}
 # macOS {{{

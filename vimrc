@@ -51,7 +51,8 @@ Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-Plug 'mitsuhiko/vim-jinja'
+Plug 'Glench/Vim-Jinja2-Syntax'
+"Plug 'mitsuhiko/vim-jinja'
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
@@ -214,6 +215,7 @@ au FileType javascript setlocal sw=2 sts=2 fdm=syntax
 au FileType css setlocal sw=2 sts=2
 au FileType scss setlocal sw=2 sts=2
 au FileType html setlocal sw=2 sts=2
+au FileType jinja setlocal sw=2 sts=2
 au FileType htmljinja setlocal sw=2 sts=2
 " }}}
 " C, Lua {{{
