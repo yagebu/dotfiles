@@ -38,7 +38,8 @@ Plug 'kopischke/vim-stay'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
-Plug 'neomake/neomake'
+"Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 "Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -128,6 +129,10 @@ nnoremap j gj
 nnoremap k gk
 nnoremap gj j
 nnoremap gk k
+vnoremap j gj
+vnoremap k gk
+vnoremap gj j
+vnoremap gk k
 
 " Tab to switch to next buffer, Shift-Tab to the previous one.
 nnoremap <Tab> :bn<CR>|
@@ -204,7 +209,12 @@ set viewoptions=cursor,folds,slash,unix
 
 let g:limelight_conceal_guifg = '#999999'
 
-call neomake#configure#automake('rw')
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_sign_error = '⨉'
+let g:ale_sign_warning = '⚠'
+let g:ale_sign_column_always = 1
+"call neomake#configure#automake('rw')
 
 let g:colorizer_auto_filetype='css,scss'
 autocmd BufWritePost */dev/dotfiles/* silent !~/dev/dotfiles/install > /dev/null
