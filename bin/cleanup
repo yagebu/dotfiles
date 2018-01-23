@@ -9,8 +9,10 @@ rm -rf ~/.config/chromium/Default/Pepper\ Data/
 rm -rf ~/.config/chromium/Default/Local\ Storage/http*
 rm -rf ~/.config/chromium/Default/IndexedDB/http*
 rm -rf ~/.config/chromium/Default/databases/http*
+rm -rf ~/.config/darktable
 rm -rf ~/.config/libreoffice
 rm -rf ~/.config/pulse
+rm -rf ~/.config/xnviewmp
 rm -rf ~/.electron
 rm -rf ~/.filebot
 rm -rf ~/.gem

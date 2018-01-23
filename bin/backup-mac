@@ -8,12 +8,13 @@
     /Users/jakob                                     \
     --exclude /Users/jakob/.cache                    \
     --exclude /Users/jakob/.electron                 \
-    --exclude /Users/jakob/.local/share/thumbnails-digikam.db \
+    --exclude /Users/jakob/.local/share/digikam      \
     --exclude /Users/jakob/.local/share/nvim/plugged \
     --exclude /Users/jakob/.local/share/virtualenvs  \
     --exclude /Users/jakob/.vagrant.d                \
     --exclude /Users/jakob/.npm                      \
     --exclude /Users/jakob/.Trash                    \
+    --exclude /Users/jakob/dev/neovim                \
     --exclude /Users/jakob/Google\ Drive             \
     --exclude /Users/jakob/Library                   \
     --exclude /Users/jakob/Movies                    \
