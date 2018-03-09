@@ -17,4 +17,3 @@ export npm_config_cache="~/.cache/npm"
 export HGRCPATH=${XDG_CONFIG_HOME}/hgrc
 export PYLINTHOME=${XDG_CACHE_HOME}/pylintd/
 #export PYTHONDONTWRITEBYTECODE=1
-export GOPATH="$HOME/dev/go"

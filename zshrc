@@ -78,15 +78,22 @@ alias go='git checkout'
 # macOS {{{
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias paci='brew install'
-    alias pacu='brew update && brew upgrade && brew cleanup && brew cask cleanup && pipu && vi +PlugUpgrade +PlugUpdate +qa'
     alias pacs='brew search'
     alias pacr='brew uninstall'
 
+    function pacu() {
+        brew update
+        brew upgrade
+        brew cleanup
+        brew cask cleanup
+        pipu
+        vi +PlugUpgrade +PlugUpdate +qa
+    }
+
     function pipu() {
-        pip2 install -U -r ~/dev/dotfiles/python/python2-packages
-        pip3 install -U -r ~/dev/dotfiles/python/python3-packages
-        pip3 install -e ~/dev/beancount
-        pip3 install -e ~/dev/fava
+        pip install -U -r ~/dev/dotfiles/python/python3-packages
+        pip install -e ~/dev/beancount
+        pip install -e ~/dev/fava
     }
 fi
 # }}}

@@ -53,14 +53,12 @@ Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'Glench/Vim-Jinja2-Syntax'
-"Plug 'mitsuhiko/vim-jinja'
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
-"Plug 'tweekmonster/nvimdev.nvim'
 function InstallTern()
     if has('mac')
         system('npm install -g tern')
@@ -170,10 +168,9 @@ tnoremap <Esc> <C-\><C-n>
 nnoremap <silent> <leader><space> :nohlsearch<cr>
 nnoremap <silent> U :UndotreeToggle<cr>
 nnoremap <silent> <leader><leader> :Files<cr>
-nnoremap <silent> <leader><Enter>  :Buffers<cr>
-nnoremap <silent> <leader>a  :Ag<cr>
+nnoremap <silent> <leader>b  :Buffers<cr>
+nnoremap <silent> <leader>r  :Rg<cr>
 nnoremap <silent> <leader>g  :Goyo<cr>
-nnoremap <silent> <leader>h  :Helptags<cr>
 nnoremap <silent> <F8> :TagbarToggle<cr>
 
 xmap ga <Plug>(EasyAlign)
@@ -218,6 +215,14 @@ let g:ale_sign_column_always = 1
 
 let g:colorizer_auto_filetype='css,scss'
 autocmd BufWritePost */dev/dotfiles/* silent !~/dev/dotfiles/install > /dev/null
+" }}}
+" Ripgrep {{{
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
 " }}}
 " File types {{{
 " Javascript, CSS, SCSS {{{
