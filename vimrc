@@ -16,14 +16,20 @@ endif
 
 call plug#begin("$XDG_DATA_HOME/nvim/plugged")
 " }}}
-Plug 'itchyny/lightline.vim'
-Plug 'ap/vim-buftabline'
+"Plug 'SirVer/ultisnips'
 "Plug 'honza/vim-snippets'
+"Plug 'neomake/neomake'
+Plug 'Konfekt/FastFold'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'ap/vim-buftabline'
+Plug 'itchyny/lightline.vim'
+Plug 'jreybert/vimagit'
+Plug 'janko-m/vim-test'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align'
@@ -32,20 +38,15 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
-Plug 'jreybert/vimagit'
-Plug 'Konfekt/FastFold'
 Plug 'kopischke/vim-stay'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
-"Plug 'neomake/neomake'
-Plug 'w0rp/ale'
-"Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'w0rp/ale'
 
 " File type specific plugins
 Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
@@ -179,6 +180,13 @@ nmap ga <Plug>(EasyAlign)
 nnoremap <silent> coc
       \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
       \ :set conceallevel?<CR>
+
+" Run tests
+nmap <silent> t<C-n> :TestNearest<CR>
+nmap <silent> t<C-f> :TestFile<CR>
+nmap <silent> t<C-s> :TestSuite<CR>
+nmap <silent> t<C-l> :TestLast<CR>
+nmap <silent> t<C-g> :TestVisit<CR>
 " }}}
 " Completion {{{
 "let g:deoplete#enable_at_startup = 1
@@ -367,3 +375,4 @@ let g:terminal_color_14 = "#8ec07c"
 " light4 + light1
 let g:terminal_color_7 = "#a89984"
 let g:terminal_color_15 = "#ebdbb2"
+" }}}

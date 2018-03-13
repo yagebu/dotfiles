@@ -91,9 +91,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     }
 
     function pipu() {
-        pip install -U -r ~/dev/dotfiles/python/python3-packages
-        pip install -e ~/dev/beancount
-        pip install -e ~/dev/fava
+        pip3 install -U -r ~/dev/dotfiles/python/python3-packages
+        pip3 install -e ~/dev/beancount
+        pip3 install -e ~/dev/fava
     }
 fi
 # }}}
