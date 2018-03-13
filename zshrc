@@ -113,8 +113,14 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     function pacs() {
         aura -Ss "$1"; aura -As "$1"
     }
-    alias pacu='aura -Syu && aura -Akua'
     alias pacud='aura -Syu && aura -Akua --devel'
+
+    function pacu() {
+        sudo pacman -Syu
+        sudo aura -Akua
+        pipu
+        vi +PlugUpgrade +PlugUpdate +qa
+    }
 
     function pipu() {
         pip install --user -e ~/dev/beancount
