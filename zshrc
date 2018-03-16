@@ -123,8 +123,9 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     }
 
     function pipu() {
-        pip install --user -e ~/dev/beancount
-        pip install --user -e ~/dev/fava
+        pip install --user -U -e ~/dev/beancount
+        pip install --user -U -e ~/dev/fava
+        pip install --user -U -r ~/dev/dotfiles/python/python3-packages
     }
 fi
 # }}}

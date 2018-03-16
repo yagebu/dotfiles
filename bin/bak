@@ -53,22 +53,19 @@ def check(repos):
 @cli.command()
 def pictures():
     """Backup pictures."""
-    name = TODAY
-    run(f'borg create -vp "ks:backup/pictures::{name}" Pictures')
+    run(f'borg create -vp "ks:backup/pictures::{TODAY}" Pictures')
 
 
 @cli.command()
 def raw():
     """Backup RAW photos."""
-    name = TODAY
-    run(f'borg create -vp "ks:backup/raw::{name}" var/RAW var/panoramas')
+    run(f'borg create -vp "ks:backup/raw::{TODAY}" var/RAW var/panoramas')
 
 
 @cli.command()
 def vms():
     """Backup VMs."""
-    name = TODAY
-    run(f'borg create -vp "ks:backup/vm::{name}" -C zlib var/VMs')
+    run(f'borg create -vp "ks:backup/vm::{TODAY}" -C zlib var/VMs')
 
 
 if __name__ == '__main__':
