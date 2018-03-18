@@ -118,14 +118,14 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     function pacu() {
         sudo pacman -Syu
         sudo aura -Akua
-        pipu
-        vi +PlugUpgrade +PlugUpdate +qa
     }
 
-    function pipu() {
+    function pacua() {
+        pacu
         pip install --user -U -e ~/dev/beancount
         pip install --user -U -e ~/dev/fava
         pip install --user -U -r ~/dev/dotfiles/python/python3-packages
+        vi +PlugUpgrade +PlugUpdate +qa
     }
 fi
 # }}}

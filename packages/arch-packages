@@ -1,0 +1,17 @@
+beets
+python-flask
+python-keyring
+python-llfuse
+python-neovim
+python-pew
+python-pip
+python-pyacoustid
+python-pylast
+python-pylint
+python-pytest
+python-tox
+python2-keyring
+python2-neovim
+python2-pip
+twine
+yapf

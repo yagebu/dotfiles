@@ -33,10 +33,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     cp arch/sway ~/.config/sway/config
     cp arch/i3status ~/.config/i3status/config
 
-
     if [[ $1 == "sudo" ]]; then
         sudo cp arch/lock-screen /usr/bin/lock-screen
         sudo cp arch/sway-kb /usr/bin/sway-kb
         sudo cp arch/sway-kb.desktop /usr/share/wayland-sessions/sway-kb.desktop
+
+        sudo pacman -S --needed - < packages/arch-packages
     fi
 fi

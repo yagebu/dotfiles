@@ -19,7 +19,7 @@ systemd.
 
 ## Other programs
 
-* Browser: Chromium with vimium.
+* Browser: Firefox with vimium.
 * Email: mutt, offlineimap, and msmtp
 * Media player: mpv.
 * PDF: zathura with mupdf backend, Skim on OS X.
