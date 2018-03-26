@@ -91,7 +91,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     }
 
     function pipu() {
-        pip3 install -U -r ~/dev/dotfiles/python/python3-packages
+        pip3 install -U -r ~/dev/dotfiles/packages/python3-packages
         pip3 install -e ~/dev/beancount
         pip3 install -e ~/dev/fava
     }
@@ -124,7 +124,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
         pacu
         pip install --user -U -e ~/dev/beancount
         pip install --user -U -e ~/dev/fava
-        pip install --user -U -r ~/dev/dotfiles/python/python3-packages
+        pip install --user -U -r ~/dev/dotfiles/packages/python3-packages
         vi +PlugUpgrade +PlugUpdate +qa
     }
 fi
