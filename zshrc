@@ -105,23 +105,14 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias rs-start='systemctl --user start redshift.service'
     alias rs-stop='systemctl --user stop redshift.service'
     # pacman
-    alias aura='sudo aura'
-    alias pac='aura'
-    alias paci='aura -S'
-    alias paca='aura -A'
-    alias pacr='aura -Rs'
-    function pacs() {
-        aura -Ss "$1"; aura -As "$1"
-    }
-    alias pacud='aura -Syu && aura -Akua --devel'
-
-    function pacu() {
-        sudo pacman -Syu
-        sudo aura -Akua
-    }
+    alias pac='pikaur'
+    alias paci='pikaur -S'
+    alias pacr='pikaur -Rs'
+    alias pacs='pikaur -Ss'
+    alias pacs='pikaur -Syu'
 
     function pacua() {
-        pacu
+        pikaur -Syu --devel
         pip install --user -U -e ~/dev/beancount
         pip install --user -U -e ~/dev/fava
         pip install --user -U -r ~/dev/dotfiles/packages/python3-packages
