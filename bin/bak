@@ -17,7 +17,15 @@ def cli():
 
 def run(cmd):
     """Run the given command in the home directory."""
+    print(f'Running: {cmd}')
     subprocess.run(cmd, shell=True, cwd=Path.home())
+
+
+def create(args):
+    """Run the given command in the home directory."""
+    full_args = ['borg', 'create', '-p'] + args
+    print(f'Running: {full_args}')
+    subprocess.run(full_args, cwd=Path.home())
 
 
 @cli.command()
@@ -53,19 +61,19 @@ def check(repos):
 @cli.command()
 def pictures():
     """Backup pictures."""
-    run(f'borg create -vp "ks:backup/pictures::{TODAY}" Pictures')
+    create([f'ks:backup/pictures::{TODAY}', 'Pictures'])
 
 
 @cli.command()
 def raw():
     """Backup RAW photos."""
-    run(f'borg create -vp "ks:backup/raw::{TODAY}" var/RAW var/panoramas')
+    create([f'ks:backup/raw::{TODAY}', 'var/RAW', 'var/panoramas'])
 
 
 @cli.command()
 def vms():
     """Backup VMs."""
-    run(f'borg create -vp "ks:backup/vm::{TODAY}" -C zlib var/VMs')
+    create([f'ks:backup/vm::{TODAY}', '-C', 'zlib', 'var/VMs'])
 
 
 if __name__ == '__main__':

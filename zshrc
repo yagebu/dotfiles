@@ -107,9 +107,9 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     # pacman
     alias pac='pikaur'
     alias paci='pikaur -S'
-    alias pacr='pikaur -Rs'
+    alias pacr='sudo pacman -Rs'
     alias pacs='pikaur -Ss'
-    alias pacs='pikaur -Syu'
+    alias pacu='pikaur -Syu'
 
     function pacua() {
         pikaur -Syu --devel
