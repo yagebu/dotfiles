@@ -42,8 +42,6 @@ def prune():
     # The prefix ensures that only the usual daily backups are pruned.
     click.secho('Pruning js-arch', fg='green')
     run('borg prune -v --list --prefix 20 -d60 -w-1 ks:backup/js-arch')
-    click.secho('Pruning js-mba', fg='green')
-    run('borg prune -v --list --prefix 20 -d60 -w-1 ks:backup/js-mba')
 
 
 @cli.command()

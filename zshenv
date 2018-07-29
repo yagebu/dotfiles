@@ -7,6 +7,7 @@
 [[ "$TERM" = "xterm" ]] && export TERM=xterm-256color
 
 export EDITOR="nvim"
+export BROWSER="firefox"
 export HISTSIZE=10000
 export HISTFILE="$XDG_CONFIG_HOME/zsh/history"
 export SAVEHIST=$HISTSIZE

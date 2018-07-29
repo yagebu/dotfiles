@@ -8,6 +8,7 @@ pew
 pyflakes
 pyinstaller
 pylint
+pymupdf
 pytest
 sphinx
 tox
