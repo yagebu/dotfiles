@@ -112,8 +112,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacu='pikaur -Syu'
 
     function pipu() {
-        pip install --user -U -e ~/dev/beancount
-        pip install --user -U -e ~/dev/fava
+        pip install --user -U -e ~/dev/beancount ~/dev/fava
         pip install --user -U -r ~/dev/dotfiles/packages/python3-packages
     }
 

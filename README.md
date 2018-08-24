@@ -10,12 +10,9 @@ files.
 
 ## Desktop Environment
 
-I'm currently using Awesome WM as window manager. Current config is the
-mulitcolor theme from the awesome-copycats repo (slightly modified).
-Suspend/resume is handled by systemd and default settings.  TLP for energy
-saving.  NetworkManager for wifi.  GDM as login manager, since a (minimal)
-GNOME is installed too. Slimlock provides the lockscreen and is started by
-systemd.
+I'm currently using sway as window manager.  Suspend/resume is handled by
+systemd and default settings. TLP for energy saving. NetworkManager for
+wifi. SDDM as login manager. Swaylock provides the lockscreen and is started by systemd.
 
 ## Other programs
 

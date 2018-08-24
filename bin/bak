@@ -74,5 +74,13 @@ def vms():
     create([f'ks:backup/vm::{TODAY}', '-C', 'zlib', 'var/VMs'])
 
 
+@cli.command()
+def store():
+    """Save Backup and Music to external harddrive."""
+    drive = '/run/media/jakob/Quickstore'
+    run(f'rsync -avz --inplace --progress --delete ks:Music/FLAC/ {drive}/Music')
+    run(f'rsync -avz --progress --delete ks:backup/ {drive}/backup')
+
+
 if __name__ == '__main__':
     cli()
