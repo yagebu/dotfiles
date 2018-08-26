@@ -1,12 +1,5 @@
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-    export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-    export LANG=en_US.UTF-8
-fi
-
 # initialise colors
 autoload -U colors
 colors
@@ -74,28 +67,6 @@ alias gri='git rebase -i'
 alias gs='git status'
 alias cgo=$(which go)
 alias go='git checkout'
-# }}}
-# macOS {{{
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    alias paci='brew install'
-    alias pacs='brew search'
-    alias pacr='brew uninstall'
-
-    function pacu() {
-        brew update
-        brew upgrade
-        brew cleanup
-        brew cask cleanup
-        pipu
-        vi +PlugUpgrade +PlugUpdate +qa
-    }
-
-    function pipu() {
-        pip3 install -U -r ~/dev/dotfiles/packages/python3-packages
-        pip3 install -e ~/dev/beancount
-        pip3 install -e ~/dev/fava
-    }
-fi
 # }}}
 # Linux {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then

@@ -21,10 +21,6 @@ cp bin/cleanup ~/bin/cleanup
 cp bin/bak ~/bin/bak
 cp vimrc ~/.config/nvim/init.vim
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    cp bin/backup-mac ~/bin/backup
-fi
-
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     cp bin/backup-arch ~/bin/backup
     cp bin/backup-external ~/bin/backup-external

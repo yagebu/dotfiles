@@ -74,12 +74,23 @@ def vms():
     create([f'ks:backup/vm::{TODAY}', '-C', 'zlib', 'var/VMs'])
 
 
+def rsync(source, dest):
+    """Helper to run rsync command."""
+    run(f'rsync -avz --inplace --progress --delete {source} {dest}')
+
+
 @cli.command()
 def store():
     """Save Backup and Music to external harddrive."""
     drive = '/run/media/jakob/Quickstore'
-    run(f'rsync -avz --inplace --progress --delete ks:Music/FLAC/ {drive}/Music')
-    run(f'rsync -avz --progress --delete ks:backup/ {drive}/backup')
+    rsync('ks:Music/FLAC/', f'{drive}/Music')
+    rsync('ks:backup/', f'{drive}/backup')
+
+
+@cli.command()
+def music():
+    """Download music collection."""
+    rsync('ks:Music/OPUS/', '~/Music')
 
 
 if __name__ == '__main__':
