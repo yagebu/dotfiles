@@ -4,6 +4,7 @@ keyring
 neovim
 neovim-remote
 pew
+pipenv
 pyflakes
 pyinstaller
 pylint

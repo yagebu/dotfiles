@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=Sway (with keyboard settings)
-Comment=SirCmpwn's Wayland window manager
-Exec=sway-kb
-Type=Application

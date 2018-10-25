@@ -1,4 +1,8 @@
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+for dir in ~/bin ~/.local/bin; do
+    if [[ -z ${path[(r)$dir]} ]]; then
+        path=($dir $path)
+    fi
+done
 
 # initialise colors
 autoload -U colors
@@ -72,9 +76,8 @@ alias go='git checkout'
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias log='journalctl -r'
     alias sc='sudo systemctl'
+    alias scu='systemctl --user'
     alias jc='journalctl'
-    alias rs-start='systemctl --user start redshift.service'
-    alias rs-stop='systemctl --user stop redshift.service'
     # pacman
     alias pac='pikaur'
     alias paci='pikaur -S'

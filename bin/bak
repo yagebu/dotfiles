@@ -36,8 +36,8 @@ def prune():
     ones. Keep 2 VM backups.
     """
 
-    click.secho('Pruning VMs', fg='green')
-    run('borg prune -v --list --prefix 20 -H2 ks:backup/vm')
+    # click.secho('Pruning VMs', fg='green')
+    # run('borg prune -v --list --prefix 20 -H2 ks:backup/vm')
 
     # The prefix ensures that only the usual daily backups are pruned.
     click.secho('Pruning js-arch', fg='green')

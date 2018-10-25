@@ -49,6 +49,7 @@ Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
 
 " File type specific plugins
+Plug 'posva/vim-vue'
 Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
@@ -60,12 +61,7 @@ Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
-function InstallTern()
-    if has('mac')
-        system('npm install -g tern')
-    endif
-endfunction
-Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript', 'do': function('InstallTern') }
+Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
 
 " Color schemes
 Plug 'junegunn/seoul256.vim'
@@ -235,6 +231,7 @@ command! -bang -nargs=* Rg
 " File types {{{
 " Javascript, CSS, SCSS {{{
 au FileType javascript setlocal sw=2 sts=2 fdm=syntax
+au FileType vue setlocal sw=2 sts=2
 au FileType css setlocal sw=2 sts=2
 au FileType scss setlocal sw=2 sts=2
 au FileType html setlocal sw=2 sts=2
