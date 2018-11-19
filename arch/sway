@@ -18,6 +18,7 @@ set $menu dmenu_run
 # Default wallpaper (more resolutions are available in /usr/share/sway/)
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 output * bg /usr/share/backgrounds/gnome/Icescape.jpg fill
+
 #
 # Example configuration:
 #
@@ -57,7 +58,7 @@ input "1739:30383:DELL07E6:00_06CB:76AF_Touchpad" {
 }
 
 input "1:1:AT_Translated_Set_2_keyboard" {
-    repeat_delay 200
+    repeat_delay 250
     repeat_rate 30
     xkb_layout us
     xkb_model pc105

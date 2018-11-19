@@ -1,16 +1,2 @@
-autopep8
 flake8
-keyring
-neovim
-neovim-remote
-pew
-pipenv
-pyflakes
-pyinstaller
-pylint
 pymupdf
-pytest
-sphinx
-tox
-vim-vint
-yapf

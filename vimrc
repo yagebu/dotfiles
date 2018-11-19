@@ -39,7 +39,7 @@ Plug 'junegunn/vim-pseudocl'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
 Plug 'kopischke/vim-stay'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
@@ -60,8 +60,8 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'nathangrigg/vim-beancount'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
+Plug 'othree/yajs.vim', { 'for': ['javascript', 'vue'] }
+Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'vue'] }
 
 " Color schemes
 Plug 'junegunn/seoul256.vim'

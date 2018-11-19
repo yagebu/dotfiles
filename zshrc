@@ -1,4 +1,4 @@
-for dir in ~/bin ~/.local/bin; do
+for dir in ~/bin ~/.local/bin "$PYENV_ROOT/bin"; do
     if [[ -z ${path[(r)$dir]} ]]; then
         path=($dir $path)
     fi
@@ -86,16 +86,16 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacu='pikaur -Syu'
 
     function pipu() {
-        pip install --user -U -e ~/dev/beancount
-        pip install --user -U -e ~/dev/fava
-        pip install --user -U -e ~/dev/fava-plugins
-        pip install --user -U -r ~/dev/dotfiles/packages/python3-packages
+        pip install --user -U -e ~/dev/beancount \
+            && pip install --user -U -e ~/dev/fava \
+            && pip install --user -U -e ~/dev/fava-plugins \
+            && pip install --user -U -r ~/dev/dotfiles/packages/python3-packages
     }
 
     function pacua() {
-        pikaur -Syu --devel
-        pipu
-        vi +PlugUpgrade +PlugUpdate +qa
+        pikaur -Syu --devel \
+            && pipu \
+            && vi +PlugUpgrade +PlugUpdate +qa
     }
 fi
 # }}}

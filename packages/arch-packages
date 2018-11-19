@@ -9,8 +9,8 @@ python-pyacoustid
 python-pylast
 python-pylint
 python-pytest
+python-sphinx
 python-tox
-python2-keyring
 python2-neovim
 python2-pip
 twine
