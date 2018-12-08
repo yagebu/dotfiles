@@ -3,37 +3,38 @@ find ~ -depth -name ".DS_Store" -exec rm {} \;
 find $HOME/.local/share/nvim/undo -ctime +60 -exec rm -f {} \;
 find $HOME/.local/share/nvim/view -ctime +60 -exec rm -f {} \;
 rm -rf ~/.adobe
-rm -f ~/.bzr.log
+rm -rf ~/.bzr.log
 rm -rf ~/.cache/chromium
-rm -rf ~/.config/chromium/Default/Pepper\ Data/
-rm -rf ~/.config/chromium/Default/Local\ Storage/http*
-rm -rf ~/.config/chromium/Default/IndexedDB/http*
-rm -rf ~/.config/chromium/Default/databases/http*
+rm -rf ~/.config/chromium
 rm -rf ~/.config/darktable
 rm -rf ~/.config/libreoffice
 rm -rf ~/.config/pulse
 rm -rf ~/.config/xnviewmp
+rm -rf ~/.cookiecutter_replay
+rm -rf ~/.docker
 rm -rf ~/.electron
 rm -rf ~/.filebot
 rm -rf ~/.gem
 rm -rf ~/.gnome2
-rm -rf ~/Documents/Adobe
 rm -rf ~/.idlerc
 rm -rf ~/.java
 rm -rf ~/.kde4
-rm -rf ~/.macromedia
-rm -rf ~/.muttator
-rm -rf ~/.mpv
-rm -rf ~/.node*
-rm -rf ~/.npm
-rm -rf ~/.oracle_jre_usage
-rm -rf ~/.pki
-rm -rf ~/.pylint.d
-rm -f ~/.viminfo ~/.nviminfo ~/.python_history ~/.nvimlog ~/.xsession-errors ~/.esd_auth ~/ICEauthoriy
+rm -rf ~/.keras
 rm -rf ~/.local/share/gvfs-metadata
 rm -rf ~/.local/share/loliclip
 rm -rf ~/.local/share/recently-used.xbel
-rm -rf ~/.thumbnails
-rm -rf ~/.w3m
+rm -rf ~/.macromedia
+rm -rf ~/.mpv
+rm -rf ~/.muttator
+rm -rf ~/.node*
+rm -rf ~/.npm
+rm -rf ~/.oracle_jre_usage
 rm -rf ~/.tox
+rm -rf ~/.pki
+rm -rf ~/.pylint.d
+rm -rf ~/.thumbnails
+rm -rf ~/.tox
+rm -rf ~/.viminfo ~/.nviminfo ~/.python_history ~/.nvimlog ~/.xsession-errors ~/.esd_auth ~/ICEauthoriy
+rm -rf ~/.w3m
+rm -rf ~/Documents/Adobe
 echo "Done."

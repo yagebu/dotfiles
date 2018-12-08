@@ -31,6 +31,8 @@ fi
 export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+eval "$(pyenv init -)"
+
 # Aliases {{{
 # General {{{
 alias ....='cd ../../..'
@@ -88,6 +90,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     function pipu() {
         pip install --user -U -e ~/dev/beancount \
             && pip install --user -U -e ~/dev/fava \
+            && pip install --user -U -e ~/dev/smart_importer \
             && pip install --user -U -e ~/dev/fava-plugins \
             && pip install --user -U -r ~/dev/dotfiles/packages/python3-packages
     }
