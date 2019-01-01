@@ -1,4 +1,6 @@
 beets
+flake8
+python-black
 python-flask
 python-keyring
 python-llfuse
@@ -12,6 +14,5 @@ python-pytest
 python-sphinx
 python-tox
 python2-neovim
-python2-pip
 twine
-yapf
+wl-clipboard
