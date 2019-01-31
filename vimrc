@@ -219,6 +219,12 @@ let g:ale_sign_column_always = 1
 
 let g:colorizer_auto_filetype='css,scss'
 autocmd BufWritePost */dev/dotfiles/* silent !~/dev/dotfiles/install > /dev/null
+
+function! SortParagraphs() range
+    execute a:firstline . ',' . a:lastline . 'd'
+    let @@=join(sort(split(substitute(@@, "\n*$", "", ""), "\n\n")), "\n\n")
+    put!
+endfunction
 " }}}
 " Ripgrep {{{
 command! -bang -nargs=* Rg
