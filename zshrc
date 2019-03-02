@@ -88,7 +88,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacu='pikaur -Syu'
 
     function pipu() {
-        pip install --user -U \
+        pip install --user --no-build-isolation -U \
             -e ~/dev/beancount \
             -e ~/dev/fava \
             -e ~/dev/fava-plugins \
