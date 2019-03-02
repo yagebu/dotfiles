@@ -3,16 +3,19 @@ scriptencoding utf-8
 " Directories {{{
 set backupdir-=.
 if !isdirectory(&backupdir)
-  call mkdir(&backupdir, 'p')
+    call mkdir(&backupdir, 'p')
 endif
 " }}}
 " Plugins {{{
 " setup {{{
 if empty(glob($XDG_DATA_HOME . '/nvim/site/autoload/plug.vim'))
-  silent !echo "Installing vim-plug..."
-  silent !curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall
+    silent !echo "Installing vim-plug..."
+    silent !curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    augroup plug_install
+        autocmd!
+        autocmd VimEnter * PlugInstall
+    augroup END
 endif
 
 call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
@@ -30,7 +33,6 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
-Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-oblique'
@@ -102,7 +104,7 @@ set smartcase      " uppercase causes case-sensitive search
 set gdefault       " apply substitutions globally by default
 set inccommand=nosplit
 
-set clipboard=unnamed
+"set clipboard=unnamed
 
 "au TermOpen * setlocal scrollback=100000
 " }}}
@@ -172,8 +174,8 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 nnoremap <silent> coc
-      \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
-      \ :set conceallevel?<CR>
+            \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
+            \ :set conceallevel?<CR>
 
 " Run tests
 nmap <silent> t<C-n> :TestNearest<CR>
@@ -184,9 +186,9 @@ nmap <silent> t<C-g> :TestVisit<CR>
 " }}}
 " Completion {{{
 let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'python': ['pyls'],
-    \ }
+            \ 'javascript': ['javascript-typescript-stdio'],
+            \ 'python': ['pyls'],
+            \ }
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
@@ -232,16 +234,17 @@ endfunction
 " }}}
 " Ripgrep {{{
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+            \ call fzf#vim#grep(
+            \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+            \   <bang>0 ? fzf#vim#with_preview('up:60%')
+            \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+            \   <bang>0)
 " }}}
 " File types {{{
 " Javascript, CSS, SCSS {{{
 augroup filetypes
     autocmd!
+    autocmd FileType vim setlocal sw=4 sts=4
     autocmd FileType javascript setlocal sw=2 sts=2 fdm=syntax
     autocmd FileType vue setlocal sw=2 sts=2
     autocmd FileType css setlocal sw=2 sts=2
@@ -266,14 +269,14 @@ autocmd filetypes FileType mail setlocal fo+=aw
 " Latex {{{
 autocmd filetypes FileType tex setlocal norelativenumber
 let g:vimtex_compiler_latexmk = {
-      \ 'build_dir': expand($HOME . '/.cache/latex-build'),
-      \ }
+            \ 'build_dir': expand($HOME . '/.cache/latex-build'),
+            \ }
 " Better syntax hightlighting
 let g:tex_flavor='latex'
 
 call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'tex': g:vimtex#re#deoplete
-      \})
+            \ 'tex': g:vimtex#re#deoplete
+            \})
 
 let g:vimtex_fold_enabled = 1
 let g:vimtex_motion_enabled = 1
@@ -293,13 +296,16 @@ augroup beancount
     autocmd!
     autocmd FileType beancount setlocal foldmethod=expr
     autocmd FileType beancount setlocal foldexpr=BeancountFold(v:lnum)
+    autocmd FileType beancount SpeedDatingFormat %Y-%m
     autocmd FileType beancount SpeedDatingFormat %Y-%m-%d
     autocmd FileType beancount inoremap . .<C-\><C-O>:AlignCommodity<CR>
+    autocmd FileType beancount nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
 augroup END
-nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
 
 "call deoplete#enable_logging('INFO', '/Users/jakob/deoplete')
-" let g:deoplete#omni#input_patterns.beancount = '^\s+.*|#\S*|"[^"]*'
+"call deoplete#custom#var('omni', 'input_patterns', {
+"            \ 'beancount': '^\s+.*|#\S*|"[^"]*'
+"            \})
 
 function! BeancountFold(lnum)
     let l1 = getline(a:lnum)
@@ -313,15 +319,15 @@ endfunction
 " Lightline {{{
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-	  \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-	  \             [ 'readonly', 'filename', 'modified', 'gitbranch' ] ],
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
+            \ 'colorscheme': 'seoul256',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'readonly', 'filename', 'modified', 'gitbranch' ] ],
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'fugitive#head'
+            \ },
+            \ }
 " }}}
 " Terminal colors {{{
 " dark0 + gray
