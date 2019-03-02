@@ -221,7 +221,7 @@ let g:colorizer_auto_filetype='css,scss'
 
 augroup dotfiles
     autocmd!
-    autocmd BufWritePost */dev/dotfiles/* silent !~/dev/dotfiles/install > /dev/null
+    autocmd BufWritePost */dev/dotfiles/* silent !make -C ~/dev/dotfiles > /dev/null
 augroup END
 
 function! SortParagraphs() range

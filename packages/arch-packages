@@ -13,6 +13,5 @@ python-pylint
 python-pytest
 python-sphinx
 python-tox
-python2-neovim
 twine
 wl-clipboard
