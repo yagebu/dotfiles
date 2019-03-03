@@ -9,6 +9,7 @@ install: deps
 	cp bin/backup-arch ~/bin/backup
 	cp bin/backup-external ~/bin/backup-external
 	cp bin/pacman-disowned ~/bin/pacman-disowned
+	cp arch/kitty.conf ~/.config/kitty/kitty.conf
 	cp arch/sway ~/.config/sway/config
 	cp arch/i3status ~/.config/i3status/config
 
