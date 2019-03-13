@@ -109,7 +109,8 @@ set inccommand=nosplit
 "au TermOpen * setlocal scrollback=100000
 " }}}
 " Key bindings {{{
-nnoremap <Space> za       " Space toggles folds
+" Space toggles folds
+nnoremap <Space> za
 vnoremap <Space> za
 noremap <tab> %
 
@@ -129,21 +130,17 @@ vnoremap k gk
 vnoremap gj j
 vnoremap gk k
 
-" Tab to switch to next buffer, Shift-Tab to the previous one.
-nnoremap <Tab> :bn<CR>|
-nnoremap <S-Tab> :bp<CR>|
-
 " Quickfix
-nnoremap ]q :cnext<cr>zz
-nnoremap [q :cprev<cr>zz
-nnoremap ]l :lnext<cr>zz
-nnoremap [l :lprev<cr>zz
+nnoremap <silent> ]q :cnext<cr>zz
+nnoremap <silent> [q :cprev<cr>zz
+nnoremap <silent> ]l :lnext<cr>zz
+nnoremap <silent> [l :lprev<cr>zz
 " Buffers
-nnoremap ]b :bnext<cr>
-nnoremap [b :bprev<cr>
+nnoremap <silent> ]b :bnext<cr>
+nnoremap <silent> [b :bprev<cr>
 " Tabs
-nnoremap ]t :tabn<cr>
-nnoremap [t :tabp<cr>
+nnoremap <silent> ]t :tabn<cr>
+nnoremap <silent> [t :tabp<cr>
 
 " Save one keystroke for commmands
 inoremap jk <ESC>
@@ -252,32 +249,24 @@ augroup filetypes
     autocmd FileType html setlocal sw=2 sts=2
     autocmd FileType jinja setlocal sw=2 sts=2
     autocmd FileType htmljinja setlocal sw=2 sts=2
+    autocmd BufRead,BufNewFile *.svelte setlocal ft=html
 augroup END
 " }}}
 " C, Lua {{{
 autocmd filetypes FileType c setlocal sw=2 sts=2
 autocmd filetypes FileType lua setlocal sw=2 sts=2
 " }}}
-" Markdown {{{
-autocmd filetypes FileType markdown nmap gm :LivedownToggle<CR>
-let g:vim_markdown_folding_style_pythonic = 1
-" }}}
 " Mail {{{
 autocmd filetypes FileType mail setlocal fo+=aw
 "autocmd FileType mail Goyo
 " }}}
 " Latex {{{
-autocmd filetypes FileType tex setlocal norelativenumber
-let g:vimtex_compiler_latexmk = {
-            \ 'build_dir': expand($HOME . '/.cache/latex-build'),
-            \ }
 " Better syntax hightlighting
 let g:tex_flavor='latex'
 
-call deoplete#custom#var('omni', 'input_patterns', {
-            \ 'tex': g:vimtex#re#deoplete
-            \})
-
+let g:vimtex_compiler_latexmk = {
+            \ 'build_dir': expand($HOME . '/.cache/latex-build'),
+            \ }
 let g:vimtex_fold_enabled = 1
 let g:vimtex_motion_enabled = 1
 let g:vimtex_matchparen_enabled = 0
@@ -285,6 +274,10 @@ let g:vimtex_matchparen_enabled = 0
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_imaps_list = []
+
+call deoplete#custom#var('omni', 'input_patterns', {
+            \ 'tex': g:vimtex#re#deoplete
+            \})
 
 augroup vimtex_config
     autocmd!
