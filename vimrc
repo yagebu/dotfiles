@@ -206,6 +206,12 @@ inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
 " Misc {{{
 let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
 let g:gutentags_ctags_exclude = ['/usr/local']
+let g:gutentags_file_list_command = {
+            \ 'markers': {
+            \ '.git': 'git ls-files',
+            \ '.hg': 'hg files',
+            \ },
+            \ }
 "let g:gutentags_ctags_executable = 'ctags --python-kinds=-i'
 
 set viewoptions=cursor,folds,slash,unix
