@@ -56,9 +56,11 @@ Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'nathangrigg/vim-beancount'
+Plug 'burner/vim-svelte', { 'for': 'svelte' }
 Plug 'othree/yajs.vim', { 'for': ['javascript', 'vue'] }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'posva/vim-vue'
+Plug 'leafgarland/typescript-vim'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 "}}}
@@ -255,8 +257,16 @@ augroup filetypes
     autocmd FileType html setlocal sw=2 sts=2
     autocmd FileType jinja setlocal sw=2 sts=2
     autocmd FileType htmljinja setlocal sw=2 sts=2
-    autocmd BufRead,BufNewFile *.svelte setlocal ft=html
 augroup END
+let g:ale_linter_aliases = {
+\   'svelte': ['javascript']
+\}
+let g:ale_linters = {
+\   'svelte': ['eslint']
+\}
+let g:ale_fixers = {
+\   'svelte': ['eslint']
+\}
 " }}}
 " C, Lua {{{
 autocmd filetypes FileType c setlocal sw=2 sts=2
