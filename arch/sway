@@ -17,7 +17,7 @@ set $menu dmenu_run
 #
 # Default wallpaper (more resolutions are available in /usr/share/sway/)
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg /usr/share/backgrounds/gnome/Icescape.jpg fill
+output * background /usr/share/backgrounds/gnome/Icescape.jpg fill
 
 #
 # Example configuration:
@@ -41,6 +41,14 @@ output * bg /usr/share/backgrounds/gnome/Icescape.jpg fill
 # The escape symbol "\" has to be removed.
 # Read `man 5 sway-input` for more information about this section.
 
+
+# XPS 13 Touchpad
+input "1739:30383:DELL07E6:00_06CB:76AF_Touchpad" {
+    accel_profile adaptive
+    pointer_accel 1
+    dwt enabled
+    tap enabled
+}
 # Zenbook Touchpad
 input "2:14:ETPS/2_Elantech_Touchpad" {
     accel_profile adaptive
@@ -49,12 +57,9 @@ input "2:14:ETPS/2_Elantech_Touchpad" {
     tap enabled
 }
 
-# XPS 13 Touchpad
-input "1739:30383:DELL07E6:00_06CB:76AF_Touchpad" {
-    accel_profile adaptive
-    pointer_accel 1
-    dwt enabled
-    tap enabled
+input "6127:24632:ThinkPad_Bluetooth_Laser_Mouse" {
+    pointer_accel 0.7
+    scroll_factor 4
 }
 
 input "1:1:AT_Translated_Set_2_keyboard" {
@@ -202,17 +207,21 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # volume controls (special keys on keyboard)
-bindsym XF86AudioMute exec pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
-bindsym F10 exec pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
-bindsym F11 exec pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
-bindsym F12 exec pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
+bindsym XF86AudioMute exec \
+    pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
+bindsym F10 exec \
+    pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
+bindsym XF86AudioLowerVolume exec \
+    pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
+bindsym F11 exec \
+    pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
+bindsym XF86AudioRaiseVolume exec \
+    pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
+bindsym F12 exec \
+    pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
 
 bindsym XF86MonBrightnessUp exec brightnessctl s +2%
 bindsym XF86MonBrightnessDown exec brightnessctl s 2%-
-
-#    awful.key({}, "XF86TouchpadToggle"   , function () awful.util.spawn_with_shell("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')") end),
 
 #
 # Status Bar:
