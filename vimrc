@@ -22,10 +22,9 @@ call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 " }}}
 Plug 'Konfekt/FastFold'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/neosnippet.vim'
+"Plug 'Shougo/neosnippet-snippets'
+"Plug 'Shougo/neosnippet.vim'
 Plug 'ap/vim-buftabline'
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'itchyny/lightline.vim'
 Plug 'janko-m/vim-test'
 Plug 'jreybert/vimagit'
@@ -52,17 +51,17 @@ Plug 'w0rp/ale'
 " File type specific plugins {{{
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
-Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
-Plug 'nathangrigg/vim-beancount'
-Plug 'burner/vim-svelte', { 'for': 'svelte' }
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'vue'] }
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'posva/vim-vue'
-Plug 'leafgarland/typescript-vim'
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
+Plug 'evanleck/vim-svelte', { 'for': 'svelte' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+Plug 'sheerun/vim-polyglot'
+"Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+"Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+"Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
+"Plug 'leafgarland/typescript-vim'
+"Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 "}}}
 " Color schemes {{{
 Plug 'junegunn/seoul256.vim'
@@ -161,6 +160,7 @@ tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 tnoremap <Esc> <C-\><C-n>
 
+nnoremap <silent> <leader>f :ALEFix<cr>
 nnoremap <silent> <leader><space> :nohlsearch<cr>
 nnoremap <silent> U :UndotreeToggle<cr>
 nnoremap <silent> <leader><leader> :Files<cr>
@@ -184,11 +184,6 @@ nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
 " }}}
 " Completion {{{
-let g:LanguageClient_serverCommands = {
-            \ 'javascript': ['javascript-typescript-stdio'],
-            \ 'python': ['pyls'],
-            \ }
-
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
@@ -198,9 +193,6 @@ let g:deoplete#enable_at_startup = 1
 "autocmd InsertEnter * call deoplete#enable()
 "inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
 "autocmd CompleteDone * pclose!
-"let g:UltiSnipsExpandTrigger="<c-j>"
-"let g:UltiSnipsJumpForwardTrigger="<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
@@ -214,7 +206,6 @@ let g:gutentags_file_list_command = {
             \ '.hg': 'hg files',
             \ },
             \ }
-"let g:gutentags_ctags_executable = 'ctags --python-kinds=-i'
 
 set viewoptions=cursor,folds,slash,unix
 
@@ -247,10 +238,13 @@ command! -bang -nargs=* Rg
 " }}}
 " File types {{{
 " Javascript, CSS, SCSS {{{
+let g:polyglot_disabled = ['latex']
+
 augroup filetypes
     autocmd!
     autocmd FileType vim setlocal sw=4 sts=4
     autocmd FileType javascript setlocal sw=2 sts=2 fdm=syntax
+    autocmd FileType typescript setlocal sw=2 sts=2 fdm=syntax
     autocmd FileType vue setlocal sw=2 sts=2
     autocmd FileType css setlocal sw=2 sts=2
     autocmd FileType scss setlocal sw=2 sts=2
@@ -259,13 +253,17 @@ augroup filetypes
     autocmd FileType htmljinja setlocal sw=2 sts=2
 augroup END
 let g:ale_linter_aliases = {
-\   'svelte': ['javascript']
+\   'svelte': ['javascript'],
 \}
 let g:ale_linters = {
-\   'svelte': ['eslint']
+\   'svelte': ['eslint'],
+\   'typescript': ['eslint', 'tsserver'],
 \}
 let g:ale_fixers = {
-\   'svelte': ['eslint']
+\   '*': ['prettier', 'eslint'],
+\   'svelte': ['prettier', 'eslint'],
+\   'javascript': ['prettier', 'eslint'],
+\   'typescript': ['prettier'],
 \}
 " }}}
 " C, Lua {{{

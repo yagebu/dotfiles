@@ -55,6 +55,7 @@ input "2:14:ETPS/2_Elantech_Touchpad" {
     pointer_accel 1
     dwt enabled
     tap enabled
+    scroll_factor 4
 }
 
 input "6127:24632:ThinkPad_Bluetooth_Laser_Mouse" {
