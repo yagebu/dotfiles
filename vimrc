@@ -30,7 +30,7 @@ Plug 'janko-m/vim-test'
 Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
+"Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align'
@@ -74,16 +74,13 @@ set hidden
 set termguicolors
 colorscheme gruvbox
 set background=dark
+set mouse=a
 
 set guicursor=
-if has('mac')
-    let g:python_host_prog = '/usr/local/bin/python2'
-    let g:python3_host_prog = '/usr/local/bin/python3'
-else
-    let g:python_host_prog = '/usr/bin/python2'
-    let g:python3_host_prog = '/usr/bin/python3'
-endif
 set shortmess+=F
+
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
 
 " Do not use tabs and use 4 spaces for indentation
 set shiftwidth=4
@@ -91,23 +88,26 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 
-"set relativenumber
 set number
 set undofile
 
 set scrolloff=4
 
-set hidden         " So not abandon hidden buffers
-set hlsearch       " highlight all search results
-set incsearch      " increment search
-set ignorecase     " case-insensitive search
-set smartcase      " uppercase causes case-sensitive search
-set gdefault       " apply substitutions globally by default
-set inccommand=nosplit
+" So not abandon hidden buffers
+set hidden
+" highlight all search results
+set hlsearch
+" incremental search
+set incsearch
+" case-insensitive search
+set ignorecase
+" uppercase causes case-sensitive search
+set smartcase
+" apply substitutions globally by default
+set gdefault
+set inccommand=split
 
 "set clipboard=unnamed
-
-"au TermOpen * setlocal scrollback=100000
 " }}}
 " Key bindings {{{
 " Space toggles folds
@@ -120,8 +120,10 @@ inoremap <C-s> <C-O>:update<cr>
 nnoremap <C-s> :update<cr>
 inoremap <C-Q> <esc>:q<cr>
 nnoremap <C-Q> :q<cr>
+" Save one keystroke for commmands
+inoremap jk <ESC>
 
-" Move up/down by on-screen lines
+" Move up/down by on-screen lines {{{
 nnoremap j gj
 nnoremap k gk
 nnoremap gj j
@@ -130,7 +132,8 @@ vnoremap j gj
 vnoremap k gk
 vnoremap gj j
 vnoremap gk k
-
+" }}}
+" Move between quickfix, buffers, tabs with [ {{{
 " Quickfix
 nnoremap <silent> ]q :cnext<cr>zz
 nnoremap <silent> [q :cprev<cr>zz
@@ -142,9 +145,8 @@ nnoremap <silent> [b :bprev<cr>
 " Tabs
 nnoremap <silent> ]t :tabn<cr>
 nnoremap <silent> [t :tabp<cr>
+" }}}
 
-" Save one keystroke for commmands
-inoremap jk <ESC>
 
 " Quicker window navigation
 nnoremap <C-h> <C-w>h
@@ -176,12 +178,13 @@ nnoremap <silent> coc
             \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
             \ :set conceallevel?<CR>
 
-" Run tests
+" Run tests {{{
 nmap <silent> t<C-n> :TestNearest<CR>
 nmap <silent> t<C-f> :TestFile<CR>
 nmap <silent> t<C-s> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
+" }}}
 " }}}
 " Completion {{{
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
@@ -190,9 +193,6 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 let g:deoplete#enable_at_startup = 1
-"autocmd InsertEnter * call deoplete#enable()
-"inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
-"autocmd CompleteDone * pclose!
 
 inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
