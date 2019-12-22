@@ -9,8 +9,11 @@ install: deps
 	cp bin/backup-arch ~/bin/backup
 	cp bin/backup-external ~/bin/backup-external
 	cp bin/pacman-disowned ~/bin/pacman-disowned
+	mkdir -p ~/.config/kitty
 	cp arch/kitty.conf ~/.config/kitty/kitty.conf
+	mkdir -p ~/.config/sway
 	cp arch/sway ~/.config/sway/config
+	mkdir -p ~/.config/i3status
 	cp arch/i3status ~/.config/i3status/config
 
 .PHONY: sudo
