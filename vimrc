@@ -22,15 +22,14 @@ call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 " }}}
 Plug 'Konfekt/FastFold'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'Shougo/neosnippet-snippets'
-"Plug 'Shougo/neosnippet.vim'
+Plug 'SirVer/ultisnips'
 Plug 'ap/vim-buftabline'
+Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim'
 Plug 'janko-m/vim-test'
 Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-"Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align'
@@ -55,13 +54,9 @@ Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
 Plug 'evanleck/vim-svelte', { 'for': 'svelte' }
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'sheerun/vim-polyglot'
-"Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-"Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-"Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
-"Plug 'leafgarland/typescript-vim'
-"Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 "}}}
 " Color schemes {{{
 Plug 'junegunn/seoul256.vim'
@@ -110,19 +105,18 @@ set inccommand=split
 "set clipboard=unnamed
 " }}}
 " Key bindings {{{
-" Space toggles folds
 nnoremap <Space> za
 vnoremap <Space> za
 noremap <tab> %
+" Save one keystroke for commmands
+inoremap jk <ESC>
 
-" Save and quit
+" Save and quit {{{
 inoremap <C-s> <C-O>:update<cr>
 nnoremap <C-s> :update<cr>
 inoremap <C-Q> <esc>:q<cr>
 nnoremap <C-Q> :q<cr>
-" Save one keystroke for commmands
-inoremap jk <ESC>
-
+" }}}
 " Move up/down by on-screen lines {{{
 nnoremap j gj
 nnoremap k gk
@@ -146,23 +140,22 @@ nnoremap <silent> [b :bprev<cr>
 nnoremap <silent> ]t :tabn<cr>
 nnoremap <silent> [t :tabp<cr>
 " }}}
-
-
-" Quicker window navigation
+" Quicker window navigation {{{
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
 nmap <BS> <C-W>h
-" Terminal mappings
+" }}}
+" Terminal mappings {{{
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 tnoremap <Esc> <C-\><C-n>
-
-nnoremap <silent> <leader>f :ALEFix<cr>
+" }}}
+" Commands {{{
+nmap <silent> <leader>f <Plug>(ale_fix)
 nnoremap <silent> <leader><space> :nohlsearch<cr>
 nnoremap <silent> U :UndotreeToggle<cr>
 nnoremap <silent> <leader><leader> :Files<cr>
@@ -177,7 +170,7 @@ nmap ga <Plug>(EasyAlign)
 nnoremap <silent> coc
             \ :set conceallevel=<C-r>=&conceallevel == 2 ? 0 : 2<CR><CR>
             \ :set conceallevel?<CR>
-
+" }}}
 " Run tests {{{
 nmap <silent> t<C-n> :TestNearest<CR>
 nmap <silent> t<C-f> :TestFile<CR>
@@ -187,12 +180,16 @@ nmap <silent> t<C-g> :TestVisit<CR>
 " }}}
 " }}}
 " Completion {{{
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+nmap <silent> K <Plug>(ale_hover)
+nmap <silent> gd <Plug>(ale_go_to_definition)
+nnoremap <silent> <F2> :call ALERename<CR>
 
 let g:deoplete#enable_at_startup = 1
+
+let g:UltiSnipsSnippetDirectories = [$HOME.'/dev/dotfiles/snippets']
+let g:UltiSnipsExpandTrigger       = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
 inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
@@ -215,7 +212,7 @@ let g:ale_sign_error = '⨉'
 let g:ale_sign_warning = '⚠'
 let g:ale_sign_column_always = 1
 
-let g:colorizer_auto_filetype='css,scss'
+let g:colorizer_auto_filetype='css'
 
 augroup dotfiles
     autocmd!
@@ -237,21 +234,6 @@ command! -bang -nargs=* Rg
             \   <bang>0)
 " }}}
 " File types {{{
-" Javascript, CSS, SCSS {{{
-let g:polyglot_disabled = ['latex']
-
-augroup filetypes
-    autocmd!
-    autocmd FileType vim setlocal sw=4 sts=4
-    autocmd FileType javascript setlocal sw=2 sts=2 fdm=syntax
-    autocmd FileType typescript setlocal sw=2 sts=2 fdm=syntax
-    autocmd FileType vue setlocal sw=2 sts=2
-    autocmd FileType css setlocal sw=2 sts=2
-    autocmd FileType scss setlocal sw=2 sts=2
-    autocmd FileType html setlocal sw=2 sts=2
-    autocmd FileType jinja setlocal sw=2 sts=2
-    autocmd FileType htmljinja setlocal sw=2 sts=2
-augroup END
 let g:ale_linter_aliases = {
 \   'svelte': ['javascript'],
 \}
@@ -261,10 +243,27 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \   '*': ['prettier', 'eslint'],
-\   'svelte': ['prettier', 'eslint'],
 \   'javascript': ['prettier', 'eslint'],
+\   'python': ['black'],
+\   'svelte': ['prettier', 'eslint'],
 \   'typescript': ['prettier'],
 \}
+" Javascript, CSS, SCSS {{{
+let g:polyglot_disabled = ['latex']
+
+augroup filetypes
+    autocmd!
+    autocmd FileType vim setlocal sw=4 sts=4
+    autocmd FileType javascript setlocal sw=2 sts=2 fdm=syntax
+    autocmd FileType typescript setlocal sw=2 sts=2 fdm=syntax
+    autocmd FileType vue setlocal sw=2 sts=2
+    autocmd FileType svelte setlocal sw=2 sts=2
+    autocmd FileType css setlocal sw=2 sts=2
+    autocmd FileType scss setlocal sw=2 sts=2
+    autocmd FileType html setlocal sw=2 sts=2
+    autocmd FileType jinja setlocal sw=2 sts=2
+    autocmd FileType htmljinja setlocal sw=2 sts=2
+augroup END
 " }}}
 " C, Lua {{{
 autocmd filetypes FileType c setlocal sw=2 sts=2
