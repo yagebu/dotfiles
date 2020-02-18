@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-
+"""Backup helpers."""
 import datetime
-from pathlib import Path
 import subprocess
+from pathlib import Path
+from typing import List
 
 import click
 
@@ -12,20 +13,18 @@ TODAY = str(datetime.date.today())
 
 @click.group()
 def cli():
-    pass
+    """Backup helpers."""
 
 
-def run(cmd):
+def run(cmd: List[str]) -> None:
     """Run the given command in the home directory."""
-    print(f'Running: {cmd}')
-    subprocess.run(cmd, shell=True, cwd=Path.home())
+    print(f"Running: {cmd}")
+    subprocess.run(cmd, cwd=Path.home(), check=True)
 
 
-def create(args):
-    """Run the given command in the home directory."""
-    full_args = ['borg', 'create', '-p'] + args
-    print(f'Running: {full_args}')
-    subprocess.run(full_args, cwd=Path.home())
+def create(args: List[str]) -> None:
+    """Create a borg backup."""
+    run(["borg", "create", "-p"] + args)
 
 
 @cli.command()
@@ -33,65 +32,67 @@ def prune():
     """Prune old backups.
 
     For the main document backups, keep 60 daily ones and unlimited weekly
-    ones. Keep 2 VM backups.
+    ones.
     """
-
-    # click.secho('Pruning VMs', fg='green')
-    # run('borg prune -v --list --prefix 20 -H2 ks:backup/vm')
-
     # The prefix ensures that only the usual daily backups are pruned.
-    click.secho('Pruning js-arch', fg='green')
-    run('borg prune -v --list --prefix 20 -d60 -w-1 ks:backup/js-arch')
+    click.secho("Pruning js-arch", fg="green")
+    run(
+        [
+            "borg",
+            "prune",
+            "-v",
+            "--list",
+            "--prefix",
+            "20",
+            "-d60",  # 60 daily backups
+            "-w-1",  # unlimited weekly backups.
+            "atom:backup/js-arch",
+        ]
+    )
 
 
 @cli.command()
-@click.argument('repos', nargs=-1)
+@click.argument("repos", nargs=-1)
 def check(repos):
     """Check backups."""
     if not repos:
-        repos = ['js-arch', 'js-mba', 'vm', 'pictures', 'raw']
+        repos = ["js-arch", "js-mba", "pictures", "raw"]
 
     for repo in repos:
-        click.secho(f'Checking {repo}', fg='green')
-        run(f'borg check -v ks:backup/{repo}')
+        click.secho(f"Checking {repo}", fg="green")
+        run(["borg", "check", "-v", f"atom:backup/{repo}"])
 
 
 @cli.command()
 def pictures():
     """Backup pictures."""
-    create([f'ks:backup/pictures::{TODAY}', 'Pictures'])
+    create([f"atom:backup/pictures::{TODAY}", "Pictures"])
 
 
 @cli.command()
 def raw():
     """Backup RAW photos."""
-    create([f'ks:backup/raw::{TODAY}', 'var/RAW', 'var/panoramas'])
+    create([f"atom:backup/raw::{TODAY}", "var/RAW", "var/panoramas"])
 
 
-@cli.command()
-def vms():
-    """Backup VMs."""
-    create([f'ks:backup/vm::{TODAY}', '-C', 'zlib', 'var/VMs'])
-
-
-def rsync(source, dest):
+def rsync(source: str, dest: str) -> None:
     """Helper to run rsync command."""
-    run(f'rsync -avz --inplace --progress --delete {source} {dest}')
+    run(["rsync", "-a", "--inplace", "--progress", "--delete", source, dest])
 
 
 @cli.command()
 def store():
     """Save Backup and Music to external harddrive."""
-    drive = '/run/media/jakob/Quickstore'
-    rsync('ks:Music/FLAC/', f'{drive}/Music')
-    rsync('ks:backup/', f'{drive}/backup')
+    drive = "/run/media/jakob/Quickstore"
+    rsync("atom:Music/FLAC/", f"{drive}/Music")
+    rsync("atom:backup/", f"{drive}/backup")
 
 
 @cli.command()
 def music():
     """Download music collection."""
-    rsync('ks:Music/OPUS/', '~/Music')
+    rsync("atom:Music/OPUS/", "Music")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()
