@@ -41,6 +41,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'kopischke/vim-stay'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
+Plug 'mgedmin/python-imports.vim'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -297,6 +298,11 @@ augroup vimtex_config
     autocmd User VimtexEventInitPost VimtexCompile
 augroup END
 " }}}
+" Python {{{
+augroup python
+    autocmd!
+    autocmd FileType python nnoremap <leader>i :ImportName<CR>
+augroup END
 " Beancount (with custom org-mode folding) {{{
 augroup beancount
     autocmd!
