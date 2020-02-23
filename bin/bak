@@ -12,7 +12,7 @@ TODAY = str(datetime.date.today())
 
 
 @click.group()
-def cli():
+def cli() -> None:
     """Backup helpers."""
 
 
@@ -28,7 +28,7 @@ def create(args: List[str]) -> None:
 
 
 @cli.command()
-def prune():
+def prune() -> None:
     """Prune old backups.
 
     For the main document backups, keep 60 daily ones and unlimited weekly
@@ -53,7 +53,7 @@ def prune():
 
 @cli.command()
 @click.argument("repos", nargs=-1)
-def check(repos):
+def check(repos) -> None:
     """Check backups."""
     if not repos:
         repos = ["js-arch", "js-mba", "pictures", "raw"]
@@ -64,13 +64,13 @@ def check(repos):
 
 
 @cli.command()
-def pictures():
+def pictures() -> None:
     """Backup pictures."""
     create([f"atom:backup/pictures::{TODAY}", "Pictures"])
 
 
 @cli.command()
-def raw():
+def raw() -> None:
     """Backup RAW photos."""
     create([f"atom:backup/raw::{TODAY}", "var/RAW", "var/panoramas"])
 
@@ -81,7 +81,7 @@ def rsync(source: str, dest: str) -> None:
 
 
 @cli.command()
-def store():
+def store() -> None:
     """Save Backup and Music to external harddrive."""
     drive = "/run/media/jakob/Quickstore"
     rsync("atom:Music/FLAC/", f"{drive}/Music")
@@ -89,7 +89,7 @@ def store():
 
 
 @cli.command()
-def music():
+def music() -> None:
     """Download music collection."""
     rsync("atom:Music/OPUS/", "Music")
 
