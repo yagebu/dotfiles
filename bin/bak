@@ -3,6 +3,7 @@
 import datetime
 import subprocess
 from pathlib import Path
+from typing import Iterable
 from typing import List
 
 import click
@@ -13,18 +14,37 @@ TODAY = str(datetime.date.today())
 
 @click.group()
 def cli() -> None:
-    """Backup helpers."""
+    """Backup helpers.
+
+    Several commands to create backups, prune backups and check the integrity
+    of the backups. This is mostly a thin wrapper around the `borg` backup
+    utility.
+    """
 
 
-def run(cmd: List[str]) -> None:
+def run(cmd: List[str], quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
     """Run the given command in the home directory."""
-    print(f"Running: {cmd}")
-    subprocess.run(cmd, cwd=Path.home(), check=True)
+    if not quiet:
+        print(f"Running: {cmd}")
+    return subprocess.run(cmd, cwd=Path.home(), check=True, **kwargs)
 
 
-def create(args: List[str]) -> None:
+def create(
+    args: List[str], dry_run: bool = False, stats: bool = True, progress: bool = True
+) -> None:
     """Create a borg backup."""
-    run(["borg", "create", "-p"] + args)
+    base_borg_cmd = ["borg", "create"]
+    if not dry_run:
+        if stats:
+            base_borg_cmd.append("--stats")
+        if progress:
+            base_borg_cmd.append("--progress")
+    else:
+        base_borg_cmd.extend(["--list", "--dry-run"])
+    try:
+        run(base_borg_cmd + args)
+    except subprocess.CalledProcessError as err:
+        print(err)
 
 
 @cli.command()
@@ -36,24 +56,149 @@ def prune() -> None:
     """
     # The prefix ensures that only the usual daily backups are pruned.
     click.secho("Pruning js-arch", fg="green")
-    run(
-        [
-            "borg",
-            "prune",
-            "-v",
-            "--list",
-            "--prefix",
-            "20",
-            "-d60",  # 60 daily backups
-            "-w-1",  # unlimited weekly backups.
-            "atom:backup/js-arch",
-        ]
+    prune_args = [
+        "--prefix",
+        "20",
+        "--keep-daily",
+        "60",  # 60 daily backups
+        "--keep-weekly",
+        "-1",  # unlimited weekly backups.
+        "atom:backup/js-arch",
+    ]
+    prune_cmd = ["borg", "prune", "--list", "--dry-run", *prune_args]
+    res = run(prune_cmd, capture_output=True, text=True)
+    lines = res.stderr.splitlines()
+    count = 0
+    for line in lines:
+        if "prune" in line:
+            count += 1
+    if count == 0:
+        click.secho(f"No archives to prune.", fg="green")
+        if click.confirm("Show detailed list?", default=False):
+            click.echo_via_pager(res.stderr)
+    else:
+        click.secho(f"{count} archives to prune.", fg="yellow")
+        if click.confirm("Show detailed list?", default=False):
+            click.echo_via_pager(res.stderr)
+        if click.confirm("Do you want to continue?"):
+            res = run(["borg", "prune", "--list", *prune_args])
+
+
+HOME = "/home/jakob"
+REMOVES = [
+    ".ICEauthoriy",
+    ".adobe",
+    ".bean-shell-history",
+    ".bzr.log",
+    ".cache/chromium",
+    ".config/chromium",
+    ".config/darktable",
+    ".config/libreoffice",
+    ".config/pulse",
+    ".config/xnviewmp",
+    ".cookiecutter_replay",
+    ".docker",
+    ".electron",
+    ".esd_auth",
+    ".filebot",
+    ".gem",
+    ".gnome",
+    ".gnome2",
+    ".idlerc",
+    ".java",
+    ".kde4",
+    ".keras",
+    ".local/share/gvfs-metadata",
+    ".local/share/loliclip",
+    ".local/share/recently-used.xbel",
+    ".macromedia",
+    ".mpv",
+    ".muttator",
+    ".node*",
+    ".npm",
+    ".nviminfo",
+    ".nvimlog",
+    ".oracle_jre_usage",
+    ".pki",
+    ".pylint.d",
+    ".pytest_cache",
+    ".python_history",
+    ".thumbnails",
+    ".tox",
+    ".tree-sitter",
+    ".viminfo",
+    ".w3m",
+    ".xsession-errors",
+]
+REMOVES_FULL_PATHS = [f"{HOME}/{path}" for path in REMOVES]
+
+
+@cli.command()
+def cleanup() -> None:
+    """Delete unneeded files."""
+    click.secho("Deleting unneeded files.", fg="green")
+    rm_old_undo_and_view_files = [
+        "find",
+        f"{HOME}/.local/share/nvim/undo",
+        f"{HOME}/.local/share/nvim/view",
+        "-ctime",
+        "+60",
+        "-exec",
+        "rm",
+        "{}",
+        "+",
+    ]
+    run(rm_old_undo_and_view_files, quiet=True)
+    run(["rm", "--recursive", "--force"] + REMOVES_FULL_PATHS, quiet=True)
+    click.secho("Done.", fg="green")
+
+
+HOME_EXCLUDES = [
+    ".cache",
+    ".config/chromium",
+    ".config/syncthing",
+    ".config/vim",
+    ".local",
+    ".thunderbird",
+    ".VirtualBox",
+    "dev/neovim",
+    "Movies",
+    "Music",
+    "Pictures",
+    "var",
+]
+EXCLUDE_PATTERNS = [
+    "*/__pycache__",
+    "*/node_modules",
+    "*/__pycache__",
+    "*/.tox",
+    "*/.eggs",
+    "*/.mypy_cache",
+    "*.pyc",
+]
+EXCLUDES = [f"{HOME}/{path}" for path in HOME_EXCLUDES] + EXCLUDE_PATTERNS
+
+
+@cli.command()
+@click.option("--dry-run", is_flag=True, help="Only list files to backup.")
+@click.pass_context
+def home(ctx, dry_run: bool) -> None:
+    """Backup home."""
+    exclude_args: List[str] = []
+    for exclude in EXCLUDES:
+        exclude_args.append("--exclude")
+        exclude_args.append(exclude)
+    ctx.invoke(cleanup)
+    create(
+        [f"atom:backup/js-arch::{TODAY}", HOME, *exclude_args],
+        dry_run=dry_run,
+        progress=False,
     )
 
 
 @cli.command()
 @click.argument("repos", nargs=-1)
-def check(repos) -> None:
+def check(repos: Iterable[str]) -> None:
     """Check backups."""
     if not repos:
         repos = ["js-arch", "js-mba", "pictures", "raw"]
@@ -84,6 +229,9 @@ def rsync(source: str, dest: str) -> None:
 def store() -> None:
     """Save Backup and Music to external harddrive."""
     drive = "/run/media/jakob/Quickstore"
+    if not Path(drive).exists():
+        click.secho("External backup drive is not mounted.", fg="red")
+        return
     rsync("atom:Music/FLAC/", f"{drive}/Music")
     rsync("atom:backup/", f"{drive}/backup")
 

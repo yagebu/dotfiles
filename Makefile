@@ -3,11 +3,8 @@ install: deps
 	cp deps/dircolors ~/.config/zsh/dircolors
 	cp zshenv ~/.config/zsh/.zshenv
 	cat deps/completion deps/fzf-keys deps/fzf-completion deps/z zshrc > ~/.config/zsh/.zshrc
-	cp bin/cleanup ~/bin/cleanup
 	cp bin/bak ~/bin/bak
 	cp vimrc ~/.config/nvim/init.vim
-	cp bin/backup-arch ~/bin/backup
-	cp bin/backup-external ~/bin/backup-external
 	cp bin/pacman-disowned ~/bin/pacman-disowned
 	mkdir -p ~/.config/kitty
 	cp arch/kitty.conf ~/.config/kitty/kitty.conf
@@ -20,6 +17,11 @@ install: deps
 sudo: install
 	sudo cp arch/lock-screen /usr/bin/lock-screen
 	sudo pacman -S --needed - < packages/arch-packages
+
+.PHONY: desktop
+desktop: sudo
+	sudo cp arch/systemd-units/backup.service /etc/systemd/system
+	sudo cp arch/systemd-units/backup.timer /etc/systemd/system
 
 deps:
 	mkdir -p deps
