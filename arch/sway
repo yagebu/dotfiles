@@ -17,7 +17,7 @@ set $menu dmenu_run
 #
 # Default wallpaper (more resolutions are available in /usr/share/sway/)
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * background /usr/share/backgrounds/gnome/Icescape.jpg fill
+output * background /usr/share/backgrounds/gnome/ColdWarm.jpg fill
 
 #
 # Example configuration:
@@ -86,7 +86,8 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     # start a terminal
     bindsym $mod+Return exec $term
     # start a browser
-    bindsym $mod+c exec firefox
+    bindsym $mod+c exec "firefox"
+    #bindsym $mod+c exec "MOZ_ENABLE_WAYLAND=1 firefox"
 
     # kill focused window
     bindsym $mod+Shift+q kill
@@ -240,8 +241,8 @@ bar {
     position top
     colors {
         statusline #ffffff
-        background #32323266
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        background #32323299
+        inactive_workspace #323232ff #323232ff #bbbbbb
     }
 }
 

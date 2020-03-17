@@ -245,6 +245,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   '*': ['prettier', 'eslint'],
 \   'javascript': ['prettier', 'eslint'],
+\   'javascriptreact': ['prettier', 'eslint', 'standard'],
 \   'python': ['black'],
 \   'svelte': ['prettier', 'eslint'],
 \   'typescript': ['prettier'],
@@ -256,7 +257,9 @@ augroup filetypes
     autocmd!
     autocmd FileType vim setlocal sw=4 sts=4
     autocmd FileType javascript setlocal sw=2 sts=2 fdm=syntax
+    autocmd FileType javascriptreact setlocal sw=2 sts=2 fdm=syntax
     autocmd FileType typescript setlocal sw=2 sts=2 fdm=syntax
+    autocmd FileType typescriptreact setlocal sw=2 sts=2 fdm=syntax
     autocmd FileType vue setlocal sw=2 sts=2
     autocmd FileType svelte setlocal sw=2 sts=2
     autocmd FileType css setlocal sw=2 sts=2

@@ -2,7 +2,9 @@
 """Backup helpers."""
 import datetime
 import subprocess
+import time
 from pathlib import Path
+from socket import create_connection
 from typing import Iterable
 from typing import List
 
@@ -114,7 +116,7 @@ REMOVES = [
     ".macromedia",
     ".mpv",
     ".muttator",
-    ".node*",
+    ".node",
     ".npm",
     ".nviminfo",
     ".nvimlog",
@@ -123,6 +125,10 @@ REMOVES = [
     ".pylint.d",
     ".pytest_cache",
     ".python_history",
+    ".standard-cache",
+    ".standard-v12-cache",
+    ".standard-v13-cache",
+    ".standard-v14-cache",
     ".thumbnails",
     ".tox",
     ".tree-sitter",
@@ -179,6 +185,33 @@ EXCLUDE_PATTERNS = [
 EXCLUDES = [f"{HOME}/{path}" for path in HOME_EXCLUDES] + EXCLUDE_PATTERNS
 
 
+def is_connected() -> bool:
+    """Check if an internet connection exists."""
+    try:
+        create_connection(("1.1.1.1", 80))
+        return True
+    except OSError:
+        pass
+    return False
+
+
+def wait_until_online() -> bool:
+    """Wait for 10 minutes or until we're online."""
+    if is_connected():
+        return True
+    time.sleep(10)
+    if is_connected():
+        return True
+    click.secho(f"No internet after 10s, try for 10 minutes...", fg="red")
+    attempts = 0
+    while attempts < 60:
+        attempts += 1
+        if is_connected():
+            return True
+    click.secho(f"No internet after 10 minute wait.", fg="red")
+    return False
+
+
 @cli.command()
 @click.option("--dry-run", is_flag=True, help="Only list files to backup.")
 @click.pass_context
@@ -189,6 +222,8 @@ def home(ctx, dry_run: bool) -> None:
         exclude_args.append("--exclude")
         exclude_args.append(exclude)
     ctx.invoke(cleanup)
+    if not wait_until_online():
+        return
     create(
         [f"atom:backup/js-arch::{TODAY}", HOME, *exclude_args],
         dry_run=dry_run,
