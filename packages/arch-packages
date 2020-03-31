@@ -1,5 +1,14 @@
 beets
+borg
+ctags
+fd
 flake8
+fzf
+git
+htop
+man-db
+neovim
+pyenv
 python-black
 python-flask
 python-keyring
@@ -13,5 +22,12 @@ python-pylint
 python-pytest
 python-sphinx
 python-tox
+ripgrep
+rsync
+syncthing
+the_silver_searcher
+tmux
 twine
+ufw
 wl-clipboard
+zsh

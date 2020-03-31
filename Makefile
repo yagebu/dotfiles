@@ -1,9 +1,12 @@
 .PHONY: install
 install: deps
+	mkdir -p ~/.config/zsh
 	cp deps/dircolors ~/.config/zsh/dircolors
 	cp zshenv ~/.config/zsh/.zshenv
 	cat deps/completion deps/fzf-keys deps/fzf-completion deps/z zshrc > ~/.config/zsh/.zshrc
+	mkdir -p ~/bin
 	cp bin/bak ~/bin/bak
+	mkdir -p ~/.config/nvim
 	cp vimrc ~/.config/nvim/init.vim
 	cp bin/pacman-disowned ~/bin/pacman-disowned
 	mkdir -p ~/.config/kitty
@@ -22,6 +25,12 @@ sudo: install
 desktop: sudo
 	sudo cp arch/systemd-units/backup.service /etc/systemd/system
 	sudo cp arch/systemd-units/backup.timer /etc/systemd/system
+
+.PHONY: server
+server: install
+	sudo pacman -S --needed - < packages/arch-packages
+	sudo pacman -S --needed - < packages/server-packages
+	pikaur -S --noconfirm --needed - < packages/server-aur-packages
 
 deps:
 	mkdir -p deps
