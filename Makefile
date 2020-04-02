@@ -3,7 +3,7 @@ install: deps
 	mkdir -p ~/.config/zsh
 	cp deps/dircolors ~/.config/zsh/dircolors
 	cp zshenv ~/.config/zsh/.zshenv
-	cat deps/completion deps/fzf-keys deps/fzf-completion deps/z zshrc > ~/.config/zsh/.zshrc
+	cat deps/completion deps/fzf-keys deps/fzf-completion zshrc > ~/.config/zsh/.zshrc
 	mkdir -p ~/bin
 	cp bin/bak ~/bin/bak
 	mkdir -p ~/.config/nvim
@@ -37,7 +37,7 @@ deps:
 	curl -o deps/completion https://raw.githubusercontent.com/twe4ked/dotfiles/master/shell/zsh/completion.zsh
 	curl -o deps/fzf-keys https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh
 	curl -o deps/fzf-completion https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh
-	curl -o deps/z https://raw.githubusercontent.com/rupa/z/master/z.sh
+	curl -o deps/z.lua https://raw.githubusercontent.com/skywind3000/z.lua/master/z.lua
 
 .PHONY: clean
 clean:

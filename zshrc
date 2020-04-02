@@ -1,3 +1,5 @@
+# vim: set foldmethod=marker:
+
 for dir in ~/bin ~/.local/bin "$PYENV_ROOT/bin"; do
     if [[ -z ${path[(r)$dir]} ]]; then
         path=($dir $path)
@@ -7,7 +9,6 @@ done
 # initialise colors
 autoload -U colors
 colors
-
 eval "$(dircolors ~/.config/zsh/dircolors)"
 
 setopt PROMPT_SUBST
@@ -32,6 +33,9 @@ export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 eval "$(pyenv init -)"
+
+# z.lua
+eval "$(lua ~/dev/dotfiles/deps/z.lua --init zsh)"
 
 # Aliases {{{
 # General {{{
