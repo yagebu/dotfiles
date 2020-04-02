@@ -8,10 +8,9 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term 'kitty'
-#set $term 'KITTY_ENABLE_WAYLAND=1 kitty'
+set $term 'kitty -1'
 # Your preferred application launcher
-set $menu dmenu_run
+set $menu wofi --show drun -i | xargs swaymsg exec --
 
 ### Output configuration
 #

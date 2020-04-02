@@ -16,15 +16,14 @@ install: deps
 	mkdir -p ~/.config/i3status
 	cp arch/i3status ~/.config/i3status/config
 
-.PHONY: sudo
-sudo: install
-	sudo cp arch/lock-screen /usr/bin/lock-screen
-	sudo pacman -S --needed - < packages/arch-packages
-
 .PHONY: desktop
-desktop: sudo
+desktop: install
 	sudo cp arch/systemd-units/backup.service /etc/systemd/system
 	sudo cp arch/systemd-units/backup.timer /etc/systemd/system
+	sudo cp arch/lock-screen /usr/bin/lock-screen
+	sudo pacman -S --needed - < packages/arch-packages
+	sudo pacman -S --needed - < packages/desktop-packages
+	pikaur -S --noconfirm --needed - < packages/desktop-aur-packages
 
 .PHONY: server
 server: install
