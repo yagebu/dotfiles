@@ -27,6 +27,8 @@ desktop: install
 
 .PHONY: server
 server: install
+	sudo cp arch/systemd-units/certbot.service /etc/systemd/system
+	sudo cp arch/systemd-units/certbot.timer /etc/systemd/system
 	sudo pacman -S --needed - < packages/arch-packages
 	sudo pacman -S --needed - < packages/server-packages
 	pikaur -S --noconfirm --needed - < packages/server-aur-packages
