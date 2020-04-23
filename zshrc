@@ -29,7 +29,7 @@ if [ -f ~/Documents/.config/localrc ]; then
 fi
 
 # use ag for fzf and ignore Library path on OS X
-export FZF_DEFAULT_COMMAND="ag -l -g '' -p ~/.config/agignore"
+export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 eval "$(pyenv init -)"

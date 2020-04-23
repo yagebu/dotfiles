@@ -25,7 +25,6 @@ python-tox
 ripgrep
 rsync
 syncthing
-the_silver_searcher
 tmux
 twine
 wl-clipboard
