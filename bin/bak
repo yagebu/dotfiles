@@ -62,9 +62,11 @@ def prune() -> None:
         "--prefix",
         "20",
         "--keep-daily",
-        "60",  # 60 daily backups
+        "30",  # 30 daily backups
         "--keep-weekly",
-        "-1",  # unlimited weekly backups.
+        "52",  # weekly backups for a year.
+        "--keep-monthly",
+        "-1",  # unlimited monthly backups.
         "atom:backup/js-arch",
     ]
     prune_cmd = ["borg", "prune", "--list", "--dry-run", *prune_args]
@@ -75,7 +77,7 @@ def prune() -> None:
         if "prune" in line:
             count += 1
     if count == 0:
-        click.secho(f"No archives to prune.", fg="green")
+        click.secho("No archives to prune.", fg="green")
         if click.confirm("Show detailed list?", default=False):
             click.echo_via_pager(res.stderr)
     else:
