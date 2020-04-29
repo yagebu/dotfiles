@@ -228,8 +228,8 @@ bindsym XF86AudioRaiseVolume exec \
 bindsym F12 exec \
     pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
 
-bindsym XF86MonBrightnessUp exec brightnessctl s +2%
-bindsym XF86MonBrightnessDown exec brightnessctl s 2%-
+bindsym XF86MonBrightnessUp exec brightnessctl -e s +5%
+bindsym XF86MonBrightnessDown exec brightnessctl -e s 5%-
 
 #
 # Status Bar:
