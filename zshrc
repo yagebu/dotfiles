@@ -92,11 +92,10 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacu='pikaur -Syu'
 
     function pipu() {
-        pip install --user ~/dev/beancount
-        pip install --user --no-build-isolation -U \
-            -e ~/dev/fava \
-            -e ~/dev/fava-plugins \
-            -e ~/dev/smart_importer
+        [ -d "$HOME/dev/beancount" ] && pip install --user "$HOME/dev/beancount"
+        [ -d "$HOME/dev/fava" ] && pip install  --no-build-isolation -U -e "$HOME/dev/fava"
+        [ -d "$HOME/dev/fava-plugins" ] && pip install  --no-build-isolation -U -e "$HOME/dev/fava-plugins"
+        [ -d "$HOME/dev/smart_importer" ] && pip install  --no-build-isolation -U -e "$HOME/dev/smart_importer"
     }
 
     function pacua() {
