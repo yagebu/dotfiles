@@ -204,13 +204,13 @@ def wait_until_online() -> bool:
     time.sleep(10)
     if is_connected():
         return True
-    click.secho(f"No internet after 10s, try for 10 minutes...", fg="red")
+    click.secho("No internet after 10s, try for 10 minutes...", fg="red")
     attempts = 0
     while attempts < 60:
         attempts += 1
         if is_connected():
             return True
-    click.secho(f"No internet after 10 minute wait.", fg="red")
+    click.secho("No internet after 10 minute wait.", fg="red")
     return False
 
 
