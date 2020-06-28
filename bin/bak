@@ -182,6 +182,7 @@ EXCLUDE_PATTERNS = [
     "*/.tox",
     "*/.eggs",
     "*/.mypy_cache",
+    "*/.vscode-oss",
     "*.pyc",
 ]
 EXCLUDES = [f"{HOME}/{path}" for path in HOME_EXCLUDES] + EXCLUDE_PATTERNS
