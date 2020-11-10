@@ -7,6 +7,7 @@ if !isdirectory(&backupdir)
 endif
 " }}}
 " Plugins {{{
+let g:polyglot_disabled = ['latex']
 " setup {{{
 if empty(glob($XDG_DATA_HOME . '/nvim/site/autoload/plug.vim'))
     silent !echo "Installing vim-plug..."
@@ -240,6 +241,7 @@ let g:ale_linter_aliases = {
 let g:ale_linters = {
 \   'svelte': ['eslint'],
 \   'typescript': ['eslint', 'tsserver'],
+\   'zsh': ['shellcheck', 'shell'],
 \}
 let g:ale_fixers = {
 \   '*': ['prettier', 'eslint'],
@@ -250,8 +252,6 @@ let g:ale_fixers = {
 \   'typescript': ['prettier'],
 \}
 " Javascript, CSS, SCSS {{{
-let g:polyglot_disabled = ['latex']
-
 augroup filetypes
     autocmd!
     autocmd FileType vim setlocal sw=4 sts=4
@@ -291,9 +291,9 @@ let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_imaps_list = []
 
-call deoplete#custom#var('omni', 'input_patterns', {
-            \ 'tex': g:vimtex#re#deoplete
-            \})
+" call deoplete#custom#var('omni', 'input_patterns', {
+"             \ 'tex': g:vimtex#re#deoplete
+"             \})
 
 augroup vimtex_config
     autocmd!
@@ -316,10 +316,10 @@ augroup beancount
     autocmd FileType beancount nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
 augroup END
 
-"call deoplete#enable_logging('INFO', '/Users/jakob/deoplete')
-"call deoplete#custom#var('omni', 'input_patterns', {
-"            \ 'beancount': '^\s+.*|#\S*|"[^"]*'
-"            \})
+" call deoplete#enable_logging('INFO', '/Users/jakob/deoplete')
+" call deoplete#custom#var('omni', 'input_patterns', {
+"             \ 'beancount': '^\s+.*|#\S*|"[^"]*'
+"             \})
 
 function! BeancountFold(lnum)
     let l1 = getline(a:lnum)
