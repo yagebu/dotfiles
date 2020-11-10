@@ -29,7 +29,7 @@ if [ -f ~/Documents/.config/localrc ]; then
 fi
 
 # use ag for fzf and ignore Library path on OS X
-export FZF_DEFAULT_COMMAND="rg --files"
+export FZF_DEFAULT_COMMAND="rg --files --hidden"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 eval "$(pyenv init -)"
@@ -75,7 +75,7 @@ alias gpu='git push'
 alias gr='git rebase'
 alias gri='git rebase -i'
 alias gs='git status'
-alias cgo=$(which go)
+alias cgo="$(which go)"
 alias go='git checkout'
 # }}}
 # Linux {{{
@@ -91,14 +91,14 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacs='pikaur -Ss'
     alias pacu='pikaur -Syu'
 
-    function pipu() {
+    pipu() {
         [ -d "$HOME/dev/beancount" ] && pip install --user "$HOME/dev/beancount"
         [ -d "$HOME/dev/fava" ] && pip install --no-build-isolation -U -e "$HOME/dev/fava"
         [ -d "$HOME/dev/fava-plugins" ] && pip install --no-build-isolation -U -e "$HOME/dev/fava-plugins"
         [ -d "$HOME/dev/smart_importer" ] && pip install --no-build-isolation -U -e "$HOME/dev/smart_importer"
     }
 
-    function pacua() {
+    pacua() {
         pikaur -Syu --devel \
             && pipu \
             && vi +PlugUpgrade +PlugUpdate +qa

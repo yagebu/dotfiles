@@ -269,7 +269,7 @@ def store() -> None:
     """Save Backup and Music to external harddrive."""
     drive = "/run/media/jakob/Quickstore"
     if not Path(drive).exists():
-        click.secho("External backup drive is not mounted.", fg="red")
+        click.secho(f"External backup drive not mounted at {drive}.", fg="red")
         return
     rsync("atom:Music/FLAC/", f"{drive}/Music")
     rsync("atom:backup/", f"{drive}/backup")
