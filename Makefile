@@ -13,6 +13,11 @@ install: deps
 	cp arch/kitty.conf ~/.config/kitty/kitty.conf
 	mkdir -p ~/.config/sway
 	cp arch/sway ~/.config/sway/config
+	mkdir -p ~/.config/waybar
+	cp arch/waybar ~/.config/waybar/config
+	cp arch/waybar.css ~/.config/waybar/style.css
+	mkdir -p ~/.config/kitty
+	cp arch/kitty.conf ~/.config/kitty/kitty.conf
 	mkdir -p ~/.config/i3status
 	cp arch/i3status ~/.config/i3status/config
 
