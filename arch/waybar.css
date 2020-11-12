@@ -2,8 +2,8 @@
     border: none;
     border-radius: 0;
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: Roboto, Helvetica, Arial, "Font Awesome 5 Free", sans-serif;
-    font-size: 13px;
+    font-family: Ubuntu, "Font Awesome 5 Free", sans-serif;
+    font-size: 11pt;
     min-height: 0;
 }
 
@@ -17,24 +17,6 @@ window#waybar {
 
 window#waybar.hidden {
     opacity: 0.2;
-}
-
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
-
-window#waybar.termite {
-    background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
 }
 
 #workspaces button {
@@ -52,18 +34,12 @@ window#waybar.chromium {
 }
 
 #workspaces button.focused {
-    background-color: #64727D;
+    background-color: #285577;
     border-bottom: 3px solid #ffffff;
 }
 
 #workspaces button.urgent {
     background-color: #eb4d4b;
-}
-
-#mode {
-    background-color: #64727D;
-    background-color: #eb4d4b;
-    border-bottom: 3px solid #ffffff;
 }
 
 #clock,
@@ -83,6 +59,11 @@ window#waybar.chromium {
     margin: 0 2px;
     background-color: #64727D;
     color: #ffffff;
+}
+
+#mode {
+    background-color: #eb4d4b;
+    border-bottom: 3px solid #ffffff;
 }
 
 #battery.charging {
