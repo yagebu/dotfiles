@@ -162,17 +162,20 @@ def cleanup() -> None:
 
 
 HOME_EXCLUDES = [
+    ".VirtualBox",
     ".cache",
+    ".cargo",
+    ".config/Code - OSS",
     ".config/chromium",
     ".config/syncthing",
     ".config/vim",
     ".local",
+    ".mozilla",
     ".thunderbird",
-    ".VirtualBox",
-    "dev/neovim",
     "Movies",
     "Music",
     "Pictures",
+    "dev/neovim",
     "var",
 ]
 EXCLUDE_PATTERNS = [
