@@ -172,6 +172,8 @@ HOME_EXCLUDES = [
     ".local",
     ".mozilla",
     ".thunderbird",
+    ".var",
+    ".vscode-oss",
     "Movies",
     "Music",
     "Pictures",
@@ -179,13 +181,11 @@ HOME_EXCLUDES = [
     "var",
 ]
 EXCLUDE_PATTERNS = [
-    "*/__pycache__",
     "*/node_modules",
     "*/__pycache__",
     "*/.tox",
     "*/.eggs",
     "*/.mypy_cache",
-    "*/.vscode-oss",
     "*.pyc",
 ]
 EXCLUDES = [f"{HOME}/{path}" for path in HOME_EXCLUDES] + EXCLUDE_PATTERNS
