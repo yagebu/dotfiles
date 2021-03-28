@@ -91,11 +91,22 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pacs='pikaur -Ss'
     alias pacu='pikaur -Syu'
 
+    pipi-user () {
+        [ -d "$1" ] && pip install --user "$1"
+        return 0
+    }
+
+    pipi-editable () {
+        [ -d "$1" ] && pip install --no-build-isolation -U -e "$1"
+        return 0
+    }
+
     pipu() {
-        [ -d "$HOME/dev/beancount" ] && pip install --user "$HOME/dev/beancount"
-        [ -d "$HOME/dev/fava" ] && pip install --no-build-isolation -U -e "$HOME/dev/fava"
-        [ -d "$HOME/dev/fava-plugins" ] && pip install --no-build-isolation -U -e "$HOME/dev/fava-plugins"
-        [ -d "$HOME/dev/smart_importer" ] && pip install --no-build-isolation -U -e "$HOME/dev/smart_importer"
+        pipi-user "$HOME/dev/beancount"
+        pipi-editable "$HOME/dev/fava"
+        pipi-editable "$HOME/dev/fava-plugins"
+        pipi-editable "$HOME/dev/smart_importer"
+        return 0
     }
 
     pacua() {
