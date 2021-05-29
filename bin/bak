@@ -9,6 +9,9 @@ from typing import Iterable
 from typing import List
 
 import click
+from click import confirm
+from click import secho
+from click import echo_via_pager
 
 
 TODAY = str(datetime.date.today())
@@ -57,7 +60,7 @@ def prune() -> None:
     ones.
     """
     # The prefix ensures that only the usual daily backups are pruned.
-    click.secho("Pruning js-arch", fg="green")
+    secho("Pruning js-arch", fg="green")
     prune_args = [
         "--prefix",
         "20",
@@ -77,14 +80,14 @@ def prune() -> None:
         if "prune" in line:
             count += 1
     if count == 0:
-        click.secho("No archives to prune.", fg="green")
-        if click.confirm("Show detailed list?", default=False):
-            click.echo_via_pager(res.stderr)
+        secho("No archives to prune.", fg="green")
+        if confirm("Show detailed list?", default=False):
+            echo_via_pager(res.stderr)
     else:
-        click.secho(f"{count} archives to prune.", fg="yellow")
-        if click.confirm("Show detailed list?", default=False):
-            click.echo_via_pager(res.stderr)
-        if click.confirm("Do you want to continue?"):
+        secho(f"{count} archives to prune.", fg="yellow")
+        if confirm("Show detailed list?", default=False):
+            echo_via_pager(res.stderr)
+        if confirm("Do you want to continue?"):
             res = run(["borg", "prune", "--list", *prune_args])
 
 
@@ -144,7 +147,7 @@ REMOVES_FULL_PATHS = [f"{HOME}/{path}" for path in REMOVES]
 @cli.command()
 def cleanup() -> None:
     """Delete unneeded files."""
-    click.secho("Deleting unneeded files.", fg="green")
+    secho("Deleting unneeded files.", fg="green")
     rm_old_undo_and_view_files = [
         "find",
         f"{HOME}/.local/share/nvim/undo",
@@ -158,7 +161,7 @@ def cleanup() -> None:
     ]
     run(rm_old_undo_and_view_files, quiet=True)
     run(["rm", "--recursive", "--force"] + REMOVES_FULL_PATHS, quiet=True)
-    click.secho("Done.", fg="green")
+    secho("Done.", fg="green")
 
 
 HOME_EXCLUDES = [
@@ -208,14 +211,14 @@ def wait_until_online() -> bool:
     time.sleep(10)
     if is_connected():
         return True
-    click.secho("No internet after 10s, try for 10 minutes...", fg="red")
+    secho("No internet after 10s, try for 10 minutes...", fg="red")
     attempts = 0
     while attempts < 60:
         attempts += 1
         if is_connected():
             return True
         time.sleep(10)
-    click.secho("No internet after 10 minute wait.", fg="red")
+    secho("No internet after 10 minute wait.", fg="red")
     return False
 
 
@@ -246,7 +249,7 @@ def check(repos: Iterable[str]) -> None:
         repos = ["js-arch", "js-mba", "pictures", "raw"]
 
     for repo in repos:
-        click.secho(f"Checking {repo}", fg="green")
+        secho(f"Checking {repo}", fg="green")
         run(["borg", "check", "-v", f"atom:backup/{repo}"])
 
 
@@ -270,18 +273,34 @@ def rsync(source: str, dest: str) -> None:
 @cli.command()
 def store() -> None:
     """Save Backup and Music to external harddrive."""
-    drive = "/run/media/jakob/Quickstore"
-    if not Path(drive).exists():
-        click.secho(f"External backup drive not mounted at {drive}.", fg="red")
-        return
-    rsync("atom:Music/FLAC/", f"{drive}/Music")
-    rsync("atom:backup/", f"{drive}/backup")
+    for drive in ["/run/media/jakob/Quickstore", "/run/media/jakob/BACKUP"]:
+        if not Path(drive).exists():
+            secho(f"External backup drive not mounted at {drive}.", fg="red")
+        else:
+            secho(f"Starting backup to {drive}.", fg="green")
+            rsync("atom:backup/", f"{drive}/backup")
+            rsync("atom:Music/FLAC/", f"{drive}/Music")
 
 
 @cli.command()
 def music() -> None:
     """Download music collection."""
     rsync("atom:Music/OPUS/", "Music")
+
+
+@cli.command()
+def status() -> None:
+    """Show backup status."""
+    repos = ["js-arch", "pictures", "raw"]
+
+    for repo in repos:
+        secho(f"Last 5 backups for {repo}:", fg="green")
+        run(
+            ["borg", "list", "--short", "--last", "5", f"atom:backup/{repo}"],
+            quiet=True,
+        )
+    secho("Status of backup of documents.", fg="green")
+    subprocess.run(["systemctl", "status", "backup.service"], check=False)
 
 
 if __name__ == "__main__":

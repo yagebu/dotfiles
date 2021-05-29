@@ -32,7 +32,7 @@ fi
 export FZF_DEFAULT_COMMAND="rg --files --hidden"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 
 # z.lua
 eval "$(lua ~/dev/dotfiles/deps/z.lua --init zsh)"
