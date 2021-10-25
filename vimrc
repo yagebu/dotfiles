@@ -43,6 +43,7 @@ Plug 'kopischke/vim-stay'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
@@ -64,6 +65,14 @@ Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 "}}}
 call plug#end()
+" }}}
+" nvim-treesitter {{{
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+ensure_installed = "maintained",
+highlight = { enable = true },
+}
+EOF
 " }}}
 " Basic settings {{{
 set hidden
