@@ -1,1 +1,5 @@
 noto-fonts
+pamixer
+pipewire-alsa
+pipewire-jack
+pipewire-pulse

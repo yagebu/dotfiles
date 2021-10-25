@@ -219,19 +219,19 @@ bindsym $mod+r mode "resize"
 
 # volume controls (special keys on keyboard)
 bindsym XF86AudioMute exec \
-    pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
+    pamixer -t
 bindsym F10 exec \
-    pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
+    pamixer -t
 
 bindsym XF86AudioLowerVolume exec \
-    pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
+    pamixer -d 5
 bindsym F11 exec \
-    pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
+    pamixer -d 5
 
 bindsym XF86AudioRaiseVolume exec \
-    pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
+    pamixer -i 5
 bindsym F12 exec \
-    pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
+    pamixer -i 5
 
 bindsym XF86MonBrightnessUp exec brightnessctl -e s +5%
 bindsym XF86MonBrightnessDown exec brightnessctl -e s 5%-
