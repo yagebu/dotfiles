@@ -87,8 +87,8 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     # start a terminal
     bindsym $mod+Return exec $term
     # start a browser
-    bindsym $mod+c exec "firefox"
-    #bindsym $mod+c exec "MOZ_ENABLE_WAYLAND=1 firefox"
+    #bindsym $mod+c exec "firefox"
+    bindsym $mod+c exec "MOZ_ENABLE_WAYLAND=1 firefox"
 
     # kill focused window
     bindsym $mod+Shift+q kill

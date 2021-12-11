@@ -22,12 +22,11 @@ endif
 call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 " }}}
 Plug 'Konfekt/FastFold'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'SirVer/ultisnips'
 Plug 'ap/vim-buftabline'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim'
-Plug 'janko-m/vim-test'
+Plug 'vim-test/vim-test'
 Plug 'jreybert/vimagit'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -40,7 +39,6 @@ Plug 'junegunn/vim-pseudocl'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
 Plug 'kopischke/vim-stay'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
@@ -49,21 +47,26 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
+" Language server {{{
+Plug 'neovim/nvim-lspconfig'
+" }}}
+" Autocompletion {{{
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+" }}}
 " File type specific plugins {{{
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'chrisbra/Colorizer', { 'for': ['css', 'scss'] }
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
-Plug 'evanleck/vim-svelte', { 'for': 'svelte' }
-Plug 'sheerun/vim-polyglot'
-Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
-"}}}
+" }}}
 " Color schemes {{{
-Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
-"}}}
+" }}}
 call plug#end()
 " }}}
 " nvim-treesitter {{{
@@ -189,31 +192,87 @@ nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
 " }}}
 " }}}
+" nvim-lspconfig {{{
+lua <<EOF
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+local lspconfig = require('lspconfig')
+
+local servers = { 'pyright', 'tsserver', 'svelte' }
+for _, lsp in ipairs(servers) do
+  lspconfig[lsp].setup {
+    capabilities = capabilities,
+  }
+end
+EOF
+" }}}
 " Completion {{{
 nmap <silent> K <Plug>(ale_hover)
 nmap <silent> gd <Plug>(ale_go_to_definition)
 nnoremap <silent> <F2> :call ALERename<CR>
 
-let g:deoplete#enable_at_startup = 1
+" let g:UltiSnipsSnippetDirectories = [$HOME.'/dev/dotfiles/snippets']
+" let g:UltiSnipsExpandTrigger       = '<C-j>'
+" let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
+" let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
-let g:UltiSnipsSnippetDirectories = [$HOME.'/dev/dotfiles/snippets']
-let g:UltiSnipsExpandTrigger       = '<C-j>'
-let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+set completeopt=menu,menuone,noselect
 
-inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
+lua <<EOF
+  local cmp = require'cmp'
+
+  cmp.setup({
+    mapping = {
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end,
+    ['<S-Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end,
+    },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+EOF
 " }}}
 " Misc {{{
-let g:gutentags_cache_dir = $XDG_CACHE_HOME . '/nvim/tags'
-let g:gutentags_ctags_exclude = ['/usr/local']
-let g:gutentags_file_list_command = {
-            \ 'markers': {
-            \ '.git': 'git ls-files',
-            \ '.hg': 'hg files',
-            \ },
-            \ }
-
 set viewoptions=cursor,folds,slash,unix
 
 let g:ale_lint_on_save = 1
@@ -222,7 +281,9 @@ let g:ale_sign_error = '⨉'
 let g:ale_sign_warning = '⚠'
 let g:ale_sign_column_always = 1
 
-let g:colorizer_auto_filetype='css'
+lua <<EOF
+require'colorizer'.setup()
+EOF
 
 augroup dotfiles
     autocmd!
@@ -255,7 +316,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   '*': ['prettier', 'eslint'],
 \   'javascript': ['prettier', 'eslint'],
-\   'javascriptreact': ['prettier', 'eslint', 'standard'],
+\   'javascriptreact': ['prettier', 'eslint'],
 \   'python': ['black'],
 \   'svelte': ['prettier', 'eslint'],
 \   'typescript': ['prettier'],
@@ -300,10 +361,6 @@ let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_imaps_list = []
 
-" call deoplete#custom#var('omni', 'input_patterns', {
-"             \ 'tex': g:vimtex#re#deoplete
-"             \})
-
 augroup vimtex_config
     autocmd!
     autocmd User VimtexEventInitPost VimtexCompile
@@ -324,11 +381,6 @@ augroup beancount
     autocmd FileType beancount inoremap . .<C-\><C-O>:AlignCommodity<CR>
     autocmd FileType beancount nnoremap <leader>t :call ledger#transaction_state_toggle(line('.'), '*!')<CR>
 augroup END
-
-" call deoplete#enable_logging('INFO', '/Users/jakob/deoplete')
-" call deoplete#custom#var('omni', 'input_patterns', {
-"             \ 'beancount': '^\s+.*|#\S*|"[^"]*'
-"             \})
 
 function! BeancountFold(lnum)
     let l1 = getline(a:lnum)
