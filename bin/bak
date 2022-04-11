@@ -65,9 +65,9 @@ def prune() -> None:
         "--prefix",
         "20",
         "--keep-daily",
-        "30",  # 30 daily backups
+        "14",  # daily backups
         "--keep-weekly",
-        "52",  # weekly backups for a year.
+        "12",  # weekly backups for three months.
         "--keep-monthly",
         "-1",  # unlimited monthly backups.
         "atom:backup/js-arch",
@@ -227,7 +227,7 @@ def wait_until_online() -> bool:
 @click.pass_context
 def home(ctx, dry_run: bool) -> None:
     """Backup home."""
-    exclude_args: List[str] = []
+    exclude_args: List[str] = ["--exclude-caches"]
     for exclude in EXCLUDES:
         exclude_args.append("--exclude")
         exclude_args.append(exclude)

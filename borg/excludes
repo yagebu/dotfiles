@@ -1,0 +1,52 @@
+# linux user home excludes
+home/jakob/.VirtualBox
+home/jakob/.cache
+home/jakob/.cargo
+home/jakob/.config/Code - OSS
+home/jakob/.config/chromium
+home/jakob/.config/fresh
+home/jakob/.config/syncthing
+home/jakob/.config/vim
+home/jakob/.electron
+home/jakob/.local
+home/jakob/.local/share
+home/jakob/.mozilla
+home/jakob/.thunderbird
+home/jakob/.var
+home/jakob/.vscode-oss
+home/jakob/Movies
+home/jakob/Music
+home/jakob/Pictures
+home/jakob/dev/beancount
+home/jakob/dev/beancount-git
+home/jakob/dev/beancount-web/venv
+home/jakob/dev/borg
+home/jakob/dev/erbse/venv
+home/jakob/dev/hugin
+home/jakob/dev/neovim
+home/jakob/dev/python-client
+home/jakob/var
+
+# (old) macOS user home excludes
+Users/jakob/dev/beancount
+Users/jakob/dev/beancount-git
+Users/jakob/dev/beancount-web/venv
+Users/jakob/dev/borg
+Users/jakob/dev/erbse/venv
+Users/jakob/dev/hugin
+Users/jakob/dev/neovim
+Users/jakob/dev/lektor
+Users/jakob/dev/python-client
+Users/jakob/.config/fresh
+Users/jakob/.config/vim
+Users/jakob/.config/syncthing
+Users/jakob/.gem
+Users/jakob/.local/share
+
+# Always exclude the following directories
+*/node_modules
+*/__pycache__
+*/.tox
+*/.eggs
+*/.mypy_cache
+*.pyc

@@ -2,7 +2,7 @@
     border: none;
     border-radius: 0;
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: Ubuntu, "Font Awesome 5 Free", sans-serif;
+    font-family: Ubuntu, "Font Awesome 6 Free", sans-serif;
     font-size: 11pt;
     min-height: 0;
 }

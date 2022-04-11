@@ -72,7 +72,7 @@ call plug#end()
 " nvim-treesitter {{{
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-ensure_installed = "maintained",
+ensure_installed = { "javascript", "typescript", "html", "rust"},
 highlight = { enable = true },
 }
 EOF
