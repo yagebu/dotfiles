@@ -1,10 +1,11 @@
-brightnessctl
+downgrade
 fonts-meta-extended-lt
 hdrmerge
+mullvad-vpn
 neovim-remote
+nodejs-svelte-language-server
 ocrmypdf
 otf-et-book
 pikaur
 stapler
 ttf-mac-fonts
-wofi
