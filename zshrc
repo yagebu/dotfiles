@@ -97,8 +97,13 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     }
 
     pipi-editable () {
-        [ -d "$1" ] && pip install --no-build-isolation -U -e "$1"
+        [ -d "$1" ] && pip install --user -e "$1"
         return 0
+    }
+
+    mvd() {
+        mv ~/*.pdf ~/Documents/inbox
+        mv ~/*.csv ~/Documents/inbox
     }
 
     pipu() {

@@ -72,7 +72,7 @@ call plug#end()
 " nvim-treesitter {{{
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-ensure_installed = { "javascript", "typescript", "html", "rust"},
+ensure_installed = { "javascript", "typescript", "html", "rust", "svelte", "css"},
 highlight = { enable = true },
 }
 EOF
@@ -400,7 +400,7 @@ let g:lightline = {
             \             [ 'readonly', 'filename', 'modified', 'gitbranch' ] ],
             \ },
             \ 'component_function': {
-            \   'gitbranch': 'fugitive#head'
+            \   'gitbranch': 'FugitiveHead'
             \ },
             \ }
 " }}}
