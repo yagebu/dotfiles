@@ -89,6 +89,7 @@ def prune() -> None:
             echo_via_pager(res.stderr)
         if confirm("Do you want to continue?"):
             res = run(["borg", "prune", "--list", *prune_args])
+            res = run(["borg", "compact", "atom:backup/js-arch"])
 
 
 HOME = "/home/jakob"
@@ -111,6 +112,7 @@ REMOVES = [
     ".gem",
     ".gnome",
     ".gnome2",
+    ".hugin",
     ".idlerc",
     ".java",
     ".kde4",
