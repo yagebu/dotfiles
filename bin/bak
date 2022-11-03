@@ -59,11 +59,11 @@ def prune() -> None:
     For the main document backups, keep 60 daily ones and unlimited weekly
     ones.
     """
-    # The prefix ensures that only the usual daily backups are pruned.
+    # The prefix glob ensures that only the usual daily backups are pruned.
     secho("Pruning js-arch", fg="green")
     prune_args = [
-        "--prefix",
-        "20",
+        "--glob-archives",
+        "20*",
         "--keep-daily",
         "14",  # daily backups
         "--keep-weekly",

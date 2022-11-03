@@ -18,7 +18,7 @@ set $menu wofi --show drun -i | xargs swaymsg exec --
 set $menu_path wofi --show run -i | xargs swaymsg exec --
 # }}}
 # Output configuration {{{
-output * background /usr/share/backgrounds/gnome/brush-strokes-l.jpg fill
+output * background /usr/share/backgrounds/gnome/wood-d.webp fill
 
 # Example configuration:
 #
@@ -220,18 +220,18 @@ bindsym $mod+r mode "resize"
 # volume controls (special keys on keyboard)
 bindsym XF86AudioMute exec \
     pamixer -t
-bindsym F10 exec \
-    pamixer -t
+# bindsym F10 exec \
+#     pamixer -t
 
 bindsym XF86AudioLowerVolume exec \
     pamixer -d 5
-bindsym F11 exec \
-    pamixer -d 5
+# bindsym F11 exec \
+#     pamixer -d 5
 
 bindsym XF86AudioRaiseVolume exec \
     pamixer -i 5
-bindsym F12 exec \
-    pamixer -i 5
+# bindsym F12 exec \
+#     pamixer -i 5
 
 bindsym XF86MonBrightnessUp exec brightnessctl -e s +5%
 bindsym XF86MonBrightnessDown exec brightnessctl -e s 5%-
