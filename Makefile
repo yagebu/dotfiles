@@ -1,5 +1,5 @@
-.PHONY: install
-install: deps
+.PHONY: user
+user: deps
 	mkdir -p ~/.config/zsh
 	cp deps/dircolors ~/.config/zsh/dircolors
 	cp zshenv ~/.config/zsh/.zshenv
@@ -8,7 +8,6 @@ install: deps
 	cp bin/bak ~/bin/bak
 	mkdir -p ~/.config/nvim
 	cp vimrc ~/.config/nvim/init.vim
-	cp bin/pacman-disowned ~/bin/pacman-disowned
 	mkdir -p ~/.config/kitty
 	cp arch/kitty.conf ~/.config/kitty/kitty.conf
 	mkdir -p ~/.config/sway
@@ -21,22 +20,14 @@ install: deps
 	mkdir -p ~/.config/i3status
 	cp arch/i3status ~/.config/i3status/config
 
-.PHONY: desktop
-desktop: install
-	sudo cp arch/systemd-units/backup.service /etc/systemd/system
-	sudo cp arch/systemd-units/backup.timer /etc/systemd/system
-	sudo cp arch/lock-screen /usr/bin/lock-screen
-	sudo pacman -S --needed - < packages/arch-packages
-	sudo pacman -S --needed - < packages/desktop-packages
-	pikaur -S --noconfirm --needed - < packages/desktop-aur-packages
+.PHONY: aconfmgr-save
+aconfmgr-save:
+	aconfmgr -c aconfmgr --skip-checksums save
 
-.PHONY: server
-server: install
-	sudo cp arch/systemd-units/certbot.service /etc/systemd/system
-	sudo cp arch/systemd-units/certbot.timer /etc/systemd/system
-	sudo pacman -S --needed - < packages/arch-packages
-	sudo pacman -S --needed - < packages/server-packages
-	pikaur -S --noconfirm --needed - < packages/server-aur-packages
+.PHONY: system
+system:
+	sudo pacman -Syu
+	aconfmgr -c aconfmgr --skip-checksums apply
 
 deps:
 	mkdir -p deps

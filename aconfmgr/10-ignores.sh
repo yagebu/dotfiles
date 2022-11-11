@@ -1,0 +1,107 @@
+#!/bin/bash
+
+# Ignore boot partition and swapfile
+IgnorePath '/boot/*'
+IgnorePath '/swapfile'
+
+# Base UNIX files
+IgnorePath '/etc/group*'
+IgnorePath '/etc/gshadow*'
+IgnorePath '/etc/hostname'
+IgnorePath '/etc/hosts'
+IgnorePath '/etc/shadow*'
+IgnorePath '/etc/shells'
+IgnorePath '/etc/sudoers'
+IgnorePath '/etc/passwd*'
+IgnorePath '/etc/.pwd.lock'
+
+# Server things
+IgnorePath '/etc/letsencrypt/*'
+IgnorePath '/etc/nginx/*'   # TODO
+IgnorePath '/etc/ufw/*'     # TODO
+IgnorePath '/etc/tinyssh/*' # secret
+IgnorePath '/var/lib/nginx/*'
+IgnorePath '/var/lib/letsencrypt'
+
+IgnorePath '/etc/mullvad-vpn'
+IgnorePath '/etc/nvme'
+IgnorePath '/etc/fstab'
+IgnorePath '/etc/cups/*'
+IgnorePath '/etc/printcap'
+IgnorePath '/etc/machine-id'
+IgnorePath '/etc/conf.d/lm_sensors'
+IgnorePath '/etc/bluetooth'
+IgnorePath '/etc/sane.d/*'
+
+IgnorePath '/etc/iproute2/rt_tables'
+IgnorePath '/etc/ld.so.cache'
+IgnorePath '/etc/brlapi.key'
+
+IgnorePath '/etc/.updated'                            # systemd-generated file
+IgnorePath '/etc/ca-certificates/*'                   # ignore ssl certificates
+IgnorePath '/etc/ssl/certs/*'                         # ignore ssl certificates
+IgnorePath '/etc/ssh/*'                               # ignore ssl certificates
+IgnorePath '/etc/NetworkManager/system-connections/*' # secret
+IgnorePath '/etc/pacman.d/gnupg/*'
+IgnorePath '/etc/texmf/*'
+IgnorePath '/etc/lvm/*'
+
+IgnorePath '/etc/udev/hwdb.bin'     # large auto-generated file
+IgnorePath '/usr/lib/udev/hwdb.bin' # large auto-generated file
+IgnorePath '/etc/fonts/conf.d/*'
+
+IgnorePath '/usr/share/info/dir'
+IgnorePath '/usr/share/perl5/vendor_perl/XML'
+IgnorePath '/var/lib/tlp/rfkill-saved'
+IgnorePath '/var/lib/tpm2-tss/system/keystore'
+
+IgnorePath '/usr/share/texmf-dist' # Latex stuff
+IgnorePath '/usr/share/texmf'      # Latex stuff
+IgnorePath '/usr/share/mime/*'     # Ignore mime type config
+IgnorePath '/usr/share/fonts/*'    # Ignore mime type config
+IgnorePath '/usr/lib/modules/*'    # linux modules stuff
+IgnorePath '/usr/lib/utempter/*'
+
+# Ignore stuff in var lib - this should only ignore stuff for installed packages.
+IgnorePath '/var/.updated' # systemd-generated file
+IgnorePath '/var/lib/AccountsService/*'
+IgnorePath '/var/lib/BrlAPI'
+IgnorePath '/var/lib/NetworkManager/*'
+IgnorePath '/var/lib/alsa/*'
+IgnorePath '/var/lib/bluetooth/*'
+IgnorePath '/var/lib/boltd/*'
+IgnorePath '/var/lib/brltty'
+IgnorePath '/var/lib/btrfs/*'
+IgnorePath '/var/lib/colord/*'
+IgnorePath '/var/lib/dbus/*'
+IgnorePath '/var/lib/dkms/*'
+IgnorePath '/var/lib/flatpak/*'
+IgnorePath '/var/lib/fwupd/*'
+IgnorePath '/var/lib/gdm/*'
+IgnorePath '/var/lib/geoclue'
+IgnorePath '/var/lib/logrotate.status'
+IgnorePath '/var/lib/machines'
+IgnorePath '/var/lib/pacman/*'
+IgnorePath '/var/lib/portables'
+IgnorePath '/var/lib/power-profiles-daemon'
+IgnorePath '/var/lib/private'
+IgnorePath '/var/lib/rpcbind'
+IgnorePath '/var/lib/systemd/*'
+IgnorePath '/var/lib/texmf/*'
+IgnorePath '/var/lib/tlp/*'
+IgnorePath '/var/lib/upower/*'
+
+IgnorePath '/var/db/sudo/*'        # ??
+IgnorePath '/var/log/*'            # Ignore logs
+IgnorePath '/var/spool/cups/*'     # Ignore cups files
+IgnorePath '/var/spool/cups-pdf/*' # Ignore cups files
+IgnorePath '/var/tmp/*'            # TMP
+
+# Cache paths
+IgnorePath '/usr/lib/*.cache'
+IgnorePath '/usr/share/*.cache'
+IgnorePath '/usr/share/icons/Adwaita/icon-theme.cache'
+IgnorePath '/usr/share/icons/hicolor/icon-theme.cache'
+IgnorePath '/usr/lib/locale/locale-archive'
+IgnorePath '/usr/share/applications/mimeinfo.cache'
+IgnorePath '/usr/share/glib-2.0/schemas/gschemas.compiled'
