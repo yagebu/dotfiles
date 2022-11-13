@@ -2,10 +2,6 @@
 machine_type=$(get_machine_type)
 
 if [[ "$machine_type" == "desktop" ]]; then
-    # Font libraries
-    AddPackage fontconfig # Library for configuring and customizing font access
-    AddPackage freetype2  # Font rasterization library
-
     # Fonts
     AddPackage adobe-source-code-pro-fonts
     AddPackage adobe-source-sans-fonts

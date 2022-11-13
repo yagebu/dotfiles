@@ -229,9 +229,9 @@ if [[ "$machine_type" == "desktop" ]]; then
 fi
 
 # Latex
-if [[ "$build_size" == "full" ]]; then
-    AddPackageGroup texlive-most
-fi
+# This downloads tex packages on the fly and avoids having basically
+# all packages on the disk all the time.
+AddPackage tectonic
 
 # Sway and related packages
 if [[ "$machine_type" == "desktop" ]]; then

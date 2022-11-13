@@ -61,7 +61,7 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
-Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+Plug 'lervag/vimtex'
 Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
 " }}}
 " Color schemes {{{
@@ -349,7 +349,8 @@ autocmd filetypes FileType mail setlocal fo+=aw
 " Better syntax hightlighting
 let g:tex_flavor='latex'
 
-let g:vimtex_compiler_latexmk = {
+let g:vimtex_compiler_method = 'tectonic'
+let g:vimtex_compiler_tectonic = {
             \ 'build_dir': expand($HOME . '/.cache/latex-build'),
             \ }
 let g:vimtex_fold_enabled = 1

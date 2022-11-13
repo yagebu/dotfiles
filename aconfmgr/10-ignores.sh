@@ -43,7 +43,6 @@ IgnorePath '/etc/ssl/certs/*'                         # ignore ssl certificates
 IgnorePath '/etc/ssh/*'                               # ignore ssl certificates
 IgnorePath '/etc/NetworkManager/system-connections/*' # secret
 IgnorePath '/etc/pacman.d/gnupg/*'
-IgnorePath '/etc/texmf/*'
 IgnorePath '/etc/lvm/*'
 
 IgnorePath '/etc/udev/hwdb.bin'     # large auto-generated file
@@ -55,8 +54,6 @@ IgnorePath '/usr/share/perl5/vendor_perl/XML'
 IgnorePath '/var/lib/tlp/rfkill-saved'
 IgnorePath '/var/lib/tpm2-tss/system/keystore'
 
-IgnorePath '/usr/share/texmf-dist' # Latex stuff
-IgnorePath '/usr/share/texmf'      # Latex stuff
 IgnorePath '/usr/share/mime/*'     # Ignore mime type config
 IgnorePath '/usr/share/fonts/*'    # Ignore mime type config
 IgnorePath '/usr/lib/modules/*'    # linux modules stuff
@@ -87,7 +84,6 @@ IgnorePath '/var/lib/power-profiles-daemon'
 IgnorePath '/var/lib/private'
 IgnorePath '/var/lib/rpcbind'
 IgnorePath '/var/lib/systemd/*'
-IgnorePath '/var/lib/texmf/*'
 IgnorePath '/var/lib/tlp/*'
 IgnorePath '/var/lib/upower/*'
 
