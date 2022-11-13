@@ -72,7 +72,6 @@ if [[ "$machine_type" == "desktop" ]]; then
 
     CopyFile /etc/X11/xorg.conf.d/00-keyboard.conf
     CopyFile /etc/X11/xorg.conf.d/10-synaptics.conf
-    CopyFile /etc/X11/xorg.conf.d/99-fonts-custom.conf
     CopyFile /etc/environment
 
     ## Systemd
@@ -93,10 +92,8 @@ HOOKS=(base udev encrypt lvm2 modconf block filesystems keyboard fsck)
 EOF
 
     # Misc config
-    CopyFile /etc/fonts/local.conf
     CopyFile /etc/polkit-1/rules.d/51-blueman.rules
     CopyFile /etc/udev/rules.d/80-net-setup-link.rules
-    CopyFile /usr/bin/lock-screen 755
 
     CreateLink /etc/systemd/user/sockets.target.wants/gcr-ssh-agent.socket /usr/lib/systemd/user/gcr-ssh-agent.socket
     CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/systemd/system/getty@.service
@@ -117,16 +114,12 @@ fi
 
 # Base packages: network
 AddPackage ca-certificates # Common CA certificates (default providers)
-AddPackage iperf           # A tool to measure maximum TCP bandwidth
-AddPackage dhcpcd          # RFC2131 compliant DHCP client daemon
 AddPackage openssh
 AddPackage rsync
 AddPackage wget
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage networkmanager
-    AddPackage wireless_tools # Tools allowing to manipulate the Wireless Extensions
-    AddPackage iw             # nl80211 based CLI configuration utility for wireless devices
-    AddPackage wpa_supplicant # A utility providing key negotiation for WPA wireless networks
+    AddPackage wireless_tools # iwconfig and other tools
     CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
     CreateLink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service /usr/lib/systemd/system/NetworkManager-dispatcher.service
     CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
@@ -141,8 +134,8 @@ fi
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackageGroup gnome
     AddPackage gnome-tweaks
-    AddPackage seahorse     # GNOME application for managing PGP keys.
-    AddPackage dconf-editor # GSettings editor for GNOME
+    AddPackage seahorse
+    AddPackage dconf-editor
 
     CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/gdm.service
     CreateLink /etc/systemd/user/sockets.target.wants/gnome-keyring-daemon.socket /usr/lib/systemd/user/gnome-keyring-daemon.socket
@@ -153,7 +146,9 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage chromium
     AddPackage firefox
     AddPackage firefox-i18n-de
-    AddPackage libreoffice-still # LibreOffice maintenance branch
+    if [[ "$build_size" == "full" ]]; then
+        AddPackage libreoffice-still
+    fi
 fi
 
 # Printing
@@ -176,54 +171,51 @@ if [[ "$machine_type" == "desktop" ]]; then
     CreateLink /etc/systemd/system/sleep.target.wants/tlp-sleep.service /usr/lib/systemd/system/tlp-sleep.service
 fi
 
+# Hardware tools
+AddPackage fwupd      # Simple daemon to allow session software to update firmware
+AddPackage lshw       # A small tool to provide detailed information on the hardware configuration of the machine.
+AddPackage lm_sensors # Collection of user space tools for general SMBus access and hardware monitoring
+AddPackage nvme-cli   # NVM-Express user space tooling for Linux
+CreateLink /etc/systemd/system/multi-user.target.wants/lm_sensors.service /usr/lib/systemd/system/lm_sensors.service
+
 # MISC tools
-AddPackage ack           # A Perl-based grep replacement, aimed at programmers with large trees of heterogeneous source code
 AddPackage borg          # Deduplicating backup program with compression and authenticated encryption
 AddPackage python-llfuse # for borg
 AddPackage checksec      # Tool designed to test which standard Linux OS and PaX security features are being used
-AddPackage colordiff     # A Perl script wrapper for 'diff' that produces the same output but with pretty 'syntax' highlighting
-AddPackage encfs         # Encrypted filesystem in user-space
-AddPackage fd            # Simple, fast and user-friendly alternative to find
-AddPackage fwupd         # Simple daemon to allow session software to update firmware
-AddPackage gocryptfs     # Encrypted overlay filesystem written in Go.
-AddPackage highlight     # Fast and flexible source code highlighter (CLI version)
 AddPackage htop          # Interactive process viewer
-AddPackage kakoune       # Multiple-selection, UNIX-flavored modal editor
 AddPackage khal          # CLI calendar application build around CalDAV
-AddPackage lm_sensors    # Collection of user space tools for general SMBus access and hardware monitoring
 AddPackage logrotate     # Rotates system logs automatically
-AddPackage lshw          # A small tool to provide detailed information on the hardware configuration of the machine.
-AddPackage lsof          # Lists open files for running Unix processes
-AddPackage lua
-AddPackage man-db    # A utility for reading man pages
-AddPackage man-pages # Linux man pages
-AddPackage nvme-cli  # NVM-Express user space tooling for Linux
-AddPackage p7zip     # Command-line file archiver with high compression ratio
-AddPackage ranger    # Simple, vim-like file manager
-AddPackage --foreign stapler
-AddPackage syncthing  # Open Source Continuous Replication / Cluster Synchronization Thing
-AddPackage tmux       # A terminal multiplexer
-AddPackage tree       # A directory listing program displaying a depth indented list of files
-AddPackage youtube-dl # A command-line program to download videos from YouTube.com and a few more sites
+AddPackage man-db        # A utility for reading man pages
+AddPackage man-pages     # Linux man pages
+AddPackage p7zip         # Command-line file archiver with high compression ratio
+AddPackage syncthing     # Open Source Continuous Replication / Cluster Synchronization Thing
+AddPackage tmux          # A terminal multiplexer
+AddPackage tree          # A directory listing program displaying a depth indented list of files
 if [[ "$machine_type" == "desktop" ]]; then
-    AddPackage alacritty # A cross-platform, GPU-accelerated terminal emulator
     AddPackage flatpak   # Linux application sandboxing and distribution framework (formerly xdg-app)
     AddPackage keepassxc # Cross-platform community-driven port of Keepass password manager
     AddPackage kitty     # A modern, hackable, featureful, OpenGL-based terminal emulator
 fi
-CreateLink /etc/systemd/system/multi-user.target.wants/lm_sensors.service /usr/lib/systemd/system/lm_sensors.service
 
-# Audio and video
+# Documents
+AddPackage ranger            # Simple, vim-like file manager
+AddPackage highlight         # source code highlighter for ranger
+AddPackage --foreign stapler # PDf joining and the like
+if [[ "$machine_type" == "desktop" ]]; then
+    AddPackage zathura           # document viewer
+    AddPackage zathura-pdf-mupdf # pdf backend for zathura
+fi
+
+# Media: Audio and video
 AddPackage beets
 AddPackage imagemagick       # for beets thumbnails
 AddPackage python-pylast     # A Python interface to Last.fm and Libre.fm
 AddPackage python-pyacoustid # Bindings for Chromaprint acoustic fingerprinting and the Acoustid API
+AddPackage youtube-dl        # A command-line program to download videos from YouTube.com and a few more sites
 AddPackage opusfile          # Library for opening, seeking, and decoding .opus files
 if [[ "$machine_type" == "desktop" ]]; then
-    AddPackage alsa-utils
     AddPackage cmus
     AddPackage mpv
-    AddPackage pamixer            # Pulseaudio command-line mixer like amixer
     AddPackage pavucontrol        # PulseAudio Volume Control
     AddPackage pipewire-alsa      # Low-latency audio/video router and processor - ALSA configuration
     AddPackage pipewire-jack      # Low-latency audio/video router and processor - JACK support
@@ -243,35 +235,16 @@ fi
 
 # Sway and related packages
 if [[ "$machine_type" == "desktop" ]]; then
-    AddPackage i3status
     AddPackage sway
     AddPackage swaybg
     AddPackage swayidle
     AddPackage swaylock
-    AddPackage waybar
-    AddPackage dmenu         # Generic menu for X
-    AddPackage wl-clipboard  # Command-line copy/paste utilities for Wayland
-    AddPackage wofi          # launcher for wlroots-based wayland compositors
-    AddPackage brightnessctl # Lightweight brightness control tool
-fi
 
-# Fonts
-if [[ "$machine_type" == "desktop" ]]; then
-    AddPackage adobe-source-code-pro-fonts
-    AddPackage adobe-source-sans-fonts
-    AddPackage fontconfig # Library for configuring and customizing font access
-    AddPackage freetype2  # Font rasterization library
-    AddPackage otf-fira-mono
-    AddPackage otf-fira-sans
-    AddPackage otf-font-awesome
-    AddPackage ttf-droid
-    AddPackage ttf-inconsolata
-    AddPackage ttf-ubuntu-font-family
-    # TODO: this seems to be broken currently:
-    # AddPackage --foreign fonts-meta-extended-lt
-    AddPackage --foreign fonts-meta-base
-    AddPackage --foreign otf-et-book
-    AddPackage --foreign ttf-mac-fonts
+    AddPackage waybar        # (used instead of i3status)
+    AddPackage wl-clipboard  # Command-line copy/paste utilities for Wayland
+    AddPackage wofi          # launcher (used instead of dmenu)
+    AddPackage pamixer       # Pulseaudio command-line mixer like amixer
+    AddPackage brightnessctl # Lightweight brightness control tool
 fi
 
 # Pictures
@@ -284,65 +257,6 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage hugin
     AddPackage rawtherapee
 fi
-
-# Dev: neovim
-AddPackage neovim
-AddPackage python-pynvim # Python client for Neovim
-AddPackage --foreign neovim-remote
-
-# Dev: Tools
-AddPackage cmake     # A cross-platform open-source make system
-AddPackage ctags     # Generates an index file of language objects found in source files
-AddPackage diffutils # Utility programs used for creating patch files
-AddPackage entr      # Run arbitrary commands when files change
-AddPackage fzf       # Command-line fuzzy finder
-AddPackage git
-AddPackage github-cli
-AddPackage less  # A terminal based program for viewing text files
-AddPackage meson # High productivity build system
-AddPackage ripgrep
-AddPackage shfmt # Format shell programs
-AddPackage zsh
-if [[ "$machine_type" == "desktop" ]]; then
-    AddPackage code # The Open Source build of Visual Studio Code (vscode) editor
-    AddPackage filezilla
-    AddPackage zathura
-    AddPackage zathura-pdf-mupdf
-fi
-
-# Dev: Javascript, Typescript, Svelte
-AddPackage npm                        # A package manager for javascript
-AddPackage typescript-language-server # Language Server Protocol (LSP) implementation for TypeScript using tsserver
-AddPackage --foreign nodejs-svelte-language-server
-
-# Dev: Rust
-AddPackage rust
-AddPackage rust-analyzer
-AddPackage maturin
-
-# Dev: Python
-AddPackage flake8
-AddPackage mpdecimal # for Python's decimal
-AddPackage mypy
-AddPackage pyenv
-AddPackage pyright
-AddPackage python-black
-AddPackage python-build
-AddPackage python-flask
-AddPackage python-jedi
-AddPackage python-pip
-AddPackage python-pipenv
-AddPackage python-poetry
-AddPackage python-pre-commit
-AddPackage python-pylint
-AddPackage python-pytest
-AddPackage python-pytest-cov
-AddPackage python-scikit-learn
-AddPackage python-setuptools-scm
-AddPackage python-sphinx
-AddPackage python-tox
-AddPackage python-wheel
-AddPackage twine # Collection of utilities for interacting with PyPI
 
 # Mail
 if [[ "$machine_type" == "desktop" ]]; then
@@ -358,7 +272,7 @@ fi
 # ocrmypdf
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage --foreign ocrmypdf
-    AddPackage tesseract          # An OCR program
-    AddPackage tesseract-data-deu # Tesseract OCR data (deu)
-    AddPackage tesseract-data-eng # Tesseract OCR data (eng)
+    AddPackage tesseract
+    AddPackage tesseract-data-deu
+    AddPackage tesseract-data-eng
 fi

@@ -4,21 +4,25 @@ user: deps
 	cp deps/dircolors ~/.config/zsh/dircolors
 	cp zshenv ~/.config/zsh/.zshenv
 	cat deps/completion deps/fzf-keys deps/fzf-completion zshrc > ~/.config/zsh/.zshrc
+
 	mkdir -p ~/bin
 	cp bin/bak ~/bin/bak
+
 	mkdir -p ~/.config/nvim
 	cp vimrc ~/.config/nvim/init.vim
+
 	mkdir -p ~/.config/kitty
 	cp arch/kitty.conf ~/.config/kitty/kitty.conf
+
 	mkdir -p ~/.config/sway
 	cp arch/sway ~/.config/sway/config
+
 	mkdir -p ~/.config/waybar
 	cp arch/waybar ~/.config/waybar/config
 	cp arch/waybar.css ~/.config/waybar/style.css
+
 	mkdir -p ~/.config/kitty
 	cp arch/kitty.conf ~/.config/kitty/kitty.conf
-	mkdir -p ~/.config/i3status
-	cp arch/i3status ~/.config/i3status/config
 
 .PHONY: aconfmgr-save
 aconfmgr-save:
