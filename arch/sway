@@ -18,7 +18,7 @@ set $menu wofi --show drun -i | xargs swaymsg exec --
 set $menu_path wofi --show run -i | xargs swaymsg exec --
 # }}}
 # Output configuration {{{
-output * background /usr/share/backgrounds/gnome/wood-d.webp fill
+output * background /usr/share/backgrounds/gnome/blobs-d.svg fill
 
 # Example configuration:
 #
