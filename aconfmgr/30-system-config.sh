@@ -1,6 +1,5 @@
 #!/bin/bash
 machine_type=$(get_machine_type)
-build_size=$(get_build_size)
 
 CreateLink /etc/systemd/user/sockets.target.wants/p11-kit-server.socket /usr/lib/systemd/user/p11-kit-server.socket
 CreateLink /etc/systemd/system/multi-user.target.wants/syncthing@jakob.service /usr/lib/systemd/system/syncthing@.service
@@ -145,9 +144,6 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage chromium
     AddPackage firefox
     AddPackage firefox-i18n-de
-    if [[ "$build_size" == "full" ]]; then
-        AddPackage libreoffice-still
-    fi
 fi
 
 # Printing
