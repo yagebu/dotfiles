@@ -47,7 +47,6 @@ IgnorePath '/etc/sane.d/*'
 IgnorePath '/etc/.updated'                            # systemd-generated file
 IgnorePath '/etc/ca-certificates/extracted/*'         # extracted ssl certificates
 IgnorePath '/etc/ssl/certs/*'                         # extracted ssl certificates
-IgnorePath '/etc/ssh/*'                               # TODO
 IgnorePath '/etc/ssh/*_key'                           # secret
 IgnorePath '/etc/ssh/*_key.pub'                       # secret
 IgnorePath '/etc/NetworkManager/system-connections/*' # secret

@@ -114,7 +114,6 @@ fi
 
 # Base packages: network
 AddPackage ca-certificates # Common CA certificates (default providers)
-AddPackage openssh
 AddPackage rsync
 AddPackage wget
 if [[ "$machine_type" == "desktop" ]]; then
