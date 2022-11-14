@@ -5,15 +5,20 @@ IgnorePath '/boot/*'
 IgnorePath '/swapfile'
 
 # Base UNIX files
-IgnorePath '/etc/group*'
-IgnorePath '/etc/gshadow*'
+IgnorePath '/etc/.pwd.lock'
+IgnorePath '/etc/group'
+IgnorePath '/etc/group-'
+IgnorePath '/etc/gshadow'
+IgnorePath '/etc/gshadow-'
 IgnorePath '/etc/hostname'
 IgnorePath '/etc/hosts'
-IgnorePath '/etc/shadow*'
+IgnorePath '/etc/passwd'
+IgnorePath '/etc/passwd-'
+IgnorePath '/etc/shadow'
+IgnorePath '/etc/shadow-'
 IgnorePath '/etc/shells'
 IgnorePath '/etc/sudoers'
-IgnorePath '/etc/passwd*'
-IgnorePath '/etc/.pwd.lock'
+IgnorePath '/etc/sudoers-'
 
 # Server things
 IgnorePath '/etc/letsencrypt/*'
@@ -23,31 +28,34 @@ IgnorePath '/etc/tinyssh/*' # secret
 IgnorePath '/var/lib/nginx/*'
 IgnorePath '/var/lib/letsencrypt'
 
-IgnorePath '/etc/mullvad-vpn'
-IgnorePath '/etc/nvme'
-IgnorePath '/etc/fstab'
-IgnorePath '/etc/cups/*'
-IgnorePath '/etc/printcap'
-IgnorePath '/etc/machine-id'
-IgnorePath '/etc/conf.d/lm_sensors'
 IgnorePath '/etc/bluetooth'
-IgnorePath '/etc/sane.d/*'
-
+IgnorePath '/etc/brlapi.key'
+IgnorePath '/etc/conf.d/lm_sensors'
+IgnorePath '/etc/cups/*'
+IgnorePath '/etc/fstab'
 IgnorePath '/etc/iproute2/rt_tables'
 IgnorePath '/etc/ld.so.cache'
-IgnorePath '/etc/brlapi.key'
+IgnorePath '/etc/machine-id'
+IgnorePath '/etc/mullvad-vpn/account-history.json'
+IgnorePath '/etc/mullvad-vpn/device.json'
+IgnorePath '/etc/mullvad-vpn/settings.json'
+IgnorePath '/etc/nvme/hostid'
+IgnorePath '/etc/nvme/hostnqn'
+IgnorePath '/etc/printcap'
+IgnorePath '/etc/sane.d/*'
 
 IgnorePath '/etc/.updated'                            # systemd-generated file
-IgnorePath '/etc/ca-certificates/*'                   # ignore ssl certificates
-IgnorePath '/etc/ssl/certs/*'                         # ignore ssl certificates
-IgnorePath '/etc/ssh/*'                               # ignore ssl certificates
+IgnorePath '/etc/ca-certificates/extracted/*'         # extracted ssl certificates
+IgnorePath '/etc/ssl/certs/*'                         # extracted ssl certificates
+IgnorePath '/etc/ssh/*'                               # TODO
+IgnorePath '/etc/ssh/*_key'                           # secret
+IgnorePath '/etc/ssh/*_key.pub'                       # secret
 IgnorePath '/etc/NetworkManager/system-connections/*' # secret
 IgnorePath '/etc/pacman.d/gnupg/*'
 IgnorePath '/etc/lvm/*'
 
 IgnorePath '/etc/udev/hwdb.bin'     # large auto-generated file
 IgnorePath '/usr/lib/udev/hwdb.bin' # large auto-generated file
-IgnorePath '/etc/fonts/conf.d/*'
 
 IgnorePath '/usr/share/info/dir'
 IgnorePath '/usr/share/perl5/vendor_perl/XML'
@@ -55,7 +63,6 @@ IgnorePath '/var/lib/tlp/rfkill-saved'
 IgnorePath '/var/lib/tpm2-tss/system/keystore'
 
 IgnorePath '/usr/share/mime/*'     # Ignore mime type config
-IgnorePath '/usr/share/fonts/*'    # Ignore mime type config
 IgnorePath '/usr/lib/modules/*'    # linux modules stuff
 IgnorePath '/usr/lib/utempter/*'
 
@@ -90,14 +97,12 @@ IgnorePath '/var/lib/upower/*'
 IgnorePath '/var/db/sudo/*'        # ??
 IgnorePath '/var/log/*'            # Ignore logs
 IgnorePath '/var/spool/cups/*'     # Ignore cups files
-IgnorePath '/var/spool/cups-pdf/*' # Ignore cups files
 IgnorePath '/var/tmp/*'            # TMP
 
 # Cache paths
 IgnorePath '/usr/lib/*.cache'
-IgnorePath '/usr/share/*.cache'
-IgnorePath '/usr/share/icons/Adwaita/icon-theme.cache'
-IgnorePath '/usr/share/icons/hicolor/icon-theme.cache'
 IgnorePath '/usr/lib/locale/locale-archive'
 IgnorePath '/usr/share/applications/mimeinfo.cache'
 IgnorePath '/usr/share/glib-2.0/schemas/gschemas.compiled'
+IgnorePath '/usr/share/icons/Adwaita/icon-theme.cache'
+IgnorePath '/usr/share/icons/hicolor/icon-theme.cache'
