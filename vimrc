@@ -72,23 +72,32 @@ call plug#end()
 " nvim-treesitter {{{
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-ensure_installed = { "javascript", "typescript", "html", "rust", "svelte", "css", "bash"},
-highlight = { enable = true },
+    ensure_installed = {
+        "bash",
+        "css",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "rust",
+        "svelte",
+        "typescript",
+        "vim",
+    },
+    highlight = {
+        enable = true
+    },
 }
 EOF
 " }}}
 " Basic settings {{{
-set hidden
 set termguicolors
 colorscheme gruvbox
-set background=dark
 set mouse=a
 
-set guicursor=
-set shortmess+=F
-
-let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
+let g:loaded_node_provider = 0
+let g:loaded_perl_provider = 0
 
 " Do not use tabs and use 4 spaces for indentation
 set shiftwidth=4
@@ -101,21 +110,10 @@ set undofile
 
 set scrolloff=4
 
-" So not abandon hidden buffers
-set hidden
-" highlight all search results
-set hlsearch
-" incremental search
-set incsearch
-" case-insensitive search
-set ignorecase
-" uppercase causes case-sensitive search
-set smartcase
-" apply substitutions globally by default
-set gdefault
+set ignorecase " case-insensitive search
+set smartcase  " uppercase causes case-sensitive search
+set gdefault   " apply substitutions globally by default
 set inccommand=split
-
-"set clipboard=unnamed
 " }}}
 " Key bindings {{{
 nnoremap <Space> za
@@ -174,7 +172,6 @@ nnoremap <silent> U :UndotreeToggle<cr>
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader>b  :Buffers<cr>
 nnoremap <silent> <leader>r  :Rg<cr>
-nnoremap <silent> <leader>g  :Goyo<cr>
 nnoremap <silent> <F8> :TagbarToggle<cr>
 
 xmap ga <Plug>(EasyAlign)
@@ -272,8 +269,6 @@ lua <<EOF
 EOF
 " }}}
 " Misc {{{
-set viewoptions=cursor,folds,slash,unix
-
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_sign_error = '⨉'
@@ -310,6 +305,7 @@ let g:ale_linter_aliases = {
 let g:ale_linters = {
 \   'svelte': ['eslint'],
 \   'typescript': ['eslint', 'tsserver'],
+\   'sh': ['shellcheck', 'shell'],
 \   'zsh': ['shellcheck', 'shell'],
 \}
 let g:ale_fixers = {
@@ -318,35 +314,33 @@ let g:ale_fixers = {
 \   'javascriptreact': ['prettier', 'eslint'],
 \   'python': ['black'],
 \   'sh': ['shfmt'],
-\   'zsh': ['shfmt'],
 \   'svelte': ['prettier', 'eslint'],
 \   'typescript': ['prettier'],
+\   'zsh': ['shfmt'],
 \}
+" Shell {{{
 let g:ale_sh_shfmt_options = '-i 4'
+augroup shell
+    autocmd!
+    autocmd FileType sh,zsh setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
+augroup END
+" }}}
 " Javascript, CSS, SCSS {{{
 augroup filetypes
     autocmd!
-    autocmd FileType vim setlocal sw=4 sts=4
-    autocmd FileType javascript setlocal sw=2 sts=2 fdm=syntax
-    autocmd FileType javascriptreact setlocal sw=2 sts=2 fdm=syntax
-    autocmd FileType typescript setlocal sw=2 sts=2 fdm=syntax
-    autocmd FileType typescriptreact setlocal sw=2 sts=2 fdm=syntax
-    autocmd FileType vue setlocal sw=2 sts=2
-    autocmd FileType svelte setlocal sw=2 sts=2
-    autocmd FileType css setlocal sw=2 sts=2
-    autocmd FileType scss setlocal sw=2 sts=2
-    autocmd FileType html setlocal sw=2 sts=2
-    autocmd FileType jinja setlocal sw=2 sts=2
-    autocmd FileType htmljinja setlocal sw=2 sts=2
+    autocmd FileType vim setlocal shiftwidth=4 softtabstop=4
+    autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal shiftwidth=2 softtabstop=2 foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
+    autocmd FileType svelte setlocal shiftwidth=2 softtabstop=2 foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
+    autocmd FileType css,scss setlocal shiftwidth=2 softtabstop=2
+    autocmd FileType html,jinja,jinja.html setlocal shiftwidth=2 softtabstop=2
 augroup END
 " }}}
 " C, Lua {{{
-autocmd filetypes FileType c setlocal sw=2 sts=2
-autocmd filetypes FileType lua setlocal sw=2 sts=2
+autocmd filetypes FileType c setlocal shiftwidth=2 softtabstop=2
+autocmd filetypes FileType lua setlocal shiftwidth=2 softtabstop=2
 " }}}
 " Mail {{{
-autocmd filetypes FileType mail setlocal fo+=aw
-"autocmd FileType mail Goyo
+autocmd filetypes FileType mail setlocal formatoptions+=aw
 " }}}
 " Latex {{{
 " Better syntax hightlighting
@@ -373,6 +367,8 @@ augroup END
 augroup python
     autocmd!
     autocmd FileType python nnoremap <leader>i :ImportName<CR>
+    autocmd FileType python setlocal foldmethod=expr
+    autocmd FileType python setlocal foldexpr=nvim_treesitter#foldexpr()
 augroup END
 " Beancount (with custom org-mode folding) {{{
 augroup beancount
