@@ -22,7 +22,6 @@ IgnorePath '/etc/sudoers-'
 
 # Server things
 IgnorePath '/etc/letsencrypt/*'
-IgnorePath '/etc/nginx/*'   # TODO
 IgnorePath '/etc/ufw/*'     # TODO
 IgnorePath '/etc/tinyssh/*' # secret
 IgnorePath '/var/lib/nginx/*'

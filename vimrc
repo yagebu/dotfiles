@@ -317,9 +317,12 @@ let g:ale_fixers = {
 \   'javascript': ['prettier', 'eslint'],
 \   'javascriptreact': ['prettier', 'eslint'],
 \   'python': ['black'],
+\   'sh': ['shfmt'],
+\   'zsh': ['shfmt'],
 \   'svelte': ['prettier', 'eslint'],
 \   'typescript': ['prettier'],
 \}
+let g:ale_sh_shfmt_options = '-i 4'
 " Javascript, CSS, SCSS {{{
 augroup filetypes
     autocmd!

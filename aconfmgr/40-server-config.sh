@@ -1,16 +1,54 @@
 #!/bin/bash
 machine_type=$(get_machine_type)
 
+function SetupNginx() {
+    AddPackage nginx
+    CreateLink /etc/systemd/system/multi-user.target.wants/nginx.service /usr/lib/systemd/system/nginx.service
+    CopyFile /etc/nginx/nginx.conf
+    IgnorePath '/etc/nginx/conf.d'     # secret
+    IgnorePath '/etc/nginx/htpasswd'   # secret
+    IgnorePath '/etc/nginx/ssl-config' # secret
+
+    AddPackage goaccess
+
+    # Certbot
+    AddPackage certbot
+    cat >"$(CreateFile /etc/systemd/system/certbot.service)" <<EOF
+[Unit]
+Description=Let's Encrypt renewal
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/certbot renew
+ExecStartPost=/usr/sbin/systemctl restart nginx.service
+EOF
+    cat >"$(CreateFile /etc/systemd/system/certbot.timer)" <<EOF
+[Unit]
+Description=Monthly renewal of Let's Encrypt's certificates
+
+[Timer]
+OnCalendar=monthly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+    CreateLink /etc/systemd/system/timers.target.wants/certbot.timer /etc/systemd/system/certbot.timer
+}
+
 # Server packages
 if [[ "$machine_type" == "server" ]]; then
-    AddPackage certbot            # An ACME client
-    AddPackage goaccess           # An open source real-time web log analyzer and interactive viewer
-    AddPackage kitty-terminfo     # Terminfo for kitty, an OpenGL-based terminal emulator
-    AddPackage mkinitcpio-netconf # Archlinux mkinitcpio hook for configuring early userspace networking
-    AddPackage mkinitcpio-tinyssh # Archlinux mkinitcpio hook to install and enable the tinyssh daemon in early userspace
-    AddPackage mkinitcpio-utils   # Collection of Archlinux mkinitcpio utilities performing various tasks
-    AddPackage nginx              # Lightweight HTTP server and IMAP/POP3 proxy server
-    AddPackage ufw                # Uncomplicated and easy to use CLI tool for managing a netfilter firewall
+    AddPackage kitty-terminfo
+
+    SetupNginx
+
+    # mkinitcpio for ssh on boot
+    AddPackage mkinitcpio-netconf
+    AddPackage mkinitcpio-tinyssh
+    AddPackage mkinitcpio-utils
+
+    # Firewall
+    AddPackage ufw
 
     AddPackage --foreign fava
 
@@ -40,32 +78,8 @@ EOF
     CreateLink /etc/systemd/system/network-online.target.wants/systemd-networkd-wait-online.service /usr/lib/systemd/system/systemd-networkd-wait-online.service
     CreateLink /etc/systemd/system/sockets.target.wants/systemd-networkd.socket /usr/lib/systemd/system/systemd-networkd.socket
 
-    CreateLink /etc/systemd/system/multi-user.target.wants/nginx.service /usr/lib/systemd/system/nginx.service
     CreateLink /etc/systemd/system/multi-user.target.wants/sshd.service /usr/lib/systemd/system/sshd.service
     CreateLink /etc/systemd/system/multi-user.target.wants/ufw.service /usr/lib/systemd/system/ufw.service
-
-    # Certbot
-    cat >"$(CreateFile /etc/systemd/system/certbot.service)" <<EOF
-[Unit]
-Description=Let's Encrypt renewal
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/certbot renew
-ExecStartPost=/usr/sbin/systemctl restart nginx.service
-EOF
-    cat >"$(CreateFile /etc/systemd/system/certbot.timer)" <<EOF
-[Unit]
-Description=Monthly renewal of Let's Encrypt's certificates
-
-[Timer]
-OnCalendar=monthly
-Persistent=true
-
-[Install]
-WantedBy=timers.target
-EOF
-    CreateLink /etc/systemd/system/timers.target.wants/certbot.timer /etc/systemd/system/certbot.timer
 
     # Lektor
     ###############################################3
