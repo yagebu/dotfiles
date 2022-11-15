@@ -166,6 +166,11 @@ if [[ "$machine_type" == "desktop" ]]; then
     CreateLink /etc/systemd/system/sleep.target.wants/tlp-sleep.service /usr/lib/systemd/system/tlp-sleep.service
 fi
 
+# Man pages.
+AddPackage man-db
+AddPackage man-pages
+CreateLink /etc/systemd/system/timers.target.wants/man-db.timer /usr/lib/systemd/system/man-db.timer
+
 # Hardware tools
 AddPackage fwupd      # Simple daemon to allow session software to update firmware
 AddPackage lshw       # A small tool to provide detailed information on the hardware configuration of the machine.
@@ -180,8 +185,6 @@ AddPackage checksec      # Tool designed to test which standard Linux OS and PaX
 AddPackage htop          # Interactive process viewer
 AddPackage khal          # CLI calendar application build around CalDAV
 AddPackage logrotate     # Rotates system logs automatically
-AddPackage man-db        # A utility for reading man pages
-AddPackage man-pages     # Linux man pages
 AddPackage p7zip         # Command-line file archiver with high compression ratio
 AddPackage syncthing     # Open Source Continuous Replication / Cluster Synchronization Thing
 AddPackage tmux          # A terminal multiplexer
