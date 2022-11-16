@@ -7,7 +7,6 @@ if !isdirectory(&backupdir)
 endif
 " }}}
 " Plugins {{{
-let g:polyglot_disabled = ['latex']
 " setup {{{
 if empty(glob($XDG_DATA_HOME . '/nvim/site/autoload/plug.vim'))
     silent !echo "Installing vim-plug..."
@@ -22,9 +21,7 @@ endif
 call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 " }}}
 Plug 'Konfekt/FastFold'
-Plug 'SirVer/ultisnips'
 Plug 'ap/vim-buftabline'
-Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim'
 Plug 'vim-test/vim-test'
 Plug 'jreybert/vimagit'
@@ -39,7 +36,6 @@ Plug 'junegunn/vim-pseudocl'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
 Plug 'kopischke/vim-stay'
-Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
 Plug 'tpope/vim-fugitive'
@@ -47,15 +43,22 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
+Plug 'nvim-tree/nvim-tree.lua'
 " Language server {{{
 Plug 'neovim/nvim-lspconfig'
 " }}}
 " Autocompletion {{{
+Plug 'hrsh7th/nvim-cmp'
+
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
+
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 " }}}
 " File type specific plugins {{{
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -63,6 +66,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'lervag/vimtex'
 Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
+Plug 'simrat39/rust-tools.nvim'
 " }}}
 " Color schemes {{{
 Plug 'morhetz/gruvbox'
@@ -98,6 +102,7 @@ set mouse=a
 let g:python3_host_prog = '/usr/bin/python3'
 let g:loaded_node_provider = 0
 let g:loaded_perl_provider = 0
+let g:loaded_ruby_provider = 0
 
 " Do not use tabs and use 4 spaces for indentation
 set shiftwidth=4
@@ -114,10 +119,39 @@ set ignorecase " case-insensitive search
 set smartcase  " uppercase causes case-sensitive search
 set gdefault   " apply substitutions globally by default
 set inccommand=split
+
+" }}}
+" nvim-tree {{{
+lua <<EOF
+-- TODO: move this to the start of the file.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+require("nvim-tree").setup({
+    diagnostics = {
+        enable = true,
+    },
+    update_focused_file = {
+        enable = true,
+    },
+    renderer = {
+        icons = {
+            show = {
+                file = false,
+                folder = false,
+                folder_arrow = false,
+            },
+            git_placement = 'after',
+        },
+    },
+})
+EOF
 " }}}
 " Key bindings {{{
 nnoremap <Space> za
+nnoremap <Space><Space> za
 vnoremap <Space> za
+vnoremap <Space><Space> za
 noremap <tab> %
 " Save one keystroke for commmands
 inoremap jk <ESC>
@@ -168,11 +202,11 @@ tnoremap <Esc> <C-\><C-n>
 " Commands {{{
 nmap <silent> <leader>f <Plug>(ale_fix)
 nnoremap <silent> <leader><space> :nohlsearch<cr>
+nnoremap <silent> T :NvimTreeToggle<cr>
 nnoremap <silent> U :UndotreeToggle<cr>
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader>b  :Buffers<cr>
 nnoremap <silent> <leader>r  :Rg<cr>
-nnoremap <silent> <F8> :TagbarToggle<cr>
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
@@ -195,19 +229,69 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local lspconfig = require('lspconfig')
 
+-- Keymappings mostly as recommended in https://github.com/neovim/nvim-lspconfig#Suggested-configuration
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+end
+
 local servers = { 'pyright', 'tsserver', 'svelte' }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     capabilities = capabilities,
+    on_attach = on_attach,
   }
 end
+
+-- rust-tools calls lspconfig.setup, so do not do that twice.
+local rust_tools = require("rust-tools")
+rust_tools.setup({
+	server = {
+        on_attach = function(client, bufnr)
+            on_attach(client, bufnr)
+            -- Hover actions
+            vim.keymap.set("n", "<C-space>", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
+            -- Code action groups
+            vim.keymap.set("n", "<Leader>a", rust_tools.code_action_group.code_action_group, { buffer = bufnr })
+        end,
+		settings = {
+			["rust-analyzer"] = {
+				checkOnSave = {
+					command = "clippy"
+				}
+			}
+		}
+	},
+})
+rust_tools.inlay_hints.enable()
 EOF
 " }}}
 " Completion {{{
-nmap <silent> K <Plug>(ale_hover)
-nmap <silent> gd <Plug>(ale_go_to_definition)
-nnoremap <silent> <F2> :call ALERename<CR>
-
 " let g:UltiSnipsSnippetDirectories = [$HOME.'/dev/dotfiles/snippets']
 " let g:UltiSnipsExpandTrigger       = '<C-j>'
 " let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
@@ -219,40 +303,43 @@ lua <<EOF
   local cmp = require'cmp'
 
   cmp.setup({
-    mapping = {
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end,
+    snippet = {
+      expand = function(args)
+        vim.fn["UltiSnips#Anon"](args.body)
+      end,
     },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<Tab>'] = function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          fallback()
+        end
+      end,
+      ['<S-Tab>'] = function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end,
+    }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
+      { name = 'ultisnips' },
     }, {
       { name = 'buffer' },
     })
   })
 
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = {
       { name = 'buffer' }
     }
@@ -260,6 +347,7 @@ lua <<EOF
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
       { name = 'path' }
     }, {
@@ -273,7 +361,7 @@ let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_sign_error = '⨉'
 let g:ale_sign_warning = '⚠'
-let g:ale_sign_column_always = 1
+" let g:ale_sign_column_always = 1
 
 lua <<EOF
 require'colorizer'.setup()
@@ -307,17 +395,26 @@ let g:ale_linters = {
 \   'typescript': ['eslint', 'tsserver'],
 \   'sh': ['shellcheck', 'shell'],
 \   'zsh': ['shellcheck', 'shell'],
+\   'rust': [],
 \}
 let g:ale_fixers = {
 \   '*': ['prettier', 'eslint'],
 \   'javascript': ['prettier', 'eslint'],
 \   'javascriptreact': ['prettier', 'eslint'],
 \   'python': ['black'],
+\   'rust': ['rustfmt'],
 \   'sh': ['shfmt'],
 \   'svelte': ['prettier', 'eslint'],
 \   'typescript': ['prettier'],
 \   'zsh': ['shfmt'],
 \}
+" Rust {{{
+" let g:ale_rust_cargo_use_clippy = 1
+augroup shell
+    autocmd!
+    autocmd FileType rust setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
+augroup END
+" }}}
 " Shell {{{
 let g:ale_sh_shfmt_options = '-i 4'
 augroup shell
