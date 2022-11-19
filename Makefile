@@ -9,7 +9,8 @@ user: deps
 	cp bin/bak ~/bin/bak
 
 	mkdir -p ~/.config/nvim
-	cp vimrc ~/.config/nvim/init.vim
+	rm -f ~/.config/nvim/init.vim
+	cp nvim_init.lua ~/.config/nvim/init.lua
 
 	mkdir -p ~/.config/kitty
 	cp arch/kitty.conf ~/.config/kitty/kitty.conf

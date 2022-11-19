@@ -5,6 +5,7 @@ machine_type=$(get_machine_type)
 AddPackage neovim
 AddPackage python-pynvim
 AddPackage --foreign neovim-remote
+AddPackage stylua   # The config for neovim is written in lua
 AddPackage kakoune
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage code
