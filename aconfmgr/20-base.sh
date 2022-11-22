@@ -32,11 +32,16 @@ CopyFile /etc/mkinitcpio.d/linux.preset
 CreateLink /etc/localtime ../usr/share/zoneinfo/Europe/Berlin
 CreateLink /etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service /usr/lib/systemd/system/systemd-timesyncd.service
 
+# /etc/pacman.conf - Enable color output and parallel downloads
+f="$(GetPackageOriginalFile pacman /etc/pacman.conf)"
+sed -i 's/^#Color/Color/g' "$f"
+sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/g' "$f"
+
 # Load user ZSH config from .config/zsh
 # /etc/zsh/zshenv
 echo 'export ZDOTDIR="$HOME/.config/zsh/"' >"$(CreateFile /etc/zsh/zshenv)"
 
-# /etc/locale.gen
+# /etc/locale.gen - Enable locale generation
 f="$(GetPackageOriginalFile glibc /etc/locale.gen)"
 sed -i 's/^#\(de_DE.UTF-8\)/\1/g' "$f"
 sed -i 's/^#\(en_GB.UTF-8\)/\1/g' "$f"
