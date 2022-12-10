@@ -261,6 +261,9 @@ workspace 4 output DP-1 DP-2 eDP-1
 workspace 5 output eDP-1
 workspace music output eDP-1
 
+output DP-1 position -3840,0
+output DP-1 position -3840,0
+
 # Start cmus on the music workspace on start.
 assign [app_id="kitty-cmus"] workspace music
 exec $term --class kitty-cmus cmus

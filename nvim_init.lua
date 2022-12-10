@@ -189,7 +189,12 @@ local on_attach = function(client, bufnr)
   --vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 vim.keymap.set("n", "<space>f", function()
-  vim.lsp.buf.format({ async = true })
+  vim.lsp.buf.format({
+    async = true,
+    filter = function(client)
+      return client.name ~= "tsserver"
+    end,
+  })
 end, opts)
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -230,6 +235,9 @@ null_ls.setup({
   sources = {
     -- Javascript, Typescript, Svelte, etc.
     null_ls.builtins.diagnostics.eslint.with({
+      extra_filetypes = { "svelte" },
+    }),
+    null_ls.builtins.formatting.eslint.with({
       extra_filetypes = { "svelte" },
     }),
     null_ls.builtins.formatting.prettier.with({

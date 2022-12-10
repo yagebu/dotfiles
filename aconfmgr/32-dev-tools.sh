@@ -32,6 +32,8 @@ AddPackage lua   # For z.lua
 
 # Dev: Javascript, Typescript, Svelte
 AddPackage npm                        # A package manager for javascript
+AddPackage eslint
+AddPackage prettier
 AddPackage typescript-language-server # Language Server Protocol (LSP) implementation for TypeScript using tsserver
 AddPackage --foreign nodejs-svelte-language-server
 
