@@ -59,6 +59,7 @@ AddPackage python-pre-commit
 AddPackage python-pylint
 AddPackage python-pytest
 AddPackage python-pytest-cov
+AddPackage python-reorder-python-imports
 AddPackage python-scikit-learn
 AddPackage python-setuptools-scm
 AddPackage python-sphinx

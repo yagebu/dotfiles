@@ -32,6 +32,8 @@ aconfmgr-save:
 .PHONY: system
 system:
 	sudo pacman -Syu
+	pikaur -Syu
+	nvim +PlugUpgrade +PlugUpdate +qa
 	aconfmgr -c aconfmgr --skip-checksums apply
 
 deps:
