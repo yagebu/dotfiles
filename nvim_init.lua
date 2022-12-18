@@ -236,6 +236,7 @@ null_ls.setup({
     -- Javascript, Typescript, Svelte, etc.
     null_ls.builtins.diagnostics.eslint.with({
       extra_filetypes = { "svelte" },
+      method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
     }),
     null_ls.builtins.formatting.eslint.with({
       extra_filetypes = { "svelte" },
@@ -262,7 +263,10 @@ null_ls.setup({
 
     -- Python
     null_ls.builtins.diagnostics.pylint,
-    null_ls.builtins.diagnostics.mypy,
+    null_ls.builtins.diagnostics.mypy.with({
+      method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+    }),
+    null_ls.builtins.diagnostics.ruff,
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.reorder_python_imports,
   },

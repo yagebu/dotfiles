@@ -65,4 +65,5 @@ AddPackage python-setuptools-scm
 AddPackage python-sphinx
 AddPackage python-tox
 AddPackage python-wheel
+AddPackage ruff
 AddPackage twine
