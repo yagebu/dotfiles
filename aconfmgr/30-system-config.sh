@@ -103,12 +103,10 @@ fi
 ############################################################################################################
 # Base packages: graphics and GUI
 if [[ "$machine_type" == "desktop" ]]; then
-    AddPackage mesa                   # An open-source implementation of the OpenGL specification
-    AddPackage xclip                  # Command line interface to the X11 clipboard
-    AddPackage xdg-desktop-portal-wlr # xdg-desktop-portal backend for wlroots
-    AddPackage xf86-input-synaptics   # Synaptics driver for notebook touchpads
-    AddPackage xf86-video-intel       # X.org Intel i810/i830/i915/945G/G965+ video drivers
-    AddPackage xf86-video-vesa        # X.org vesa video driver
+    AddPackage mesa
+    AddPackage xclip
+    AddPackage xdg-desktop-portal-wlr
+    AddPackage xf86-input-synaptics
 fi
 
 # Base packages: network

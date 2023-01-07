@@ -127,17 +127,4 @@ User=jakob
 WantedBy=default.target
 EOF
     CreateLink /etc/systemd/system/default.target.wants/lektor-kiv.service /etc/systemd/system/lektor-kiv.service
-
-# CopyFile /etc/systemd/system/lektor-prinzplusprinz.service
-# [Unit]
-# Description=Lektor server (prinzplusprinz).
-#
-# [Service]
-# ExecStart=/usr/bin/pipenv run lektor --language de server --port 5102
-# WorkingDirectory=/home/jakob/lektor/prinzplusprinz
-# Restart=on-success
-# User=jakob
-#
-# [Install]
-# WantedBy=default.target
 fi
