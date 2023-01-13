@@ -40,6 +40,14 @@ output * background /usr/share/backgrounds/gnome/blobs-d.svg fill
 # The escape symbol "\" has to be removed.
 # Read `man 5 sway-input` for more information about this section.
 # }}}
+# Framework Laptop Touchpad {{{
+input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
+    accel_profile adaptive
+    pointer_accel 1
+    dwt enabled
+    tap enabled
+}
+# }}}
 # XPS 13 Touchpad {{{
 input "1739:30383:DELL07E6:00_06CB:76AF_Touchpad" {
     accel_profile adaptive
@@ -263,6 +271,7 @@ workspace music output eDP-1
 
 # VS Code will not work with negative positions here
 output eDP-1 position 3840,1080
+output eDP-1 scale 1
 output DP-1 position 0,0
 
 # Start cmus on the music workspace on start.

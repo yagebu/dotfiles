@@ -39,6 +39,9 @@ WantedBy=timers.target
 EOF
     CreateLink /etc/systemd/system/timers.target.wants/backup.timer /etc/systemd/system/backup.timer
 
+    cat >"$(CreateFile /etc/modprobe.d/framework-als-deactivate.conf)" <<EOF
+blacklist hid_sensor_hub
+EOF
 #######################################
 elif [[ "$HOSTNAME" == "js-zen" ]]; then
     AddPackage --foreign asus-kbd-backlight
@@ -217,7 +220,8 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage pipewire-jack      # Low-latency audio/video router and processor - JACK support
     AddPackage pipewire-pulse     # Low-latency audio/video router and processor - PulseAudio replacement
     AddPackage gst-libav          # Multimedia graph framework - libav plugin
-    AddPackage libva-intel-driver # VA-API implementation for Intel G45 and HD Graphics family
+    AddPackage libva-intel-driver # VA-API for older laptops
+    AddPackage intel-media-driver # VA-API for newer laptops
     CreateLink /etc/systemd/user/pipewire-session-manager.service /usr/lib/systemd/user/wireplumber.service
     CreateLink /etc/systemd/user/pipewire.service.wants/wireplumber.service /usr/lib/systemd/user/wireplumber.service
     CreateLink /etc/systemd/user/sockets.target.wants/pipewire-pulse.socket /usr/lib/systemd/user/pipewire-pulse.socket
