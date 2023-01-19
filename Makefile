@@ -29,6 +29,10 @@ user: deps
 aconfmgr-save:
 	aconfmgr -c aconfmgr --skip-checksums save
 
+.PHONY: aconfmgr-apply
+aconfmgr-apply:
+	aconfmgr -c aconfmgr --skip-checksums apply
+
 .PHONY: system
 system:
 	sudo pacman -Syu

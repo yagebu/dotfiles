@@ -39,6 +39,8 @@ WantedBy=timers.target
 EOF
     CreateLink /etc/systemd/system/timers.target.wants/backup.timer /etc/systemd/system/backup.timer
 
+    # Framework Laptop specific
+    AddPackage fprintd
     cat >"$(CreateFile /etc/modprobe.d/framework-als-deactivate.conf)" <<EOF
 blacklist hid_sensor_hub
 EOF
@@ -99,7 +101,6 @@ EOF
 
     CreateLink /etc/systemd/user/sockets.target.wants/gcr-ssh-agent.socket /usr/lib/systemd/user/gcr-ssh-agent.socket
     CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/systemd/system/getty@.service
-    CreateLink /etc/systemd/system/sockets.target.wants/fava.socket /etc/systemd/system/fava.socket
     CreateLink /etc/systemd/user/default.target.wants/xdg-user-dirs-update.service /usr/lib/systemd/user/xdg-user-dirs-update.service
 fi
 
@@ -108,6 +109,7 @@ fi
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage mesa
     AddPackage xclip
+    AddPackage xdg-desktop-portal-gnome
     AddPackage xdg-desktop-portal-wlr
     AddPackage xf86-input-synaptics
 fi
@@ -151,8 +153,7 @@ fi
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage cups     # The CUPS Printing System - daemon package
     AddPackage cups-pdf # PDF printer for cups
-    CreateLink /etc/systemd/system/printer.target.wants/org.cups.cupsd.service /usr/lib/systemd/system/org.cups.cupsd.service
-    CreateLink /etc/systemd/system/sockets.target.wants/org.cups.cupsd.socket /usr/lib/systemd/system/org.cups.cupsd.socket
+    CreateLink /etc/systemd/system/sockets.target.wants/cups.socket /usr/lib/systemd/system/cups.socket
 fi
 
 # Laptop things
@@ -163,8 +164,9 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage ethtool       # for tlp Utility for controlling network drivers and hardware
     AddPackage smartmontools # Control and monitor S.M.A.R.T. enabled ATA and SCSI Hard Drives
 
+    # Mask systemd-rfkill as requested by tlp
+    CreateLink /etc/systemd/system/systemd-rfkill.service /dev/null
     CreateLink /etc/systemd/system/multi-user.target.wants/tlp.service /usr/lib/systemd/system/tlp.service
-    CreateLink /etc/systemd/system/sleep.target.wants/tlp-sleep.service /usr/lib/systemd/system/tlp-sleep.service
 fi
 
 # Man pages.

@@ -279,6 +279,7 @@ trouble.setup({
 })
 -- }}}
 -- Key bindings {{{
+vim.g.mapleader = ";"
 -- Folds and exiting insert mode.
 vim.keymap.set({ "n", "v" }, "<space><space>", "za", { noremap = true })
 vim.keymap.set("", "<Tab>", "%", { noremap = true })

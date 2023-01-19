@@ -30,7 +30,6 @@ IgnorePath '/var/lib/letsencrypt'
 IgnorePath '/etc/bluetooth'
 IgnorePath '/etc/brlapi.key'
 IgnorePath '/etc/conf.d/lm_sensors'
-IgnorePath '/etc/cups/*'
 IgnorePath '/etc/fstab'
 IgnorePath '/etc/iproute2/rt_tables'
 IgnorePath '/etc/ld.so.cache'
@@ -41,7 +40,6 @@ IgnorePath '/etc/mullvad-vpn/settings.json'
 IgnorePath '/etc/nvme/hostid'
 IgnorePath '/etc/nvme/hostnqn'
 IgnorePath '/etc/printcap'
-IgnorePath '/etc/sane.d/*'
 
 IgnorePath '/etc/.updated'                            # systemd-generated file
 IgnorePath '/etc/ca-certificates/extracted/*'         # extracted ssl certificates
@@ -56,12 +54,8 @@ IgnorePath '/etc/udev/hwdb.bin'     # large auto-generated file
 IgnorePath '/usr/lib/udev/hwdb.bin' # large auto-generated file
 
 IgnorePath '/usr/share/info/dir'
-IgnorePath '/usr/share/perl5/vendor_perl/XML'
-IgnorePath '/var/lib/tlp/rfkill-saved'
-IgnorePath '/var/lib/tpm2-tss/system/keystore'
-
-IgnorePath '/usr/share/mime/*'     # Ignore mime type config
-IgnorePath '/usr/lib/modules/*'    # linux modules stuff
+IgnorePath '/usr/share/mime/*'      # Ignore mime type config
+IgnorePath '/usr/lib/modules/*'     # linux kernel modules stuff
 IgnorePath '/usr/lib/utempter/*'
 
 # Ignore stuff in var lib - this should only ignore stuff for installed packages.
@@ -78,6 +72,7 @@ IgnorePath '/var/lib/colord/*'
 IgnorePath '/var/lib/dbus/*'
 IgnorePath '/var/lib/dkms/*'
 IgnorePath '/var/lib/flatpak/*'
+IgnorePath '/var/lib/fprint/*'
 IgnorePath '/var/lib/fwupd/*'
 IgnorePath '/var/lib/gdm/*'
 IgnorePath '/var/lib/geoclue'
@@ -90,12 +85,13 @@ IgnorePath '/var/lib/private'
 IgnorePath '/var/lib/rpcbind'
 IgnorePath '/var/lib/systemd/*'
 IgnorePath '/var/lib/tlp/*'
+IgnorePath '/var/lib/tpm2-tss/system/keystore'
 IgnorePath '/var/lib/upower/*'
 
-IgnorePath '/var/db/sudo/*'        # ??
-IgnorePath '/var/log/*'            # Ignore logs
-IgnorePath '/var/spool/cups/*'     # Ignore cups files
-IgnorePath '/var/tmp/*'            # TMP
+IgnorePath '/var/db/sudo/lectured'  # users that were shown the sudo intro lecture message
+IgnorePath '/var/log/*'             # Ignore logs
+IgnorePath '/var/spool/cups/*'      # Ignore cups files
+IgnorePath '/var/tmp/*'             # TMP
 
 # Cache paths
 IgnorePath '/usr/lib/*.cache'
