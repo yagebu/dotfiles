@@ -50,6 +50,14 @@ sed -i 's/^#\(en_US.UTF-8\)/\1/g' "$f"
 # /etc/locale.conf
 echo 'LANG=en_GB.utf8' >"$(CreateFile /etc/locale.conf)"
 
+cat >"$(CreateFile /etc/shells)" <<EOF
+/bin/sh
+/bin/bash
+/bin/zsh
+/usr/bin/zsh
+/usr/bin/git-shell
+EOF
+
 # systemd-resolv als DNS resolver
 CreateLink /etc/resolv.conf /run/systemd/resolve/stub-resolv.conf
 CreateLink /etc/systemd/system/multi-user.target.wants/systemd-resolved.service /usr/lib/systemd/system/systemd-resolved.service

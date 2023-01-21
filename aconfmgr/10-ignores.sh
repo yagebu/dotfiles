@@ -11,12 +11,10 @@ IgnorePath '/etc/group-'
 IgnorePath '/etc/gshadow'
 IgnorePath '/etc/gshadow-'
 IgnorePath '/etc/hostname'
-IgnorePath '/etc/hosts'
 IgnorePath '/etc/passwd'
 IgnorePath '/etc/passwd-'
 IgnorePath '/etc/shadow'
 IgnorePath '/etc/shadow-'
-IgnorePath '/etc/shells'
 IgnorePath '/etc/sudoers'
 IgnorePath '/etc/sudoers-'
 
@@ -30,13 +28,15 @@ IgnorePath '/var/lib/letsencrypt'
 IgnorePath '/etc/bluetooth'
 IgnorePath '/etc/brlapi.key'
 IgnorePath '/etc/conf.d/lm_sensors'
+IgnorePath '/etc/cups/subscriptions.conf'   # auto-generated
+IgnorePath '/etc/cups/subscriptions.conf.0' # auto-generated
 IgnorePath '/etc/fstab'
 IgnorePath '/etc/iproute2/rt_tables'
 IgnorePath '/etc/ld.so.cache'
 IgnorePath '/etc/machine-id'
-IgnorePath '/etc/mullvad-vpn/account-history.json'
-IgnorePath '/etc/mullvad-vpn/device.json'
-IgnorePath '/etc/mullvad-vpn/settings.json'
+IgnorePath '/etc/mullvad-vpn/account-history.json' # secret
+IgnorePath '/etc/mullvad-vpn/device.json'          # secret
+IgnorePath '/etc/mullvad-vpn/settings.json'        # secret
 IgnorePath '/etc/nvme/hostid'
 IgnorePath '/etc/nvme/hostnqn'
 IgnorePath '/etc/printcap'
@@ -54,8 +54,8 @@ IgnorePath '/etc/udev/hwdb.bin'     # large auto-generated file
 IgnorePath '/usr/lib/udev/hwdb.bin' # large auto-generated file
 
 IgnorePath '/usr/share/info/dir'
-IgnorePath '/usr/share/mime/*'      # Ignore mime type config
-IgnorePath '/usr/lib/modules/*'     # linux kernel modules stuff
+IgnorePath '/usr/share/mime/*'  # Ignore mime type config
+IgnorePath '/usr/lib/modules/*' # linux kernel modules stuff
 IgnorePath '/usr/lib/utempter/*'
 
 # Ignore stuff in var lib - this should only ignore stuff for installed packages.
@@ -88,10 +88,10 @@ IgnorePath '/var/lib/tlp/*'
 IgnorePath '/var/lib/tpm2-tss/system/keystore'
 IgnorePath '/var/lib/upower/*'
 
-IgnorePath '/var/db/sudo/lectured'  # users that were shown the sudo intro lecture message
-IgnorePath '/var/log/*'             # Ignore logs
-IgnorePath '/var/spool/cups/*'      # Ignore cups files
-IgnorePath '/var/tmp/*'             # TMP
+IgnorePath '/var/db/sudo/lectured' # users that were shown the sudo intro lecture message
+IgnorePath '/var/log/*'            # Ignore logs
+IgnorePath '/var/spool/cups/*'     # Ignore cups files
+IgnorePath '/var/tmp/*'            # TMP
 
 # Cache paths
 IgnorePath '/usr/lib/*.cache'
