@@ -1,4 +1,5 @@
 #!/bin/bash
+machine_type=$(get_machine_type)
 
 # Ignore boot partition and swapfile
 IgnorePath '/boot/*'
@@ -19,11 +20,17 @@ IgnorePath '/etc/sudoers'
 IgnorePath '/etc/sudoers-'
 
 # Server things
-IgnorePath '/etc/letsencrypt/*'
-IgnorePath '/etc/ufw/*'     # TODO
-IgnorePath '/etc/tinyssh/*' # secret
-IgnorePath '/var/lib/nginx/*'
-IgnorePath '/var/lib/letsencrypt'
+if [[ "$machine_type" == "server" ]]; then
+    IgnorePath '/etc/letsencrypt/*'
+    # ufw: TODO
+    IgnorePath '/etc/ufw/applications.d/custom'
+    IgnorePath '/etc/ufw/ufw.conf'
+    IgnorePath '/etc/ufw/user.rules'
+    IgnorePath '/etc/ufw/user6.rules'
+    IgnorePath '/etc/tinyssh/*' # secret
+    IgnorePath '/var/lib/nginx/*'
+    IgnorePath '/var/lib/letsencrypt'
+fi
 
 IgnorePath '/etc/bluetooth'
 IgnorePath '/etc/brlapi.key'
