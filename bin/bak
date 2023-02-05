@@ -154,6 +154,8 @@ def cleanup() -> None:
         "find",
         f"{HOME}/.local/share/nvim/undo",
         f"{HOME}/.local/share/nvim/view",
+        "-type",
+        "f",
         "-ctime",
         "+60",
         "-exec",

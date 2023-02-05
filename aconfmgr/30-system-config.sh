@@ -166,6 +166,7 @@ if [[ "$machine_type" == "desktop" ]]; then
 
     # Mask systemd-rfkill as requested by tlp
     CreateLink /etc/systemd/system/systemd-rfkill.service /dev/null
+    CreateLink /etc/systemd/system/systemd-rfkill.socket /dev/null
     CreateLink /etc/systemd/system/multi-user.target.wants/tlp.service /usr/lib/systemd/system/tlp.service
 fi
 
