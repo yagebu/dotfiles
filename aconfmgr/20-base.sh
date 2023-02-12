@@ -2,8 +2,7 @@
 
 # Base packages
 AddPackage base
-AddPackageGroup base-devel
-AddPackage filesystem
+AddPackage base-devel
 AddPackage linux
 AddPackage linux-firmware
 AddPackage arch-install-scripts

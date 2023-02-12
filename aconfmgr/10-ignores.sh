@@ -37,6 +37,8 @@ IgnorePath '/etc/brlapi.key'
 IgnorePath '/etc/conf.d/lm_sensors'
 IgnorePath '/etc/cups/subscriptions.conf'   # auto-generated
 IgnorePath '/etc/cups/subscriptions.conf.O' # auto-generated
+IgnorePath '/etc/cups/printers.conf'        # permissions are changed by cups
+IgnorePath '/etc/cups/classes.conf'         # permissions are changed by cups
 IgnorePath '/etc/fstab'
 IgnorePath '/etc/iproute2/rt_tables'
 IgnorePath '/etc/ld.so.cache'
