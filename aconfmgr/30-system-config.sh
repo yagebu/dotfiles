@@ -252,7 +252,6 @@ fi
 
 # Pictures
 if [[ "$machine_type" == "desktop" ]]; then
-    AddPackage darktable
     AddPackage digikam
     AddPackage displaycal
     AddPackage feh # Fast and light imlib2-based image viewer
