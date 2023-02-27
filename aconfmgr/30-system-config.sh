@@ -71,7 +71,7 @@ fi
 ############################################################################################################
 # Base desktop config
 if [[ "$machine_type" == "desktop" ]]; then
-    echo 'Server = https://mirror.f4st.host/archlinux/$repo/os/$arch' >"$(CreateFile /etc/pacman.d/mirrorlist)"
+    echo 'Server = https://packages.oth-regensburg.de/archlinux/$repo/os/$arch' >"$(CreateFile /etc/pacman.d/mirrorlist)"
     echo 'KEYMAP=us-acentos' >"$(CreateFile /etc/vconsole.conf)"
 
     CopyFile /etc/X11/xorg.conf.d/00-keyboard.conf

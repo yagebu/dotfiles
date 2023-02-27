@@ -19,6 +19,10 @@ IgnorePath '/etc/shadow-'
 IgnorePath '/etc/sudoers'
 IgnorePath '/etc/sudoers-'
 
+# Systemd credstore?
+IgnorePath '/etc/credstore'
+IgnorePath '/etc/credstore.encrypted'
+
 # Server things
 if [[ "$machine_type" == "server" ]]; then
     IgnorePath '/etc/letsencrypt/*'
