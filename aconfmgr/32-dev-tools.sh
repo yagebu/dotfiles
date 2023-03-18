@@ -35,12 +35,13 @@ AddPackage npm                        # A package manager for javascript
 AddPackage eslint
 AddPackage prettier
 AddPackage typescript-language-server # Language Server Protocol (LSP) implementation for TypeScript using tsserver
-AddPackage --foreign nodejs-svelte-language-server
+AddPackage svelte-language-server
 
 # Dev: Rust
 AddPackage rust
 AddPackage rust-analyzer
 AddPackage maturin
+AddPackage cargo-outdated
 
 # Dev: Python
 AddPackage flake8
