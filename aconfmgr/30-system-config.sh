@@ -121,9 +121,9 @@ AddPackage wget
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage networkmanager
     AddPackage wireless_tools # iwconfig and other tools
-    CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
     CreateLink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service /usr/lib/systemd/system/NetworkManager-dispatcher.service
     CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
+    CreateLink /etc/systemd/system/network-online.target.wants/NetworkManager-wait-online.service /usr/lib/systemd/system/NetworkManager-wait-online.service
 
     # Bluetooth
     AddPackage bluez-utils # Development and debugging utilities for the bluetooth protocol stack
@@ -135,6 +135,7 @@ fi
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackageGroup gnome
     AddPackage gnome-tweaks
+    AddPackage simple-scan
     AddPackage seahorse
     AddPackage dconf-editor
 
@@ -218,6 +219,7 @@ AddPackage opusfile          # Library for opening, seeking, and decoding .opus 
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage cmus
     AddPackage mpv
+    AddPackage --foreign mpv_inhibit_gnome
     AddPackage pavucontrol        # PulseAudio Volume Control
     AddPackage pipewire-alsa      # Low-latency audio/video router and processor - ALSA configuration
     AddPackage pipewire-jack      # Low-latency audio/video router and processor - JACK support

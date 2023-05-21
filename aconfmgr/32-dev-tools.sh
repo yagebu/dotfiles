@@ -47,6 +47,7 @@ AddPackage cargo-outdated
 AddPackage flake8
 AddPackage mpdecimal # for Python's decimal
 AddPackage mypy
+AddPackage --foreign pip-tools
 AddPackage pyenv
 AddPackage pyright
 AddPackage python-black

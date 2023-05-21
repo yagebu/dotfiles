@@ -29,6 +29,7 @@ CopyFile /etc/mkinitcpio.d/linux.preset
 
 # Time zone and time sync
 CreateLink /etc/localtime ../usr/share/zoneinfo/Europe/Berlin
+CreateLink /etc/systemd/system/dbus-org.freedesktop.timesync1.service /usr/lib/systemd/system/systemd-timesyncd.service
 CreateLink /etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service /usr/lib/systemd/system/systemd-timesyncd.service
 
 # /etc/pacman.conf - Enable color output and parallel downloads
@@ -59,5 +60,5 @@ EOF
 
 # systemd-resolv als DNS resolver
 CreateLink /etc/resolv.conf /run/systemd/resolve/stub-resolv.conf
-CreateLink /etc/systemd/system/multi-user.target.wants/systemd-resolved.service /usr/lib/systemd/system/systemd-resolved.service
+CreateLink /etc/systemd/system/sysinit.target.wants/systemd-resolved.service /usr/lib/systemd/system/systemd-resolved.service
 CreateLink /etc/systemd/system/dbus-org.freedesktop.resolve1.service /usr/lib/systemd/system/systemd-resolved.service
