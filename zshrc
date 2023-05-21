@@ -85,11 +85,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias scu='systemctl --user'
     alias jc='journalctl'
     # pacman
-    alias pac='pikaur'
-    alias paci='pikaur -S'
+    #alias pac='pikaur'
+    #alias paci='pikaur -S'
     alias pacr='sudo pacman -Rs'
-    alias pacs='pikaur -Ss'
-    alias pacu='pikaur -Syu'
+    #alias pacs='pikaur -Ss'
+    #alias pacu='pikaur -Syu'
 
     pipi-user () {
         [ -d "$1" ] && pip install --user "$1"
@@ -114,11 +114,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
         return 0
     }
 
-    pacua() {
-        pikaur -Syu --devel \
-            && pipu \
-            && vi +PlugUpgrade +PlugUpdate +qa
-    }
+    # pacua() {
+    #     pikaur -Syu --devel \
+    #         && pipu \
+    #         && vi +PlugUpgrade +PlugUpdate +qa
+    # }
 fi
 # }}}
 # }}}
