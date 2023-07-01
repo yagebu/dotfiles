@@ -279,7 +279,7 @@ def store() -> None:
     """Save Backup and Music to external harddrive."""
     for drive in ["/run/media/jakob/Quickstore", "/run/media/jakob/BACKUP"]:
         if not Path(drive).exists():
-            secho(f"External backup drive not mounted at {drive}.", fg="red")
+            secho(f"External backup drive not mounted at {drive}.", fg="yellow")
         else:
             secho(f"Starting backup to {drive}.", fg="green")
             rsync("atom:backup/", f"{drive}/backup")

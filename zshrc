@@ -87,26 +87,25 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     # pacman
     alias pacr='sudo pacman -Rs'
 
-    pipi-user () {
-        [ -d "$1" ] && pip install --user "$1"
-        return 0
-    }
-
-    pipi-editable () {
-        [ -d "$1" ] && pip install --user -e "$1"
-        return 0
-    }
-
     mvd() {
         mv ~/*.pdf ~/Documents/inbox
         mv ~/*.csv ~/Documents/inbox
     }
 
     pipu() {
-        pipi-user "$HOME/dev/beancount"
-        pipi-editable "$HOME/dev/fava"
-        pipi-editable "$HOME/dev/fava-plugins"
-        pipi-editable "$HOME/dev/smart_importer"
+        [ -d "$HOME/dev/fava" ]           && pipx install -e "$HOME/dev/fava"
+        [ -d "$HOME/dev/beancount" ]      && pipx install "$HOME/dev/beancount" && pipx inject fava "$HOME/dev/beancount"
+        if [ -d "$HOME/dev/fava-plugins" ]; then
+            pipx inject fava -e "$HOME/dev/fava-plugins"
+        else
+            pipx inject fava fava-plugins
+        fi
+        if [ -d "$HOME/dev/smart_importer" ]; then
+            pipx inject fava -e "$HOME/dev/smart_importer"
+        else
+            pipx inject fava smart-importer
+        fi
+        pipx upgrade-all
         return 0
     }
 fi

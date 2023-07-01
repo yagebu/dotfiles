@@ -7,6 +7,7 @@ AddPackage python-pynvim
 AddPackage --foreign neovim-remote
 AddPackage stylua   # The config for neovim is written in lua
 AddPackage kakoune
+AddPackage helix
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage code
 fi
@@ -37,6 +38,9 @@ AddPackage prettier
 AddPackage typescript-language-server # Language Server Protocol (LSP) implementation for TypeScript using tsserver
 AddPackage svelte-language-server
 
+# Dev: Misc
+AddPackage emscripten
+
 # Dev: Rust
 AddPackage rust
 AddPackage rust-analyzer
@@ -52,10 +56,12 @@ AddPackage pyenv
 AddPackage pyright
 AddPackage python-black
 AddPackage python-build
+AddPackage python-cheroot
 AddPackage python-flask
 AddPackage python-jedi
 AddPackage python-pip
 AddPackage python-pipenv
+AddPackage python-pipx
 AddPackage python-poetry
 AddPackage python-pre-commit
 AddPackage python-pylint
