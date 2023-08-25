@@ -58,6 +58,7 @@ AddPackage python-black
 AddPackage python-build
 AddPackage python-cheroot
 AddPackage python-flask
+AddPackage python-hatch
 AddPackage python-jedi
 AddPackage python-pip
 AddPackage python-pipenv
