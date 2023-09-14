@@ -39,7 +39,10 @@ AddPackage typescript-language-server # Language Server Protocol (LSP) implement
 AddPackage svelte-language-server
 
 # Dev: Misc
-AddPackage emscripten
+if [[ "$HOSTNAME" == "js-arch" ]]; then
+    # this is a very big package
+    AddPackage emscripten
+fi
 
 # Dev: Rust
 AddPackage rust
