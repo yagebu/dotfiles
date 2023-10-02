@@ -59,6 +59,10 @@ cat >"$(CreateFile /etc/shells)" <<EOF
 /usr/bin/git-shell
 EOF
 
+# These seem to be changed somehow
+SetFileProperty /usr/bin/groupmems group groups
+SetFileProperty /usr/bin/groupmems mode 2750
+
 # systemd-resolv als DNS resolver
 CreateLink /etc/resolv.conf /run/systemd/resolve/stub-resolv.conf
 CreateLink /etc/systemd/system/sysinit.target.wants/systemd-resolved.service /usr/lib/systemd/system/systemd-resolved.service

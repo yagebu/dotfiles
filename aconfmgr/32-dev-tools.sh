@@ -55,6 +55,7 @@ AddPackage flake8
 AddPackage mpdecimal # for Python's decimal
 AddPackage mypy
 AddPackage --foreign pip-tools
+AddPackage pre-commit
 AddPackage pyenv
 AddPackage pyright
 AddPackage python-black
@@ -67,7 +68,6 @@ AddPackage python-pip
 AddPackage python-pipenv
 AddPackage python-pipx
 AddPackage python-poetry
-AddPackage python-pre-commit
 AddPackage python-pylint
 AddPackage python-pytest
 AddPackage python-pytest-cov

@@ -39,20 +39,15 @@ WantedBy=timers.target
 EOF
     CreateLink /etc/systemd/system/timers.target.wants/backup.timer /etc/systemd/system/backup.timer
 
-    # Framework Laptop specific
+    # Framework Laptop 13 (12th generation) specific.
     AddPackage fprintd
+
     cat >"$(CreateFile /etc/modprobe.d/framework-als-deactivate.conf)" <<EOF
 blacklist hid_sensor_hub
 EOF
 #######################################
-elif [[ "$HOSTNAME" == "js-zen" ]]; then
-    AddPackage --foreign asus-kbd-backlight
-    CreateLink /etc/systemd/system/multi-user.target.wants/asus-kbd-backlight.service /usr/lib/systemd/system/asus-kbd-backlight.service
-
-    # Wifi drivers that use dkms
-    AddPackage broadcom-wl-dkms
-    AddPackage linux-headers # for DKMS
-
+# elif [[ "$HOSTNAME" == "js-zen" ]]; then
+# Nothing specific right now
 #######################################
 elif [[ "$HOSTNAME" == "js-atom" ]]; then
     cat >>"$(GetPackageOriginalFile systemd /etc/systemd/journald.conf)" <<EOF
@@ -148,6 +143,7 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage chromium
     AddPackage firefox
     AddPackage firefox-i18n-de
+    AddPackage gpxsee
 fi
 
 # Printing
@@ -214,7 +210,7 @@ AddPackage beets
 AddPackage imagemagick       # for beets thumbnails
 AddPackage python-pylast     # A Python interface to Last.fm and Libre.fm
 AddPackage python-pyacoustid # Bindings for Chromaprint acoustic fingerprinting and the Acoustid API
-AddPackage youtube-dl        # A command-line program to download videos from YouTube.com and a few more sites
+AddPackage --foreign youtube-dl        # A command-line program to download videos from YouTube.com and a few more sites
 AddPackage opusfile          # Library for opening, seeking, and decoding .opus files
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage cmus
