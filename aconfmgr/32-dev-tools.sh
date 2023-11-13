@@ -48,6 +48,7 @@ fi
 AddPackage rust
 AddPackage rust-analyzer
 AddPackage maturin
+AddPackage cargo-insta
 AddPackage cargo-outdated
 
 # Dev: Python

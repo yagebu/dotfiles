@@ -48,7 +48,7 @@ Plug 'tpope/vim-fugitive'
 " }}}
 " Language server {{{
 Plug 'neovim/nvim-lspconfig'
-Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'nvimtools/none-ls.nvim'
 Plug 'folke/trouble.nvim'
 " }}}
 " Autocompletion {{{
@@ -262,7 +262,7 @@ null_ls.setup({
     }),
 
     -- Python
-    null_ls.builtins.diagnostics.pylint,
+    -- null_ls.builtins.diagnostics.pylint,
     null_ls.builtins.diagnostics.mypy.with({
       method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
     }),
