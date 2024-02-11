@@ -107,6 +107,9 @@ IgnorePath '/var/log/*'            # Ignore logs
 IgnorePath '/var/spool/cups/*'     # Ignore cups files
 IgnorePath '/var/tmp/*'            # TMP
 
+# Permissions are changed by some process
+IgnorePath '/usr/share/polkit-1/rules.d'
+
 # Cache paths
 IgnorePath '/usr/lib/*.cache'
 IgnorePath '/usr/lib/locale/locale-archive'
