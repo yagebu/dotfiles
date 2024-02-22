@@ -55,7 +55,6 @@ AddPackage cargo-outdated
 AddPackage flake8
 AddPackage mpdecimal # for Python's decimal
 AddPackage mypy
-AddPackage --foreign pip-tools
 AddPackage pre-commit
 AddPackage pyenv
 AddPackage pyright
@@ -72,7 +71,6 @@ AddPackage python-poetry
 AddPackage python-pylint
 AddPackage python-pytest
 AddPackage python-pytest-cov
-AddPackage --foreign python-reorder-python-imports
 AddPackage python-scikit-learn
 AddPackage python-setuptools-scm
 AddPackage python-sphinx
@@ -80,3 +78,4 @@ AddPackage python-tox
 AddPackage python-wheel
 AddPackage ruff
 AddPackage twine
+AddPackage uv
