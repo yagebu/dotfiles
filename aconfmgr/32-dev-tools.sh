@@ -5,7 +5,7 @@ machine_type=$(get_machine_type)
 AddPackage neovim
 AddPackage python-pynvim
 AddPackage --foreign neovim-remote
-AddPackage stylua   # The config for neovim is written in lua
+AddPackage stylua # The config for neovim is written in lua
 AddPackage kakoune
 AddPackage helix
 if [[ "$machine_type" == "desktop" ]]; then
@@ -32,11 +32,12 @@ AddPackage zsh   # Default shell used by this config
 AddPackage lua   # For z.lua
 
 # Dev: Javascript, Typescript, Svelte
-AddPackage npm                        # A package manager for javascript
+AddPackage npm
 AddPackage eslint
 AddPackage prettier
-AddPackage typescript-language-server # Language Server Protocol (LSP) implementation for TypeScript using tsserver
+AddPackage eslint-language-server
 AddPackage svelte-language-server
+AddPackage typescript-language-server
 
 # Dev: Misc
 if [[ "$HOSTNAME" == "js-arch" ]]; then
@@ -77,5 +78,6 @@ AddPackage python-sphinx
 AddPackage python-tox
 AddPackage python-wheel
 AddPackage ruff
+AddPackage ruff-lsp
 AddPackage twine
 AddPackage uv

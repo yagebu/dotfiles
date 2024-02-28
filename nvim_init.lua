@@ -209,6 +209,16 @@ lspconfig.svelte.setup({
   on_attach = on_attach,
 })
 
+lspconfig.eslint.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+lspconfig.ruff_lsp.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
 -- rust-tools calls lspconfig.setup, so do not do that twice.
 rust_tools.setup({
   server = {
@@ -234,13 +244,7 @@ local null_ls = require("null-ls")
 null_ls.setup({
   sources = {
     -- Javascript, Typescript, Svelte, etc.
-    null_ls.builtins.diagnostics.eslint.with({
-      extra_filetypes = { "svelte" },
-      method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-    }),
-    null_ls.builtins.formatting.eslint.with({
-      extra_filetypes = { "svelte" },
-    }),
+    -- eslint is handled by language server
     null_ls.builtins.formatting.prettier.with({
       extra_filetypes = { "svelte" },
     }),
@@ -262,13 +266,11 @@ null_ls.setup({
     }),
 
     -- Python
-    -- null_ls.builtins.diagnostics.pylint,
+    -- ruff is handled by language server
     null_ls.builtins.diagnostics.mypy.with({
       method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
     }),
-    null_ls.builtins.diagnostics.ruff,
-    null_ls.builtins.formatting.ruff,
-    null_ls.builtins.formatting.black,
+    -- null_ls.builtins.formatting.black,
   },
 })
 -- }}}
