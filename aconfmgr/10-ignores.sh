@@ -39,6 +39,7 @@ fi
 IgnorePath '/etc/bluetooth'
 IgnorePath '/etc/brlapi.key'
 IgnorePath '/etc/conf.d/lm_sensors'
+IgnorePath '/etc/colord'                    # auto-generated
 IgnorePath '/etc/cups/subscriptions.conf'   # auto-generated
 IgnorePath '/etc/cups/subscriptions.conf.O' # auto-generated
 IgnorePath '/etc/cups/printers.conf'        # permissions are changed by cups
@@ -89,6 +90,7 @@ IgnorePath '/var/lib/fprint/*'
 IgnorePath '/var/lib/fwupd/*'
 IgnorePath '/var/lib/gdm/*'
 IgnorePath '/var/lib/geoclue'
+IgnorePath '/var/lib/libuuid'
 IgnorePath '/var/lib/logrotate.status'
 IgnorePath '/var/lib/machines'
 IgnorePath '/var/lib/pacman/*'
