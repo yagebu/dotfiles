@@ -45,6 +45,7 @@ IgnorePath '/etc/cups/subscriptions.conf.O' # auto-generated
 IgnorePath '/etc/cups/printers.conf'        # permissions are changed by cups
 IgnorePath '/etc/cups/classes.conf'         # permissions are changed by cups
 IgnorePath '/etc/fstab'
+IgnorePath '/etc/gnome-remote-desktop'
 IgnorePath '/etc/iproute2/rt_tables'
 IgnorePath '/etc/ld.so.cache'
 IgnorePath '/etc/machine-id'
@@ -54,7 +55,6 @@ IgnorePath '/etc/mullvad-vpn/settings.json'        # secret
 IgnorePath '/etc/nvme/hostid'
 IgnorePath '/etc/nvme/hostnqn'
 IgnorePath '/etc/printcap'
-IgnorePath '/etc/vconsole.conf' # systemd-generated file
 
 IgnorePath '/etc/.updated'                            # systemd-generated file
 IgnorePath '/etc/ca-certificates/extracted/*'         # extracted ssl certificates
@@ -91,6 +91,8 @@ IgnorePath '/var/lib/fprint/*'
 IgnorePath '/var/lib/fwupd/*'
 IgnorePath '/var/lib/gdm/*'
 IgnorePath '/var/lib/geoclue'
+IgnorePath '/var/lib/gnome-remote-desktop'
+IgnorePath '/var/lib/lastlog'
 IgnorePath '/var/lib/libuuid'
 IgnorePath '/var/lib/logrotate.status'
 IgnorePath '/var/lib/machines'

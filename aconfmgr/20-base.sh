@@ -48,6 +48,9 @@ sed -i 's/^#\(de_DE.UTF-8\)/\1/g' "$f"
 sed -i 's/^#\(en_GB.UTF-8\)/\1/g' "$f"
 sed -i 's/^#\(en_US.UTF-8\)/\1/g' "$f"
 
+# /etc/vconsole.conf
+echo 'KEYMAP=us-acentos' >"$(CreateFile /etc/vconsole.conf)"
+
 # /etc/locale.conf
 echo 'LANG=en_GB.utf8' >"$(CreateFile /etc/locale.conf)"
 
