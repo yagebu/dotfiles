@@ -54,6 +54,7 @@ IgnorePath '/etc/mullvad-vpn/settings.json'        # secret
 IgnorePath '/etc/nvme/hostid'
 IgnorePath '/etc/nvme/hostnqn'
 IgnorePath '/etc/printcap'
+IgnorePath '/etc/vconsole.conf' # systemd-generated file
 
 IgnorePath '/etc/.updated'                            # systemd-generated file
 IgnorePath '/etc/ca-certificates/extracted/*'         # extracted ssl certificates
