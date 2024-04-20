@@ -13,27 +13,14 @@ function SetupNginx() {
 
     # Certbot
     AddPackage certbot
-    cat >"$(CreateFile /etc/systemd/system/certbot.service)" <<EOF
-[Unit]
-Description=Let's Encrypt renewal
 
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/certbot renew
+    # Restart nginx after certbot renewal
+    cat >>"$(GetPackageOriginalFile certbot /usr/lib/systemd/system/certbot-renew.service)" <<EOF
 ExecStartPost=/usr/sbin/systemctl restart nginx.service
 EOF
-    cat >"$(CreateFile /etc/systemd/system/certbot.timer)" <<EOF
-[Unit]
-Description=Monthly renewal of Let's Encrypt's certificates
 
-[Timer]
-OnCalendar=monthly
-Persistent=true
-
-[Install]
-WantedBy=timers.target
-EOF
-    CreateLink /etc/systemd/system/timers.target.wants/certbot.timer /etc/systemd/system/certbot.timer
+    # Start certbot renewal twice a day
+    CreateLink /etc/systemd/system/timers.target.wants/certbot-renew.timer /usr/lib/systemd/system/certbot-renew.timer
 }
 
 # Server packages
