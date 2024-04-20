@@ -105,7 +105,9 @@ vim.cmd("colorscheme gruvbox")
 local colorizer = require("colorizer")
 colorizer.setup()
 
+-- set this explicitly for performance
 vim.g.python3_host_prog = "/usr/bin/python3"
+-- disable these explicitly for performance
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -273,20 +275,20 @@ trouble.setup({
 -- Key bindings {{{
 vim.g.mapleader = ";"
 -- Folds and exiting insert mode.
-vim.keymap.set({ "n", "v" }, "<space><space>", "za", { noremap = true })
-vim.keymap.set("", "<Tab>", "%", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<space><space>", "za")
+vim.keymap.set("", "<Tab>", "%")
 -- Save one keystroke for commmands
-vim.keymap.set("i", "jk", "<Esc>", { noremap = true })
+vim.keymap.set("i", "jk", "<Esc>")
 -- Save and quit
-vim.keymap.set("i", "<C-S>", "<C-O>:update<CR>", { noremap = true })
-vim.keymap.set("n", "<C-S>", ":update<CR>", { noremap = true })
-vim.keymap.set("i", "<C-Q>", "<Esc>:q<CR>", { noremap = true })
-vim.keymap.set("n", "<C-Q>", ":q<CR>", { noremap = true })
+vim.keymap.set("i", "<C-S>", "<C-O>:update<CR>")
+vim.keymap.set("n", "<C-S>", ":update<CR>")
+vim.keymap.set("i", "<C-Q>", "<Esc>:q<CR>")
+vim.keymap.set("n", "<C-Q>", ":q<CR>")
 -- Move up/down by on-screen lines
-vim.keymap.set({ "n", "v" }, "j", "gj", { noremap = true })
-vim.keymap.set({ "n", "v" }, "k", "gk", { noremap = true })
-vim.keymap.set({ "n", "v" }, "gj", "j", { noremap = true })
-vim.keymap.set({ "n", "v" }, "gk", "k", { noremap = true })
+vim.keymap.set({ "n", "v" }, "j", "gj")
+vim.keymap.set({ "n", "v" }, "k", "gk")
+vim.keymap.set({ "n", "v" }, "gj", "j")
+vim.keymap.set({ "n", "v" }, "gk", "k")
 -- Buffers
 vim.keymap.set("n", "]b", ":bnext<CR>", { silent = true })
 vim.keymap.set("n", "[b", ":bprev<CR>", { silent = true })
@@ -294,17 +296,17 @@ vim.keymap.set("n", "[b", ":bprev<CR>", { silent = true })
 vim.keymap.set("n", "]t", ":tabn<CR>", { silent = true })
 vim.keymap.set("n", "[t", ":tabp<CR>", { silent = true })
 -- Quicker window navigation
-vim.keymap.set("n", "<C-H>", "<C-W>h", { noremap = true })
-vim.keymap.set("n", "<C-J>", "<C-W>j", { noremap = true })
-vim.keymap.set("n", "<C-K>", "<C-W>k", { noremap = true })
-vim.keymap.set("n", "<C-L>", "<C-W>l", { noremap = true })
+vim.keymap.set("n", "<C-H>", "<C-W>h")
+vim.keymap.set("n", "<C-J>", "<C-W>j")
+vim.keymap.set("n", "<C-K>", "<C-W>k")
+vim.keymap.set("n", "<C-L>", "<C-W>l")
 vim.keymap.set("n", "<BS>", "<C-W>h", { remap = true })
 -- Terminal mappings
-vim.keymap.set("t", "<C-H>", "<C-\\><C-n><C-W>h", { noremap = true })
-vim.keymap.set("t", "<C-J>", "<C-\\><C-n><C-W>j", { noremap = true })
-vim.keymap.set("t", "<C-K>", "<C-\\><C-n><C-W>k", { noremap = true })
-vim.keymap.set("t", "<C-L>", "<C-\\><C-n><C-W>l", { noremap = true })
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
+vim.keymap.set("t", "<C-H>", "<C-\\><C-n><C-W>h")
+vim.keymap.set("t", "<C-J>", "<C-\\><C-n><C-W>j")
+vim.keymap.set("t", "<C-K>", "<C-\\><C-n><C-W>k")
+vim.keymap.set("t", "<C-L>", "<C-\\><C-n><C-W>l")
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 -- Fuzzy file search and MISC other plugin commands
 vim.keymap.set("n", "<leader><space>", ":nohlsearch<CR>", { silent = true })
 vim.keymap.set("n", "T", nvim_tree_api.tree.toggle, { silent = true })
