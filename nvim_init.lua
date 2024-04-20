@@ -69,7 +69,7 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'lervag/vimtex'
 Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
-Plug 'simrat39/rust-tools.nvim'
+Plug 'mrcjkb/rustaceanvim', { 'tag': '*' }
 " }}}
 " Color schemes {{{
 Plug 'morhetz/gruvbox'
@@ -155,88 +155,78 @@ nvim_tree.setup({
 -- nvim-lspconfig {{{
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local lspconfig = require("lspconfig")
-local rust_tools = require("rust-tools")
 
 -- Keymappings mostly as recommended in
--- https://github.com/neovim/nvim-lspconfig#Suggested-configuration
-local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
+-- https://github.com/neovim/nvim-lspconfig#suggested-configuration
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
 
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set("n", "<space>wl", function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-  vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-  --vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-end
-vim.keymap.set("n", "<space>f", function()
-  vim.lsp.buf.format({
-    async = true,
-    filter = function(client)
-      return client.name ~= "tsserver"
-    end,
-  })
-end, opts)
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+    vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set("n", "<space>wl", function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+    vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "<space>f", function()
+      vim.lsp.buf.format({
+        async = true,
+        filter = function(client) -- this is the only modification from the suggested defaults
+          return client.name ~= "tsserver"
+        end,
+      })
+    end, opts)
+  end,
+})
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
+local lsp_setup_args = { capabilities = capabilities }
 
-lspconfig.tsserver.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
+lspconfig.tsserver.setup(lsp_setup_args)
+lspconfig.svelte.setup(lsp_setup_args)
+lspconfig.eslint.setup(lsp_setup_args)
+lspconfig.ruff_lsp.setup(lsp_setup_args)
+-- rust_analyzer is setup automatically by rustaceanvim
 
-lspconfig.svelte.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-
-lspconfig.eslint.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-
-lspconfig.ruff_lsp.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-
--- rust-tools calls lspconfig.setup, so do not do that twice.
-rust_tools.setup({
+-- TODO: inlay hints should work again with neovim 0.10
+vim.g.rustaceanvim = {
+  ---@type RustaceanLspClientOpts
   server = {
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
-      vim.keymap.set("n", "<C-space>", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
-    end,
-    settings = {
+    default_settings = {
       ["rust-analyzer"] = {
+        cargo = {
+          extraEnv = {
+            -- to work around https://github.com/PyO3/pyo3/issues/1708
+            CARGO_TARGET_DIR = "target/rust-analyzer",
+          },
+        },
         checkOnSave = {
           command = "clippy",
         },
       },
     },
   },
-})
-rust_tools.inlay_hints.enable()
+}
 -- }}}
 -- null-ls (extra linters and formatters) {{{
 local null_ls = require("null-ls")
@@ -569,6 +559,5 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
   group = group_id,
 })
--- }}}
 -- }}}
 -- }}}
