@@ -36,7 +36,7 @@ aconfmgr-apply:
 .PHONY: system
 system:
 	paru
-	nvim +PlugUpgrade +PlugUpdate +qa
+	nvim +PlugUpgrade +PlugClean! +PlugUpdate +qa
 	aconfmgr -c aconfmgr --skip-checksums apply
 
 deps:

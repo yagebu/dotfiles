@@ -8,6 +8,49 @@ end
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 -- }}}
+-- Documentation and overview {{{
+-- Some helpful references
+--  - an example initial config file with modern nvim plugins:
+--    https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
+-- }}}
+-- Pre-plugin basic configuration {{{
+-- enable 24 bit colors
+vim.o.termguicolors = true
+-- enable mouse support in [a]ll modes
+vim.o.mouse = "a"
+-- Sync clipboard between OS and Neovim.
+vim.o.clipboard = "unnamedplus"
+
+-- set this explicitly for performance
+vim.g.python3_host_prog = "/usr/bin/python3"
+-- disable these explicitly for performance
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+
+-- Do not use tabs and use 4 spaces for indentation
+vim.o.shiftwidth = 4
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.expandtab = true
+
+-- as recommended by vim-stay:
+vim.o.viewoptions = "cursor,folds,slash,unix"
+
+vim.o.number = true
+vim.o.undofile = true
+
+vim.o.scrolloff = 4
+
+vim.o.ignorecase = true -- case-insensitive search
+vim.o.smartcase = true -- uppercase causes case-sensitive search
+vim.o.gdefault = true -- apply substitutions globally by default
+vim.o.inccommand = "split"
+
+-- set this before plugins to ensure that they use the correct one
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+-- }}}
 -- Plugins {{{
 -- setup {{{
 vim.cmd([[
@@ -24,23 +67,34 @@ endif
 call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 " }}}
 Plug 'Konfekt/FastFold'
-Plug 'itchyny/lightline.vim'
-Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-pseudocl'
 Plug 'justinmk/vim-sneak'
-Plug 'kopischke/vim-stay'
+Plug 'zhimsel/vim-stay'
+" Undotree, opens with `U`.
 Plug 'mbbill/undotree'
-Plug 'norcalli/nvim-colorizer.lua'
+" Color CSS variables.
+Plug 'NvChad/nvim-colorizer.lua'
+" LUA library needed by other plugins.
 Plug 'nvim-lua/plenary.nvim'
+" Fuzzy finder
 Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+" File tree (mapped to `T`)
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
-Plug 'tpope/vim-repeat'
+" Allows using <C-a> and <C-x> on dates like `2012-12-12`
 Plug 'tpope/vim-speeddating'
-Plug 'tpope/vim-surround'
 Plug 'vim-test/vim-test'
+" Toggling of comments
+Plug 'numToStr/Comment.nvim'
+" Show Keymappings
+Plug 'folke/which-key.nvim'
+" A collection of various mini plugins. Currently used:
+"  - mini.align
+"  - mini.statusline
+"  - mini.surround
+" https://github.com/echasnovski/mini.nvim
+Plug 'echasnovski/mini.nvim'
 " git {{{
 Plug 'jreybert/vimagit'
 Plug 'junegunn/gv.vim'
@@ -72,7 +126,8 @@ Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
 Plug 'mrcjkb/rustaceanvim', { 'tag': '*' }
 " }}}
 " Color schemes {{{
-Plug 'morhetz/gruvbox'
+Plug 'ellisonleao/gruvbox.nvim'
+" Plug 'morhetz/gruvbox'
 " }}}
 call plug#end()
 ]])
@@ -97,39 +152,31 @@ nvim_treesitter_configs.setup({
   },
 })
 -- }}}
--- Basic settings {{{
-vim.o.termguicolors = true
-vim.o.mouse = "a"
+-- Colorscheme gruvbox {{{
+-- set colorscheme
+vim.cmd.colorscheme("gruvbox")
+-- }}}
+-- Initialise misc plugins (Comment, colorizer, mini.align, mini.surround, mini.statusline, which-key) {{{
+-- Comments - adds some keybindings automatically like `gc` and `gb` also see :h comments.keybindings
+require("Comment").setup()
+-- colorizer colors CSS colors
+require("colorizer").setup()
+require("mini.align").setup()
+require("mini.surround").setup()
+require("mini.statusline").setup()
 
-vim.cmd("colorscheme gruvbox")
-local colorizer = require("colorizer")
-colorizer.setup()
-
--- set this explicitly for performance
-vim.g.python3_host_prog = "/usr/bin/python3"
--- disable these explicitly for performance
-vim.g.loaded_node_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_ruby_provider = 0
-
--- Do not use tabs and use 4 spaces for indentation
-vim.o.shiftwidth = 4
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.expandtab = true
-
--- as recommended by vim-stay:
-vim.o.viewoptions = "cursor,folds,slash,unix"
-
-vim.o.number = true
-vim.o.undofile = true
-
-vim.o.scrolloff = 4
-
-vim.o.ignorecase = true -- case-insensitive search
-vim.o.smartcase = true -- uppercase causes case-sensitive search
-vim.o.gdefault = true -- apply substitutions globally by default
-vim.o.inccommand = "split"
+vim.o.timeout = true
+vim.o.timeoutlen = 300
+require("which-key").setup()
+require("which-key").register({
+  ["<leader>c"] = { name = "[C]ode", _ = "which_key_ignore" },
+  -- ["<leader>d"] = { name = "[D]ocument", _ = "which_key_ignore" },
+  -- ["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
+  ["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
+  -- ["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
+  ["<leader>t"] = { name = "[T]est", _ = "which_key_ignore" },
+  -- ["<leader>h"] = { name = "Git [H]unk", _ = "which_key_ignore" },
+})
 -- }}}
 -- nvim-tree {{{
 local nvim_tree = require("nvim-tree")
@@ -159,45 +206,48 @@ local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local lspconfig = require("lspconfig")
 
 -- Keymappings mostly as recommended in
+-- https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L457
+-- which is quite close to
 -- https://github.com/neovim/nvim-lspconfig#suggested-configuration
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+-- but adds descriptions and uses telescope in more places
+--
+-- The formatting is overwritten to not use the tsserver for formatting.
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(ev)
+  callback = function(event)
     -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+    vim.bo[event.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-    vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set("n", "<space>wl", function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
-    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-    vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "<space>f", function()
+    local map = function(keys, func, desc)
+      vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+    end
+    map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+    map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+    map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+    map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+    map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+    map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+    map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+    map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+    map("K", vim.lsp.buf.hover, "Hover Documentation")
+    map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+    map("<leader>f", function()
       vim.lsp.buf.format({
         async = true,
         filter = function(client) -- this is the only modification from the suggested defaults
           return client.name ~= "tsserver"
         end,
       })
-    end, opts)
+    end, "[F]ormat buffer")
   end,
 })
 
@@ -237,48 +287,38 @@ null_ls.setup({
   sources = {
     -- Javascript, Typescript, Svelte, etc.
     -- eslint is handled by language server
-    null_ls.builtins.formatting.prettier.with({
-      extra_filetypes = { "svelte" },
-    }),
+    null_ls.builtins.formatting.prettier.with({ extra_filetypes = { "svelte" } }),
 
     -- CSS
-    null_ls.builtins.diagnostics.stylelint.with({
-      extra_filetypes = { "svelte" },
-    }),
+    null_ls.builtins.diagnostics.stylelint.with({ extra_filetypes = { "svelte" } }),
 
     -- Shell
-    null_ls.builtins.formatting.shfmt.with({
-      -- indent with 4 spaces
-      extra_args = { "-i", "4" },
-    }),
+    -- indent with 4 spaces
+    null_ls.builtins.formatting.shfmt.with({ extra_args = { "-i", "4" } }),
 
-    null_ls.builtins.formatting.stylua.with({
-      -- indent with 2 spaces
-      extra_args = { "--indent-type", "Spaces", "--indent-width", "2" },
-    }),
+    -- Lua
+    -- indent with 2 spaces
+    null_ls.builtins.formatting.stylua.with({ extra_args = { "--indent-type", "Spaces", "--indent-width", "2" } }),
 
     -- Python
     -- ruff is handled by language server
-    null_ls.builtins.diagnostics.mypy.with({
-      method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-    }),
+    -- only run diagnostics on save with mypy since it's not very performant
+    null_ls.builtins.diagnostics.mypy.with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE }),
+    -- using ruff now instead of black
     -- null_ls.builtins.formatting.black,
   },
 })
 -- }}}
 -- trouble (diagnostics interface) {{{
 local trouble = require("trouble")
-trouble.setup({
-  icons = false,
-})
+trouble.setup({ icons = false })
 -- }}}
 -- Key bindings {{{
-vim.g.mapleader = ";"
 -- Folds and exiting insert mode.
 vim.keymap.set({ "n", "v" }, "<space><space>", "za")
 vim.keymap.set("", "<Tab>", "%")
 -- Save one keystroke for commmands
-vim.keymap.set("i", "jk", "<Esc>")
+vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode with jk" })
 -- Save and quit
 vim.keymap.set("i", "<C-S>", "<C-O>:update<CR>")
 vim.keymap.set("n", "<C-S>", ":update<CR>")
@@ -307,27 +347,31 @@ vim.keymap.set("t", "<C-J>", "<C-\\><C-n><C-W>j")
 vim.keymap.set("t", "<C-K>", "<C-\\><C-n><C-W>k")
 vim.keymap.set("t", "<C-L>", "<C-\\><C-n><C-W>l")
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
--- Fuzzy file search and MISC other plugin commands
-vim.keymap.set("n", "<leader><space>", ":nohlsearch<CR>", { silent = true })
+-- MISC other plugin commands
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "T", nvim_tree_api.tree.toggle, { silent = true })
 vim.keymap.set("n", "U", ":UndotreeToggle<CR>", { silent = true })
--- vim.keymap.set('n', '<leader><leader>', ':Files<CR>', { silent = true })
--- vim.keymap.set('n', '<leader>b', ':Buffers<CR>', { silent = true })
--- vim.keymap.set('n', '<leader>h', ':Helptags<CR>', { silent = true })
--- vim.keymap.set('n', '<leader>r', ':Rg<CR>', { silent = true })
-local telescope_builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader><leader>", telescope_builtin.find_files, {})
-vim.keymap.set("n", "<leader>b", telescope_builtin.buffers, {})
-vim.keymap.set("n", "<leader>h", telescope_builtin.help_tags, {})
-vim.keymap.set("n", "<leader>r", telescope_builtin.live_grep, {})
+
+-- Fuzzy file search
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "[  ] Search files" })
+-- the following are taken from kickstart.nvim
+vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
+vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
+vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
+vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
+vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+-- vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
 vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
 -- Run tests
-vim.keymap.set("n", "t<C-n>", ":TestNearest<CR>", { silent = true })
-vim.keymap.set("n", "t<C-f>", ":TestFile<CR>", { silent = true })
-vim.keymap.set("n", "t<C-s>", ":TestSuite<CR>", { silent = true })
-vim.keymap.set("n", "t<C-l>", ":TestLast<CR>", { silent = true })
-vim.keymap.set("n", "t<C-g>", ":TestVisit<CR>", { silent = true })
+vim.keymap.set("n", "<leader>tn", ":TestNearest<CR>", { desc = "[T]est [n]earest" })
+vim.keymap.set("n", "<leader>tf", ":TestFile<CR>", { desc = "[T]est [f]ile" })
+vim.keymap.set("n", "<leader>ta", ":TestSuite<CR>", { desc = "[T]est [a]ll tests" })
 -- }}}
 -- Completion {{{
 local cmp = require("cmp")
@@ -392,7 +436,7 @@ cmp.setup.cmdline(":", {
   }),
 })
 -- }}}
--- Misc {{{
+-- Automatically run make on nvim_init changes {{{
 local group_id = vim.api.nvim_create_augroup("yagebu_nvim_init", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
   desc = "Automatically copy over new dotfiles on changes.",
@@ -400,54 +444,13 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   command = "silent !make -C ~/dev/dotfiles > /dev/null",
   group = group_id,
 })
-
--- TODO: write a lua function for this. Is useful to sort Beancount transactions.
+-- }}}
+-- TODO: write a lua function for this. Is useful to sort Beancount transactions {{{
 -- function! SortParagraphs() range
 --     execute a:firstline . ',' . a:lastline . 'd'
 --     let @@=join(sort(split(substitute(@@, '\n*$', '', ''), "\n\n")), "\n\n")
 --     put!
 -- endfunction
--- }}}
--- Terminal colors {{{
--- dark0 + gray
-vim.g.terminal_color_0 = "#282828"
-vim.g.terminal_color_8 = "#928374"
--- neutral_red + bright_red
-vim.g.terminal_color_1 = "#cc241d"
-vim.g.terminal_color_9 = "#fb4934"
--- neutral_green + bright_green
-vim.g.terminal_color_2 = "#98971a"
-vim.g.terminal_color_10 = "#b8bb26"
--- neutral_yellow + bright_yellow
-vim.g.terminal_color_3 = "#d79921"
-vim.g.terminal_color_11 = "#fabd2f"
--- neutral_blue + bright_blue
-vim.g.terminal_color_4 = "#458588"
-vim.g.terminal_color_12 = "#83a598"
--- neutral_purple + bright_purple
-vim.g.terminal_color_5 = "#b16286"
-vim.g.terminal_color_13 = "#d3869b"
--- neutral_aqua + faded_aqua
-vim.g.terminal_color_6 = "#689d6a"
-vim.g.terminal_color_14 = "#8ec07c"
--- light4 + light1
-vim.g.terminal_color_7 = "#a89984"
-vim.g.terminal_color_15 = "#ebdbb2"
--- }}}
--- Lightline {{{
-vim.o.laststatus = 2
-vim.g.lightline = {
-  colorscheme = "gruvbox",
-  active = {
-    left = {
-      { "mode", "paste" },
-      { "readonly", "filename", "modified", "gitbranch" },
-    },
-  },
-  component_function = {
-    gitbranch = "FugitiveHead",
-  },
-}
 -- }}}
 -- File types {{{
 -- Fold configuration {{{
