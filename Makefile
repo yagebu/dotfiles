@@ -33,10 +33,13 @@ aconfmgr-save:
 aconfmgr-apply:
 	aconfmgr -c aconfmgr --skip-checksums apply
 
-.PHONY: system
-system:
-	paru
+.PHONY: nvim
+nvim: user
 	nvim +PlugUpgrade +PlugClean! +PlugUpdate +qa
+
+.PHONY: system
+system: nvim
+	paru
 	aconfmgr -c aconfmgr --skip-checksums apply
 
 deps:

@@ -1,8 +1,10 @@
 -- vim: set foldmethod=marker:
 -- Directories {{{
 vim.opt.backupdir:remove({ "." })
-if vim.fn.isdirectory(vim.o.backupdir) then
-  vim.fn.mkdir(vim.o.backupdir, "p")
+-- create backup dir if it doesn't exist
+local backup_dir = vim.opt.backupdir:get()[1]
+if not vim.fn.isdirectory(backup_dir) then
+  vim.fn.mkdir(backup_dir, "p")
 end
 -- disable netrw for nvim-tree
 vim.g.loaded_netrw = 1
@@ -15,11 +17,11 @@ vim.g.loaded_netrwPlugin = 1
 -- }}}
 -- Pre-plugin basic configuration {{{
 -- enable 24 bit colors
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 -- enable mouse support in [a]ll modes
-vim.o.mouse = "a"
+vim.opt.mouse = "a"
 -- Sync clipboard between OS and Neovim.
-vim.o.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus"
 
 -- set this explicitly for performance
 vim.g.python3_host_prog = "/usr/bin/python3"
@@ -28,31 +30,30 @@ vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
--- Do not use tabs and use 4 spaces for indentation
-vim.o.shiftwidth = 4
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.expandtab = true
-
 -- as recommended by vim-stay:
-vim.o.viewoptions = "cursor,folds,slash,unix"
+vim.opt.viewoptions = { "cursor", "folds", "slash", "unix" }
 
-vim.o.number = true
-vim.o.undofile = true
+-- vim-sleuth is used for auto-detection of tabs and spaces settings
 
-vim.o.scrolloff = 4
+vim.opt.number = true
+vim.opt.undofile = true
 
-vim.o.ignorecase = true -- case-insensitive search
-vim.o.smartcase = true -- uppercase causes case-sensitive search
-vim.o.gdefault = true -- apply substitutions globally by default
-vim.o.inccommand = "split"
+vim.opt.scrolloff = 4
+
+-- case-insensitive search
+vim.opt.ignorecase = true
+-- uppercase causes case-sensitive search
+vim.opt.smartcase = true
+-- apply substitutions globally by default
+vim.opt.gdefault = true
+vim.opt.inccommand = "split"
 
 -- set this before plugins to ensure that they use the correct one
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 -- }}}
 -- Plugins {{{
--- setup {{{
+-- setup vim-plug automatically if not installed yet {{{
 vim.cmd([[
 if empty(glob($XDG_DATA_HOME . '/nvim/site/autoload/plug.vim'))
     silent !echo "Installing vim-plug..."
@@ -66,17 +67,23 @@ endif
 
 call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 " }}}
-Plug 'Konfekt/FastFold'
+" Lua library needed by other plugins.
+Plug 'nvim-lua/plenary.nvim'
+
+" Automatically detect tabs/spaces
+Plug 'tpope/vim-sleuth'
+
+" Preview copy/paste registers
 Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/vim-pseudocl'
+
 Plug 'justinmk/vim-sneak'
+
+" Automatically save editor state
 Plug 'zhimsel/vim-stay'
 " Undotree, opens with `U`.
 Plug 'mbbill/undotree'
 " Color CSS variables.
 Plug 'NvChad/nvim-colorizer.lua'
-" LUA library needed by other plugins.
-Plug 'nvim-lua/plenary.nvim'
 " Fuzzy finder
 Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 " File tree (mapped to `T`)
@@ -85,22 +92,21 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
 " Allows using <C-a> and <C-x> on dates like `2012-12-12`
 Plug 'tpope/vim-speeddating'
 Plug 'vim-test/vim-test'
-" Toggling of comments
-Plug 'numToStr/Comment.nvim'
 " Show Keymappings
 Plug 'folke/which-key.nvim'
-" A collection of various mini plugins. Currently used:
-"  - mini.align
-"  - mini.statusline
-"  - mini.surround
+" Highlight TODO comments
+Plug 'folke/todo-comments.nvim'
+" A collection of various mini plugins. Currently used ones see below.
 " https://github.com/echasnovski/mini.nvim
 Plug 'echasnovski/mini.nvim'
 " git {{{
-Plug 'jreybert/vimagit'
-Plug 'junegunn/gv.vim'
-Plug 'tpope/vim-fugitive'
+" were never really used, so disabled / removed for now
+" Plug 'jreybert/vimagit'
+" Plug 'junegunn/gv.vim'
+" Plug 'tpope/vim-fugitive'
+Plug 'lewis6991/gitsigns.nvim'
 " }}}
-" Language server {{{
+" Language server and linting {{{
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvimtools/none-ls.nvim'
 Plug 'folke/trouble.nvim'
@@ -156,26 +162,86 @@ nvim_treesitter_configs.setup({
 -- set colorscheme
 vim.cmd.colorscheme("gruvbox")
 -- }}}
--- Initialise misc plugins (Comment, colorizer, mini.align, mini.surround, mini.statusline, which-key) {{{
--- Comments - adds some keybindings automatically like `gc` and `gb` also see :h comments.keybindings
-require("Comment").setup()
+-- Initialise misc plugins (colorizer, mini.{align,comment,surround,statusline}, todo-comments, which-key) {{{
 -- colorizer colors CSS colors
 require("colorizer").setup()
 require("mini.align").setup()
+require("mini.comment").setup()
 require("mini.surround").setup()
-require("mini.statusline").setup()
+require("mini.statusline").setup({ use_icons = false })
 
-vim.o.timeout = true
-vim.o.timeoutlen = 300
+require("todo-comments").setup()
+
+vim.opt.timeout = true
+vim.opt.timeoutlen = 300
 require("which-key").setup()
 require("which-key").register({
   ["<leader>c"] = { name = "[C]ode", _ = "which_key_ignore" },
-  -- ["<leader>d"] = { name = "[D]ocument", _ = "which_key_ignore" },
-  -- ["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
+  ["<leader>d"] = { name = "[D]ocument", _ = "which_key_ignore" },
+  ["<leader>h"] = { name = "Git [H]unk", _ = "which_key_ignore" },
+  ["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
   ["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
-  -- ["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
   ["<leader>t"] = { name = "[T]est", _ = "which_key_ignore" },
-  -- ["<leader>h"] = { name = "Git [H]unk", _ = "which_key_ignore" },
+  ["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
+})
+require("which-key").register({
+  ["<leader>h"] = { "Git [H]unk" },
+}, { mode = "v" })
+-- }}}
+-- gitsigns {{{
+-- keybindings taken from
+-- https://github.com/nvim-lua/kickstart.nvim/blob/master/lua/kickstart/plugins/gitsigns.lua
+require("gitsigns").setup({
+  on_attach = function(bufnr)
+    local gitsigns = require("gitsigns")
+
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    -- Navigation
+    map("n", "]c", function()
+      if vim.wo.diff then
+        vim.cmd.normal({ "]c", bang = true })
+      else
+        gitsigns.nav_hunk("next")
+      end
+    end, { desc = "Jump to next git [c]hange" })
+
+    map("n", "[c", function()
+      if vim.wo.diff then
+        vim.cmd.normal({ "[c", bang = true })
+      else
+        gitsigns.nav_hunk("prev")
+      end
+    end, { desc = "Jump to previous git [c]hange" })
+
+    -- Actions
+    -- visual mode
+    map("v", "<leader>hs", function()
+      gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end, { desc = "stage git hunk" })
+    map("v", "<leader>hr", function()
+      gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end, { desc = "reset git hunk" })
+    -- normal mode
+    map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "git [s]tage hunk" })
+    map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "git [r]eset hunk" })
+    map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "git [S]tage buffer" })
+    map("n", "<leader>hu", gitsigns.undo_stage_hunk, { desc = "git [u]ndo stage hunk" })
+    map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "git [R]eset buffer" })
+    map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git [p]review hunk" })
+    map("n", "<leader>hb", gitsigns.blame_line, { desc = "git [b]lame line" })
+    map("n", "<leader>hd", gitsigns.diffthis, { desc = "git [d]iff against index" })
+    map("n", "<leader>hD", function()
+      gitsigns.diffthis("@")
+    end, { desc = "git [D]iff against last commit" })
+    -- Toggles
+    map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "[T]oggle git show [b]lame line" })
+    map("n", "<leader>tD", gitsigns.toggle_deleted, { desc = "[T]oggle git show [D]eleted" })
+  end,
 })
 -- }}}
 -- nvim-tree {{{
@@ -257,6 +323,7 @@ local lsp_setup_args = { capabilities = capabilities }
 lspconfig.tsserver.setup(lsp_setup_args)
 lspconfig.svelte.setup(lsp_setup_args)
 lspconfig.eslint.setup(lsp_setup_args)
+lspconfig.pylsp.setup(lsp_setup_args)
 lspconfig.ruff_lsp.setup(lsp_setup_args)
 -- rust_analyzer is setup automatically by rustaceanvim
 
@@ -381,7 +448,7 @@ vim.g.UltiSnipsExpandTrigger = "<C-J>"
 vim.g.UltiSnipsJumpForwardTrigger = "<C-J>"
 vim.g.UltiSnipsJumpBackwardTrigger = "<C-K>"
 
-vim.o.completeopt = "menu,menuone,noselect"
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 cmp.setup({
   snippet = {
@@ -468,27 +535,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "typescriptreact",
   },
   command = "setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()",
-  group = group_id,
-})
--- }}}
--- 2 spaces indentation {{{
-vim.api.nvim_create_autocmd("FileType", {
-  desc = "2 spaces for indentation",
-  pattern = {
-    "svelte",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "css",
-    "scss",
-    "html",
-    "jinja",
-    "jinja.html",
-    "c",
-    "lua",
-  },
-  command = "setlocal shiftwidth=2 softtabstop=2",
   group = group_id,
 })
 -- }}}
