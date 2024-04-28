@@ -24,7 +24,7 @@ After=network.target
 
 [Service]
 User=jakob
-ExecStart=/usr/bin/python3 /home/jakob/bin/bak home
+ExecStart=/usr/bin/python3 /home/jakob/.local/bin/bak home
 EOF
     cat >"$(CreateFile /etc/systemd/system/backup.timer)" <<EOF
 [Unit]
