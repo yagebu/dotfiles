@@ -74,7 +74,7 @@ EOF
 Description=Lektor server (Biere).
 
 [Service]
-ExecStart=/usr/bin/pipenv run lektor --language de server --port 5101
+ExecStart=/home/jakob/lektor/biere/.venv/bin/lektor --language de server --port 5101
 WorkingDirectory=/home/jakob/lektor/biere
 Restart=on-success
 User=jakob
@@ -89,7 +89,7 @@ EOF
 Description=Lektor server (evaschnitzer.de).
 
 [Service]
-ExecStart=/usr/bin/pipenv run lektor --language de server --port 5103
+ExecStart=/home/jakob/lektor/evaschnitzer.de/.venv/bin/lektor --language de server --port 5103
 WorkingDirectory=/home/jakob/lektor/evaschnitzer.de
 Restart=on-success
 User=jakob
@@ -104,7 +104,7 @@ EOF
 Description=Lektor server (Kunst im Viehhof).
 
 [Service]
-ExecStart=/usr/bin/pipenv run lektor --language de server --port 5100
+ExecStart=/home/jakob/lektor/kiv/.venv/bin/lektor --language de server --port 5100
 WorkingDirectory=/home/jakob/lektor/kiv
 Restart=on-success
 User=jakob
