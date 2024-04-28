@@ -1,6 +1,6 @@
 # vim: set foldmethod=marker:
 
-for dir in ~/bin ~/.local/bin "$PYENV_ROOT/bin"; do
+for dir in "$HOME/.local/bin"; do
     if [[ -z ${path[(r)$dir]} ]]; then
         path=($dir $path)
     fi
@@ -24,15 +24,13 @@ fi
 setopt hist_ignore_all_dups
 
 # load private config
-if [ -f ~/Documents/.config/localrc ]; then
-    source ~/Documents/.config/localrc
+if [ -f "$HOME/Documents/.config/localrc" ]; then
+    source "$HOME/Documents/.config/localrc"
 fi
 
-# use ag for fzf and ignore Library path on OS X
+# use rg for fzf and ignore Library path on OS X
 export FZF_DEFAULT_COMMAND="rg --files --hidden"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-eval "$(pyenv init --path)"
 
 # z.lua
 eval "$(lua ~/dev/dotfiles/deps/z.lua --init zsh)"
@@ -43,22 +41,22 @@ alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
 alias :q='clear; exit'
-alias ag="ag -p ~/.config/agignore"
 alias cl='clear'
 alias df='df -h'
 alias di='colordiff'
 alias du='du -c -h'
 alias grep='grep --color=auto'
-alias ls='ls --color=auto'
 alias l='ls -lh'
-alias lsa='ls -a'
 alias la='ls -lha'
+alias ls='ls --color=auto'
+alias lsa='ls -a'
 alias m='mutt -F ~/.config/mutt/muttrc'
 alias r='ranger'
+alias sudo='sudo '
 alias svi='sudo -e'
 alias ta='tmux attach'
+alias va='source .venv/bin/activate'
 alias vi='nvim'
-alias sudo='sudo '
 # }}}
 # git {{{
 alias g='git '
@@ -75,7 +73,6 @@ alias gpu='git push'
 alias gr='git rebase'
 alias gri='git rebase -i'
 alias gs='git status'
-alias cgo="$(which go)"
 alias go='git checkout'
 # }}}
 # Linux {{{

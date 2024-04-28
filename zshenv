@@ -9,17 +9,15 @@
 
 export EDITOR="nvim"
 export BROWSER="firefox"
-export HISTSIZE=10000
+export HISTSIZE=100000
 export HISTFILE="$XDG_CONFIG_HOME/zsh/history"
 export SAVEHIST=$HISTSIZE
 export _ZL_DATA="$XDG_CONFIG_HOME/zsh/zlua"
 export LESSHISTFILE="-"
 export HGRCPATH="$XDG_CONFIG_HOME/hgrc"
-export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
 # export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
 # Cache directories
 export npm_config_cache="$XDG_CACHE_HOME/npm"
 export PYLINTHOME="$XDG_CACHE_HOME/pylintd/"
 export MYPY_CACHE_DIR="$XDG_CACHE_HOME/mypy/"
-#export PYTHONDONTWRITEBYTECODE=1

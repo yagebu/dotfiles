@@ -5,8 +5,8 @@ user: deps
 	cp zshenv ~/.config/zsh/.zshenv
 	cat deps/completion deps/fzf-keys deps/fzf-completion zshrc > ~/.config/zsh/.zshrc
 
-	mkdir -p ~/bin
-	cp bin/bak ~/bin/bak
+	mkdir -p ~/.local/bin
+	cp bin/bak ~/.local/bin/bak
 
 	mkdir -p ~/.config/nvim
 	rm -f ~/.config/nvim/init.vim

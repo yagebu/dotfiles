@@ -57,7 +57,6 @@ AddPackage flake8
 AddPackage mpdecimal # for Python's decimal
 AddPackage mypy
 AddPackage pre-commit
-AddPackage pyenv
 AddPackage pyright
 AddPackage python-black
 AddPackage python-build
