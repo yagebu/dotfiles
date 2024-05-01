@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Backup helpers."""
+
 import datetime
 import subprocess
 import time
@@ -107,6 +108,7 @@ REMOVES = [
     ".cookiecutter_replay",
     ".docker",
     ".electron",
+    ".emscripten_cache",
     ".esd_auth",
     ".filebot",
     ".gem",
@@ -171,6 +173,7 @@ def cleanup() -> None:
 HOME_EXCLUDES = [
     ".VirtualBox",
     ".cache",
+    ".*cache",
     ".cargo",
     ".config/Code - OSS",
     ".config/chromium",

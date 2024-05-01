@@ -43,6 +43,7 @@ AddPackage typescript-language-server
 if [[ "$HOSTNAME" == "js-arch" ]]; then
     # this is a very big package
     AddPackage emscripten
+    AddPackage ollama
 fi
 
 # Dev: Rust
