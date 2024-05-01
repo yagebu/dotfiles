@@ -9,6 +9,7 @@ AddPackage arch-install-scripts
 AddPackage intel-ucode # Microcode update files for Intel CPUs
 
 # Base packages: package management
+AddPackage pacman-contrib
 AddPackage --foreign aconfmgr-git
 AddPackage --foreign downgrade
 AddPackage --foreign pikaur
@@ -37,6 +38,9 @@ CreateLink /etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service /u
 f="$(GetPackageOriginalFile pacman /etc/pacman.conf)"
 sed -i 's/^#Color/Color/g' "$f"
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/g' "$f"
+
+# Weekly clearing of pacman cache (keeps the last 3 versions of packages)
+CreateLink /etc/systemd/system/timers.target.wants/paccache.timer /usr/lib/systemd/system/paccache.timer
 
 # Load user ZSH config from .config/zsh
 # /etc/zsh/zshenv
