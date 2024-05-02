@@ -54,7 +54,7 @@ elif [[ "$HOSTNAME" == "js-atom" ]]; then
 SystemMaxUse=250M
 RuntimeMaxUse=100M
 EOF
-    echo 'Server = https://archlinux.mailtunnel.eu/$repo/os/$arch' >"$(CreateFile /etc/pacman.d/mirrorlist)"
+    echo 'Server = https://mirror.cyberbits.eu/archlinux/$repo/os/$arch' >"$(CreateFile /etc/pacman.d/mirrorlist)"
     cat >"$(CreateFile /etc/mkinitcpio.conf)" <<EOF
 MODULES=()
 BINARIES=()
