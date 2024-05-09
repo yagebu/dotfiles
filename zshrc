@@ -82,6 +82,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias scu='systemctl --user'
     alias jc='journalctl'
     # pacman
+    alias pac='pacman '
     alias pacr='sudo pacman -Rs'
 
     mvd() {

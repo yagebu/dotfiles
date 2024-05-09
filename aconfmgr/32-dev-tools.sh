@@ -6,14 +6,13 @@ AddPackage neovim
 AddPackage python-pynvim
 AddPackage --foreign neovim-remote
 AddPackage stylua # The config for neovim is written in lua
-AddPackage kakoune
 AddPackage helix
+
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage code
 fi
 
 # Dev: Tools
-AddPackage ack        # grep-like
 AddPackage colordiff  # well, colored diff
 AddPackage entr       # Run arbitrary commands when files change
 AddPackage fd         # Simple, fast and user-friendly alternative to find
@@ -58,24 +57,12 @@ AddPackage flake8
 AddPackage mpdecimal # for Python's decimal
 AddPackage mypy
 AddPackage pre-commit
-AddPackage pyright
-AddPackage python-black
-AddPackage python-build
 AddPackage python-cheroot
 AddPackage python-flask
-AddPackage python-hatch
-AddPackage python-jedi
 AddPackage python-lsp-server
 AddPackage python-pip
-AddPackage python-pipenv
 AddPackage python-pipx
-AddPackage python-poetry
-AddPackage python-pylint
 AddPackage python-pytest
-AddPackage python-pytest-cov
-AddPackage python-scikit-learn
-AddPackage python-setuptools-scm
-AddPackage python-sphinx
 AddPackage python-tox
 AddPackage python-wheel
 AddPackage ruff

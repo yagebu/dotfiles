@@ -134,6 +134,17 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage dconf-editor
     AddPackage espeak-ng
 
+    # Remove some unused applications
+    RemovePackage epiphany
+    RemovePackage gnome-characters
+    RemovePackage gnome-music
+    RemovePackage gnome-remote-desktop
+
+    # no Gnome tour and help
+    RemovePackage gnome-tour
+    RemovePackage gnome-user-docs
+    RemovePackage yelp
+
     CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/gdm.service
     CreateLink /etc/systemd/user/sockets.target.wants/gnome-keyring-daemon.socket /usr/lib/systemd/user/gnome-keyring-daemon.socket
 fi
@@ -197,9 +208,9 @@ if [[ "$machine_type" == "desktop" ]]; then
 fi
 
 # Documents
-AddPackage ranger            # Simple, vim-like file manager
-AddPackage highlight         # source code highlighter for ranger
-AddPackage --foreign stapler # PDf joining and the like
+AddPackage ranger    # Simple, vim-like file manager
+AddPackage highlight # source code highlighter for ranger
+# AddPackage --foreign stapler # PDf joining and the like
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage zathura           # document viewer
     AddPackage zathura-pdf-mupdf # pdf backend for zathura
@@ -207,15 +218,14 @@ fi
 
 # Media: Audio and video
 AddPackage beets
-AddPackage imagemagick       # for beets thumbnails
-AddPackage python-pylast     # A Python interface to Last.fm and Libre.fm
-AddPackage python-pyacoustid # Bindings for Chromaprint acoustic fingerprinting and the Acoustid API
-AddPackage --foreign youtube-dl        # A command-line program to download videos from YouTube.com and a few more sites
-AddPackage opusfile          # Library for opening, seeking, and decoding .opus files
+AddPackage imagemagick          # for beets thumbnails
+AddPackage python-pylast        # A Python interface to Last.fm and Libre.fm
+AddPackage python-pyacoustid    # Bindings for Chromaprint acoustic fingerprinting and the Acoustid API
+AddPackage --foreign youtube-dl # A command-line program to download videos from YouTube.com and a few more sites
+AddPackage opusfile             # Library for opening, seeking, and decoding .opus files
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage cmus
     AddPackage mpv
-    AddPackage --foreign mpv_inhibit_gnome
     AddPackage pavucontrol        # PulseAudio Volume Control
     AddPackage pipewire-alsa      # Low-latency audio/video router and processor - ALSA configuration
     AddPackage pipewire-jack      # Low-latency audio/video router and processor - JACK support
