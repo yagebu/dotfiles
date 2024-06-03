@@ -78,6 +78,7 @@ Plug 'junegunn/vim-peekaboo'
 
 Plug 'justinmk/vim-sneak'
 
+Plug 'Konfekt/FastFold'
 " Automatically save editor state
 Plug 'zhimsel/vim-stay'
 " Undotree, opens with `U`.
@@ -290,6 +291,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[event.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+    vim.lsp.inlay_hint.enable()
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions

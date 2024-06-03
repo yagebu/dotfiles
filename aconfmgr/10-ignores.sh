@@ -37,7 +37,7 @@ if [[ "$machine_type" == "server" ]]; then
 fi
 
 # IgnorePath '/etc/bluetooth'
-# IgnorePath '/etc/brlapi.key'
+IgnorePath '/etc/brlapi.key'
 IgnorePath '/etc/conf.d/lm_sensors'
 IgnorePath '/etc/colord'                    # auto-generated
 IgnorePath '/etc/cups/subscriptions.conf'   # auto-generated

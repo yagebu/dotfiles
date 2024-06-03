@@ -103,6 +103,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
         else
             pipx inject fava smart-importer
         fi
+        pipx inject fava fava_investor
         pipx upgrade-all
         return 0
     }

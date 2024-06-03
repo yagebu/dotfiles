@@ -10,8 +10,9 @@ CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib
 
 #######################################
 if [[ "$HOSTNAME" == "js-arch" ]]; then
+    AddPackage libreoffice-still
     # Mullvad VPN client
-    AddPackage --foreign mullvad-vpn
+    AddPackage --foreign mullvad-vpn-bin
     CreateLink /etc/systemd/system/multi-user.target.wants/mullvad-daemon.service /usr/lib/systemd/system/mullvad-daemon.service
     CreateLink /etc/systemd/system/mullvad-daemon.service.wants/mullvad-early-boot-blocking.service /usr/lib/systemd/system/mullvad-early-boot-blocking.service
 

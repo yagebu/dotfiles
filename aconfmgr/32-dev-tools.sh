@@ -61,6 +61,7 @@ AddPackage python-cheroot
 AddPackage python-flask
 AddPackage python-lsp-server
 AddPackage python-pip
+AddPackage python-pipenv
 AddPackage python-pipx
 AddPackage python-pytest
 AddPackage python-tox
