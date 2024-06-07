@@ -67,6 +67,5 @@ AddPackage python-pytest
 AddPackage python-tox
 AddPackage python-wheel
 AddPackage ruff
-AddPackage ruff-lsp
 AddPackage twine
 AddPackage uv

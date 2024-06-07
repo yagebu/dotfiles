@@ -326,7 +326,7 @@ lspconfig.tsserver.setup(lsp_setup_args)
 lspconfig.svelte.setup(lsp_setup_args)
 lspconfig.eslint.setup(lsp_setup_args)
 lspconfig.pylsp.setup(lsp_setup_args)
-lspconfig.ruff_lsp.setup(lsp_setup_args)
+lspconfig.ruff.setup(lsp_setup_args)
 -- rust_analyzer is setup automatically by rustaceanvim
 
 -- TODO: inlay hints should work again with neovim 0.10
