@@ -12,7 +12,6 @@ AddPackage intel-ucode # Microcode update files for Intel CPUs
 AddPackage pacman-contrib
 AddPackage --foreign aconfmgr-git
 AddPackage --foreign downgrade
-AddPackage --foreign pikaur
 AddPackage --foreign paru-bin
 
 # Base packages: filesystems
