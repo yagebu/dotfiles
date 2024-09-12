@@ -319,7 +319,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local lsp_setup_args = { capabilities = capabilities }
 
-lspconfig.tsserver.setup(lsp_setup_args)
+lspconfig.ts_ls.setup(lsp_setup_args)
 lspconfig.svelte.setup(lsp_setup_args)
 lspconfig.eslint.setup(lsp_setup_args)
 lspconfig.pylsp.setup(lsp_setup_args)
