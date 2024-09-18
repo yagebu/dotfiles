@@ -71,7 +71,6 @@ if [[ "$machine_type" == "desktop" ]]; then
 
     CopyFile /etc/X11/xorg.conf.d/00-keyboard.conf
     CopyFile /etc/X11/xorg.conf.d/10-synaptics.conf
-    CopyFile /etc/environment
 
     ## Systemd
     # Limit journal disk usage

@@ -168,13 +168,13 @@ vim.cmd.colorscheme("gruvbox")
 require("colorizer").setup()
 require("mini.align").setup()
 require("mini.surround").setup()
-require("mini.statusline").setup({ use_icons = false })
+require("mini.statusline").setup()
 
 require("todo-comments").setup()
 
 vim.opt.timeout = true
 vim.opt.timeoutlen = 300
-require("which-key").setup({ icons = { rules = false } })
+require("which-key").setup()
 require("which-key").add({
   { "<leader>c", group = "[C]ode" },
   { "<leader>d", group = "[D]ocument" },
@@ -386,7 +386,7 @@ null_ls.setup({
 -- }}}
 -- trouble (diagnostics interface) {{{
 local trouble = require("trouble")
-trouble.setup({ icons = false })
+trouble.setup()
 -- }}}
 -- Key bindings {{{
 -- Folds and exiting insert mode.
