@@ -23,6 +23,10 @@ if [[ "$machine_type" == "desktop" ]]; then
 
     # Font config
     # See https://wiki.archlinux.org/title/Font_configuration for reference.
+    # Copy overrides:
+    #  - using Fira Code as monospace
+    CopyFile /etc/fonts/local.conf
+
     # Link default configs
     for filename in /usr/share/fontconfig/conf.default/*.conf; do
         CreateLink "/etc/fonts/conf.d/$(basename $filename)" "$filename"
