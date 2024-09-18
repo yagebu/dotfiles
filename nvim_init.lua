@@ -322,7 +322,18 @@ local lsp_setup_args = { capabilities = capabilities }
 lspconfig.ts_ls.setup(lsp_setup_args)
 lspconfig.svelte.setup(lsp_setup_args)
 lspconfig.eslint.setup(lsp_setup_args)
-lspconfig.pylsp.setup(lsp_setup_args)
+lspconfig.pylsp.setup({
+  capabilities = capabilities,
+  settings = {
+    pylsp = {
+      plugins = {
+        -- see https://github.com/python-lsp/python-lsp-server?tab=readme-ov-file#installation
+        -- for the plugins that are enabled by default
+        pycodestyle = { enabled = false },
+      },
+    },
+  },
+})
 lspconfig.ruff.setup(lsp_setup_args)
 -- rust_analyzer is setup automatically by rustaceanvim
 
@@ -370,8 +381,6 @@ null_ls.setup({
     -- ruff is handled by language server
     -- only run diagnostics on save with mypy since it's not very performant
     null_ls.builtins.diagnostics.mypy.with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE }),
-    -- using ruff now instead of black
-    -- null_ls.builtins.formatting.black,
   },
 })
 -- }}}
