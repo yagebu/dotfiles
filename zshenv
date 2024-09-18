@@ -14,7 +14,6 @@ export HISTFILE="$XDG_CONFIG_HOME/zsh/history"
 export SAVEHIST=$HISTSIZE
 export _ZL_DATA="$XDG_CONFIG_HOME/zsh/zlua"
 export LESSHISTFILE="-"
-export HGRCPATH="$XDG_CONFIG_HOME/hgrc"
 # export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
 # Cache directories

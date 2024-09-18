@@ -24,6 +24,7 @@ user: deps
 
 	mkdir -p ~/.config/kitty
 	cp arch/kitty.conf ~/.config/kitty/kitty.conf
+	kitten themes --dump-theme "Gruvbox Dark" > ~/.config/kitty/current-theme.conf
 
 .PHONY: aconfmgr-save
 aconfmgr-save:
