@@ -254,7 +254,6 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage waybar        # (used instead of i3status)
     AddPackage wl-clipboard  # Command-line copy/paste utilities for Wayland
     AddPackage wofi          # launcher (used instead of dmenu)
-    AddPackage pamixer       # Pulseaudio command-line mixer like amixer
     AddPackage brightnessctl # Lightweight brightness control tool
 fi
 

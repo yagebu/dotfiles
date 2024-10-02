@@ -95,8 +95,7 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     # start a terminal
     bindsym $mod+Return exec $term
     # start a browser
-    #bindsym $mod+c exec "firefox"
-    bindsym $mod+c exec "MOZ_ENABLE_WAYLAND=1 firefox"
+    bindsym $mod+c exec "firefox"
 
     # kill focused window
     bindsym $mod+Shift+q kill
@@ -227,19 +226,17 @@ bindsym $mod+r mode "resize"
 
 # volume controls (special keys on keyboard)
 bindsym XF86AudioMute exec \
-    pamixer -t
+    wpctl set-mute @DEFAULT_SINK@ toggle
 # bindsym F10 exec \
-#     pamixer -t
 
 bindsym XF86AudioLowerVolume exec \
-    pamixer -d 5
+    wpctl set-volume @DEFAULT_SINK@ 5%-
 # bindsym F11 exec \
-#     pamixer -d 5
 
 bindsym XF86AudioRaiseVolume exec \
-    pamixer -i 5
+    wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%+
 # bindsym F12 exec \
-#     pamixer -i 5
+#     wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%+
 
 bindsym XF86MonBrightnessUp exec brightnessctl -e s +5%
 bindsym XF86MonBrightnessDown exec brightnessctl -e s 5%-
@@ -257,7 +254,6 @@ bar swaybar_command waybar
 #     }
 # }
 # }}}
-
 
 font pango:Ubuntu 11
 

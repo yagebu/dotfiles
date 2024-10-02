@@ -165,7 +165,12 @@ vim.cmd.colorscheme("gruvbox")
 -- }}}
 -- Initialise misc plugins (colorizer, mini.{align,comment,surround,statusline}, todo-comments, which-key) {{{
 -- colorizer colors CSS colors
-require("colorizer").setup()
+require("colorizer").setup({
+  -- only use for css
+  filetypes = { "css" },
+  -- enable all CSS color notations
+  user_default_options = { css = true },
+})
 require("mini.align").setup()
 require("mini.surround").setup()
 require("mini.statusline").setup()
