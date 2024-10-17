@@ -91,20 +91,28 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     }
 
     pipu() {
-        [ -d "$HOME/dev/fava" ]           && pipx install -e "$HOME/dev/fava"
-        [ -d "$HOME/dev/beancount" ]      && pipx install "$HOME/dev/beancount" && pipx inject fava "$HOME/dev/beancount"
-        if [ -d "$HOME/dev/fava-plugins" ]; then
-            pipx inject fava -e "$HOME/dev/fava-plugins"
-        else
-            pipx inject fava fava-plugins
+        if [ -d "$HOME/dev/fava" ]; then
+            uv tool install  \
+                --with fava-plugins \
+                --with fava_investor \
+                --with smart_importer \
+                --editable "$HOME/dev/fava"
         fi
-        if [ -d "$HOME/dev/smart_importer" ]; then
-            pipx inject fava -e "$HOME/dev/smart_importer"
-        else
-            pipx inject fava smart-importer
-        fi
-        pipx inject fava fava_investor
-        pipx upgrade-all
+        # if [ -d "$HOME/dev/beancount" ] then
+        #     pipx install "$HOME/dev/beancount" && pipx inject fava "$HOME/dev/beancount"
+        # fi
+        # if [ -d "$HOME/dev/fava-plugins" ]; then
+        #     pipx inject fava -e "$HOME/dev/fava-plugins"
+        # else
+        #     pipx inject fava fava-plugins
+        # fi
+        # if [ -d "$HOME/dev/smart_importer" ]; then
+        #     pipx inject fava -e "$HOME/dev/smart_importer"
+        # else
+        #     pipx inject fava smart-importer
+        # fi
+        # pipx inject fava fava_investor
+        uv tool upgrade --all
         return 0
     }
 fi
