@@ -149,8 +149,10 @@ nvim_treesitter_configs.setup({
     "javascript",
     "json",
     "lua",
+    "python",
     "rust",
     "svelte",
+    "toml",
     "typescript",
     "vim",
   },
@@ -547,7 +549,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "typescript",
     "typescriptreact",
   },
-  command = "setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()",
+  command = "setlocal foldmethod=expr foldexpr=v:lua.vim.treesitter.foldexpr()",
   group = group_id,
 })
 -- }}}
