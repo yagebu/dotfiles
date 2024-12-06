@@ -111,6 +111,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvimtools/none-ls.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'j-hui/fidget.nvim'
 " }}}
 " Autocompletion {{{
 Plug 'hrsh7th/nvim-cmp'
@@ -165,11 +166,11 @@ nvim_treesitter_configs.setup({
 -- set colorscheme
 vim.cmd.colorscheme("gruvbox")
 -- }}}
--- Initialise misc plugins (colorizer, mini.{align,comment,surround,statusline}, todo-comments, which-key) {{{
+-- Initialise misc plugins (colorizer, mini.{align,comment,surround,statusline}, todo-comments, fidget, which-key) {{{
 -- colorizer colors CSS colors
 require("colorizer").setup({
   -- only use for css
-  filetypes = { "css" },
+  filetypes = { "css", "svelte" },
   -- enable all CSS color notations
   user_default_options = { css = true },
 })
@@ -178,6 +179,8 @@ require("mini.surround").setup()
 require("mini.statusline").setup()
 
 require("todo-comments").setup()
+
+require("fidget").setup()
 
 vim.opt.timeout = true
 vim.opt.timeoutlen = 300
@@ -282,7 +285,7 @@ local lspconfig = require("lspconfig")
 -- https://github.com/neovim/nvim-lspconfig#suggested-configuration
 -- but adds descriptions and uses telescope in more places
 --
--- The formatting is overwritten to not use the tsserver for formatting.
+-- The formatting is overwritten to not use ts_ls for formatting.
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
@@ -316,7 +319,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.lsp.buf.format({
         async = true,
         filter = function(client) -- this is the only modification from the suggested defaults
-          return client.name ~= "tsserver"
+          return client.name ~= "ts_ls"
         end,
       })
     end, "[F]ormat buffer")
@@ -346,17 +349,16 @@ lspconfig.ruff.setup(lsp_setup_args)
 -- rust_analyzer is setup automatically by rustaceanvim
 
 -- Workaround for https://github.com/neovim/neovim/issues/30985
-for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
-    local default_diagnostic_handler = vim.lsp.handlers[method]
-    vim.lsp.handlers[method] = function(err, result, context, config)
-        if err ~= nil and err.code == -32802 then
-            return
-        end
-        return default_diagnostic_handler(err, result, context, config)
+for _, method in ipairs({ "textDocument/diagnostic", "workspace/diagnostic" }) do
+  local default_diagnostic_handler = vim.lsp.handlers[method]
+  vim.lsp.handlers[method] = function(err, result, context, config)
+    if err ~= nil and err.code == -32802 then
+      return
     end
+    return default_diagnostic_handler(err, result, context, config)
+  end
 end
 
--- TODO: inlay hints should work again with neovim 0.10
 vim.g.rustaceanvim = {
   ---@type RustaceanLspClientOpts
   server = {
