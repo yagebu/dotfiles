@@ -197,7 +197,7 @@ AddPackage checksec      # Tool designed to test which standard Linux OS and PaX
 AddPackage htop          # Interactive process viewer
 AddPackage khal          # CLI calendar application build around CalDAV
 AddPackage logrotate     # Rotates system logs automatically
-AddPackage p7zip         # Command-line file archiver with high compression ratio
+AddPackage 7zip          # Command-line file archiver with high compression ratio
 AddPackage syncthing     # Open Source Continuous Replication / Cluster Synchronization Thing
 AddPackage tmux          # A terminal multiplexer
 AddPackage tree          # A directory listing program displaying a depth indented list of files
