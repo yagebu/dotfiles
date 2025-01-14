@@ -60,6 +60,7 @@ echo 'LANG=en_GB.utf8' >"$(CreateFile /etc/locale.conf)"
 cat >"$(CreateFile /etc/shells)" <<EOF
 /bin/sh
 /bin/bash
+/bin/fish
 /bin/zsh
 /usr/bin/zsh
 /usr/bin/git-shell

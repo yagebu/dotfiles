@@ -182,6 +182,9 @@ require("todo-comments").setup()
 
 require("fidget").setup()
 
+-- Also enable fastfold for 'expr' folds
+vim.g.fastfold_force = 1
+
 vim.opt.timeout = true
 vim.opt.timeoutlen = 300
 require("which-key").setup()

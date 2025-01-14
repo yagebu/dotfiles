@@ -208,7 +208,7 @@ if [[ "$machine_type" == "desktop" ]]; then
 fi
 
 # Documents
-AddPackage ranger    # Simple, vim-like file manager
+AddPackage yazi      # Console file manager
 AddPackage highlight # source code highlighter for ranger
 # AddPackage --foreign stapler # PDf joining and the like
 if [[ "$machine_type" == "desktop" ]]; then

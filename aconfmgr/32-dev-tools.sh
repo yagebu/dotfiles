@@ -27,7 +27,8 @@ fi
 
 # Dev: Shell
 AddPackage shfmt # Format shell programs
-AddPackage zsh   # Default shell used by this config
+AddPackage fish  # Default shell for this config now
+AddPackage zsh   # Shell previously used by this config
 AddPackage lua   # For z.lua
 
 # Dev: Javascript, Typescript, Svelte

@@ -2,11 +2,19 @@
 user: deps
 	mkdir -p ~/.config/zsh
 	cp deps/dircolors ~/.config/zsh/dircolors
-	cp zshenv ~/.config/zsh/.zshenv
-	cat deps/completion deps/fzf-keys deps/fzf-completion zshrc > ~/.config/zsh/.zshrc
+	cp shell/zshenv.zsh ~/.config/zsh/.zshenv
+	cat deps/completion shell/zshrc.zsh shell/zsh-aliases.zsh > ~/.config/zsh/.zshrc
 
 	mkdir -p ~/.local/bin
 	cp bin/bak ~/.local/bin/bak
+
+	mkdir -p ~/.config/fish
+	mkdir -p ~/.config/fish/conf.d
+	cp shell/config.fish ~/.config/fish/config.fish
+	cp shell/abbreviations.fish ~/.config/fish/conf.d/abbreviations.fish
+	fzf --fish > ~/.config/fish/conf.d/generated_fzf.fish
+	lua deps/z.lua --init fish > ~/.config/fish/conf.d/generated_zlua.fish
+	dircolors -c deps/dircolors > ~/.config/fish/conf.d/generated_dircolors.fish
 
 	mkdir -p ~/.config/nvim
 	rm -f ~/.config/nvim/init.vim
@@ -41,6 +49,7 @@ nvim: user
 .PHONY: system
 system: nvim
 	paru
+	-sudo bootctl update
 	-flatpak update
 	-flatpak uninstall --unused
 	aconfmgr -c aconfmgr --skip-checksums apply
@@ -49,8 +58,6 @@ deps:
 	mkdir -p deps
 	curl -o deps/dircolors https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-dark
 	curl -o deps/completion https://raw.githubusercontent.com/twe4ked/dotfiles/master/shell/zsh/completion.zsh
-	curl -o deps/fzf-keys https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh
-	curl -o deps/fzf-completion https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh
 	curl -o deps/z.lua https://raw.githubusercontent.com/skywind3000/z.lua/master/z.lua
 
 .PHONY: clean
