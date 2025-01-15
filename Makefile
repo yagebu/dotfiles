@@ -2,15 +2,16 @@
 user: deps
 	mkdir -p ~/.config/zsh
 	cp deps/dircolors ~/.config/zsh/dircolors
-	cp shell/zshenv.zsh ~/.config/zsh/.zshenv
+	cp shell/zprofile.zsh ~/.config/zsh/.zprofile
 	cat deps/completion shell/zshrc.zsh shell/zsh-aliases.zsh > ~/.config/zsh/.zshrc
 
 	mkdir -p ~/.local/bin
 	cp bin/bak ~/.local/bin/bak
 
 	mkdir -p ~/.config/fish
-	mkdir -p ~/.config/fish/conf.d
+	mkdir -p ~/.config/fish/{conf.d,functions}
 	cp shell/config.fish ~/.config/fish/config.fish
+	cp shell/functions/*.fish ~/.config/fish/functions
 	cp shell/abbreviations.fish ~/.config/fish/conf.d/abbreviations.fish
 	fzf --fish > ~/.config/fish/conf.d/generated_fzf.fish
 	lua deps/z.lua --init fish > ~/.config/fish/conf.d/generated_zlua.fish

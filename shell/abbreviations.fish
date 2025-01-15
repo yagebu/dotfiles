@@ -31,7 +31,7 @@ abbr -a sc 'sudo systemctl'
 abbr -a scu 'systemctl --user'
 abbr -a jc 'journalctl'
 # pacman {{{
-abbr -a pac 'pacman '
+abbr -a pac 'pacman'
 abbr -a pacr 'sudo pacman -Rs'
 # }}}
 # git {{{

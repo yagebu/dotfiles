@@ -51,6 +51,19 @@ sed -i 's/^#\(de_DE.UTF-8\)/\1/g' "$f"
 sed -i 's/^#\(en_GB.UTF-8\)/\1/g' "$f"
 sed -i 's/^#\(en_US.UTF-8\)/\1/g' "$f"
 
+# Set XDG base directories, see https://wiki.archlinux.org/title/XDG_Base_Directory
+cat >>"$(GetPackageOriginalFile pam /etc/security/pam_env.conf)" <<EOF
+BROWSER                DEFAULT=firefox
+EDITOR                 DEFAULT=nvim
+LESSHISTFILE           DEFAULT=-
+XDG_CACHE_HOME         DEFAULT=@{HOME}/.cache
+XDG_CONFIG_HOME        DEFAULT=@{HOME}/.config
+XDG_DATA_HOME          DEFAULT=@{HOME}/.local/share
+XDG_STATE_HOME         DEFAULT=@{HOME}/.local/state
+npm_config_cache       DEFAULT=@{HOME}/.cache/npm
+MYPY_CACHE_DIR         DEFAULT=@{HOME}/.cache/mypy
+EOF
+
 # /etc/vconsole.conf
 echo 'KEYMAP=us-acentos' >"$(CreateFile /etc/vconsole.conf)"
 

@@ -34,25 +34,3 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # z.lua
 eval "$(lua ~/dev/dotfiles/deps/z.lua --init zsh)"
-
-# Linux {{{
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    mvd() {
-        mv ~/*.pdf ~/Documents/inbox
-        mv ~/*.csv ~/Documents/inbox
-    }
-
-    pipu() {
-        if [ -d "$HOME/dev/fava" ]; then
-            uv tool install  \
-                --with fava-plugins \
-                --with fava_investor \
-                --with smart_importer \
-                --editable "$HOME/dev/fava"
-        fi
-        uv tool upgrade --all
-        return 0
-    }
-fi
-# }}}
-# }}}
