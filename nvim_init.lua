@@ -146,6 +146,7 @@ nvim_treesitter_configs.setup({
   ensure_installed = {
     "bash",
     "css",
+    "fish",
     "html",
     "javascript",
     "json",
@@ -385,6 +386,7 @@ null_ls.setup({
     -- Shell
     -- indent with 4 spaces
     null_ls.builtins.formatting.shfmt.with({ extra_args = { "-i", "4" } }),
+    null_ls.builtins.formatting.fish_indent,
 
     -- Lua
     -- indent with 2 spaces
@@ -546,6 +548,7 @@ vim.api.nvim_create_autocmd("FileType", {
   desc = "Use nvim_treesitter to get folds",
   pattern = {
     "rust",
+    "fish",
     "sh",
     "zsh",
     "python",

@@ -4,7 +4,6 @@
 abbr -a '....' 'cd ../../..'
 abbr -a '...' 'cd ../..'
 abbr -a '..' 'cd ..'
-abbr -a cl clear
 # }}}
 # Listing {{{
 abbr -a df df -h
