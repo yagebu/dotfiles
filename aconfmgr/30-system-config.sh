@@ -208,8 +208,7 @@ if [[ "$machine_type" == "desktop" ]]; then
 fi
 
 # Documents
-AddPackage yazi      # Console file manager
-AddPackage highlight # source code highlighter for ranger
+AddPackage yazi # Console file manager
 # AddPackage --foreign stapler # PDf joining and the like
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage zathura           # document viewer

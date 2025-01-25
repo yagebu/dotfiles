@@ -1,17 +1,13 @@
-.PHONY: user
-user: deps
+.PHONY: configs
+configs: deps
 	fish install.fish configs
 
 .PHONY: aconfmgr-save
 aconfmgr-save:
 	aconfmgr -c aconfmgr --skip-checksums save
 
-.PHONY: aconfmgr-apply
-aconfmgr-apply:
-	aconfmgr -c aconfmgr --skip-checksums apply
-
 .PHONY: nvim
-nvim: user
+nvim: configs
 	nvim +PlugUpgrade +PlugClean! +PlugUpdate +qa
 
 .PHONY: system

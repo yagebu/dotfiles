@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
 function init_dirs
+    echo "Creating config and bin dirs if they do not exist yet"
     mkdir -p ~/.config/{fish,kitty,nvim,sway,zsh,waybar}
     mkdir -p ~/.config/fish/{conf.d,functions}
     mkdir -p ~/.local/bin

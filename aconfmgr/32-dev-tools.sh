@@ -58,6 +58,7 @@ AddPackage flake8
 AddPackage mpdecimal # for Python's decimal
 AddPackage mypy
 AddPackage pre-commit
+AddPackage python-build
 AddPackage python-cheroot
 AddPackage python-flask
 AddPackage python-lsp-server
