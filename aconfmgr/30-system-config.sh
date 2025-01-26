@@ -217,11 +217,10 @@ fi
 
 # Media: Audio and video
 AddPackage beets
-AddPackage imagemagick          # for beets thumbnails
-AddPackage python-pylast        # A Python interface to Last.fm and Libre.fm
-AddPackage python-pyacoustid    # Bindings for Chromaprint acoustic fingerprinting and the Acoustid API
-AddPackage --foreign youtube-dl # A command-line program to download videos from YouTube.com and a few more sites
-AddPackage opusfile             # Library for opening, seeking, and decoding .opus files
+AddPackage imagemagick       # for beets thumbnails
+AddPackage python-pylast     # A Python interface to Last.fm and Libre.fm
+AddPackage python-pyacoustid # Bindings for Chromaprint acoustic fingerprinting and the Acoustid API
+AddPackage opusfile          # Library for opening, seeking, and decoding .opus files
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage cmus
     AddPackage mpv
