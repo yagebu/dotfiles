@@ -583,7 +583,6 @@ vim.g.vimtex_motion_enabled = 1
 vim.g.vimtex_matchparen_enabled = 0
 
 vim.g.vimtex_view_method = "zathura"
-vim.g.vimtex_compiler_progname = "nvr"
 vim.g.vimtex_imaps_list = {}
 
 vim.api.nvim_create_autocmd("User", {

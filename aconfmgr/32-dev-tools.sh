@@ -4,7 +4,6 @@ machine_type=$(get_machine_type)
 # Dev: Editors
 AddPackage neovim
 AddPackage python-pynvim
-AddPackage --foreign neovim-remote
 AddPackage stylua # The config for neovim is written in lua
 AddPackage helix
 
