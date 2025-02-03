@@ -37,8 +37,6 @@ if [[ "$machine_type" == "server" ]]; then
     # Firewall
     AddPackage ufw
 
-    AddPackage --foreign fava
-
     # Boot loader
     AddPackage grub # GNU GRand Unified Bootloader (2)
     CopyFile /etc/default/grub
