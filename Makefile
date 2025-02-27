@@ -14,6 +14,7 @@ nvim: configs
 system: nvim
 	paru
 	fish install.fish update
+	fish --command pipu
 	aconfmgr -c aconfmgr --skip-checksums apply
 
 deps:

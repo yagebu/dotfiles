@@ -7,4 +7,6 @@ function pipu
             --editable "$HOME/dev/fava"
     end
     uv tool upgrade --all
+    uv cache prune
+    pre-commit gc
 end
