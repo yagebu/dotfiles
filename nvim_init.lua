@@ -122,9 +122,9 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 
 " Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
+" Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 " }}}
 " File type specific plugins {{{
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -185,6 +185,9 @@ require("fidget").setup()
 
 -- Also enable fastfold for 'expr' folds
 vim.g.fastfold_force = 1
+vim.g.fastfold_fdmhook = 1
+vim.g.fastfold_fold_command_suffixes = {}
+vim.g.fastfold_fold_movement_commands = {}
 
 vim.opt.timeout = true
 vim.opt.timeoutlen = 300
@@ -466,19 +469,19 @@ vim.keymap.set("n", "<leader>ta", ":TestSuite<CR>", { desc = "[T]est [a]ll tests
 -- Completion {{{
 local cmp = require("cmp")
 
-vim.g.UltiSnipsSnippetDirectories = { vim.env.HOME .. "/dev/dotfiles/snippets" }
-vim.g.UltiSnipsExpandTrigger = "<C-J>"
-vim.g.UltiSnipsJumpForwardTrigger = "<C-J>"
-vim.g.UltiSnipsJumpBackwardTrigger = "<C-K>"
+-- vim.g.UltiSnipsSnippetDirectories = { vim.env.HOME .. "/dev/dotfiles/snippets" }
+-- vim.g.UltiSnipsExpandTrigger = "<C-J>"
+-- vim.g.UltiSnipsJumpForwardTrigger = "<C-J>"
+-- vim.g.UltiSnipsJumpBackwardTrigger = "<C-K>"
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 cmp.setup({
-  snippet = {
-    expand = function(args)
-      vim.fn["UltiSnips#Anon"](args.body)
-    end,
-  },
+--   snippet = {
+--     expand = function(args)
+--       vim.fn["UltiSnips#Anon"](args.body)
+--     end,
+--   },
   mapping = cmp.mapping.preset.insert({
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -502,9 +505,8 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
-    { name = "ultisnips" },
   }, {
-    { name = "buffer" },
+    -- { name = "buffer" },
   }),
 })
 

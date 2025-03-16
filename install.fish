@@ -1,5 +1,11 @@
 #!/usr/bin/env fish
 
+function echo_warning -d "echo a warning in red"
+    set_color red
+    echo "WARN: $argv"
+    set_color normal
+end
+
 function init_dirs
     echo "Creating config and bin dirs if they do not exist yet"
     mkdir -p ~/.config/{fish,kitty,nvim,sway,zsh,waybar}
@@ -30,13 +36,10 @@ function install_kitty
     end
 end
 
-
 function install_neovim
     echo "Copying neovim configuration"
     if test -f ~/.config/nvim/init.vim
-        set_color red
-        echo "WARN: init.vim exists - should be deleted"
-        set_color normal
+        echo_warning "init.vim exists - should be deleted"
     end
     cp nvim_init.lua ~/.config/nvim/init.lua
 end
@@ -90,7 +93,6 @@ function update
     update_systemd_boot
     update_flatpak
 end
-
 
 switch $argv[1]
     case configs

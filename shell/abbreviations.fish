@@ -18,6 +18,7 @@ abbr -a svi 'sudo -e'
 # }}}
 # misc {{{
 abbr -a y yazi
+abbr -a hx helix
 alias mutt='mutt -F ~/.config/mutt/muttrc'
 abbr -a m 'mutt'
 abbr -a ta 'tmux attach'
