@@ -43,6 +43,11 @@ EOF
     # Framework Laptop 13 (12th generation) specific.
     AddPackage fprintd
 
+    # Thermald for lower fan noise: https://wiki.archlinux.org/title/Framework_Laptop_13#Lowering_fan_noise
+    AddPackage thermald
+    CreateLink /etc/systemd/system/dbus-org.freedesktop.thermald.service /usr/lib/systemd/system/thermald.service
+    CreateLink /etc/systemd/system/multi-user.target.wants/thermald.service /usr/lib/systemd/system/thermald.service
+
     # Fix craclke sound, see https://wiki.archlinux.org/title/Framework_Laptop_13#Headset_jack
     cat >"$(CreateFile /etc/wireplumber/wireplumber.conf.d/51-framework-fix-crackle.conf)" <<EOF
 monitor.alsa.rules = [
