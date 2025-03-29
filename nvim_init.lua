@@ -76,8 +76,6 @@ Plug 'tpope/vim-sleuth'
 " Preview copy/paste registers
 Plug 'junegunn/vim-peekaboo'
 
-Plug 'justinmk/vim-sneak'
-
 Plug 'Konfekt/FastFold'
 " Automatically save editor state
 Plug 'zhimsel/vim-stay'
@@ -101,10 +99,6 @@ Plug 'folke/todo-comments.nvim'
 " https://github.com/echasnovski/mini.nvim
 Plug 'echasnovski/mini.nvim'
 " git {{{
-" were never really used, so disabled / removed for now
-" Plug 'jreybert/vimagit'
-" Plug 'junegunn/gv.vim'
-" Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'
 " }}}
 " Language server and linting {{{
@@ -120,11 +114,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-
-" Snippets
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
-" Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 " }}}
 " File type specific plugins {{{
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -193,12 +182,9 @@ vim.opt.timeout = true
 vim.opt.timeoutlen = 300
 require("which-key").setup()
 require("which-key").add({
-  { "<leader>c", group = "[C]ode" },
-  { "<leader>d", group = "[D]ocument" },
-  { "<leader>r", group = "[R]ename" },
   { "<leader>s", group = "[S]earch" },
   { "<leader>w", group = "[W]orkspace" },
-  { "<leader>t", group = "[T]est" },
+  { "<leader>t", group = "[T]est / Git [T]oggle" },
   { "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
 })
 
@@ -313,15 +299,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
     end
     map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-    map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-    map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+    -- The next are changed to match the default keybindings for these in Neovim 0.11
+    map("grr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+    map("gri", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+    map("gO", require("telescope.builtin").lsp_document_symbols, "[Open] Document Symbols")
     map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-    map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
     map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
-    map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-    map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-    map("K", vim.lsp.buf.hover, "Hover Documentation")
-    map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
     map("<leader>f", function()
       vim.lsp.buf.format({
         async = true,
@@ -407,11 +390,10 @@ local trouble = require("trouble")
 trouble.setup()
 -- }}}
 -- Key bindings {{{
--- Folds and exiting insert mode.
-vim.keymap.set({ "n", "v" }, "<space><space>", "za")
-vim.keymap.set("", "<Tab>", "%")
 -- Save one keystroke for commmands
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode with jk" })
+-- Clear search highlights on <Esc>
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- Save and quit
 vim.keymap.set("i", "<C-S>", "<C-O>:update<CR>")
 vim.keymap.set("n", "<C-S>", ":update<CR>")
@@ -422,32 +404,20 @@ vim.keymap.set({ "n", "v" }, "j", "gj")
 vim.keymap.set({ "n", "v" }, "k", "gk")
 vim.keymap.set({ "n", "v" }, "gj", "j")
 vim.keymap.set({ "n", "v" }, "gk", "k")
--- Buffers
-vim.keymap.set("n", "]b", ":bnext<CR>", { silent = true })
-vim.keymap.set("n", "[b", ":bprev<CR>", { silent = true })
--- Tabs
-vim.keymap.set("n", "]t", ":tabn<CR>", { silent = true })
-vim.keymap.set("n", "[t", ":tabp<CR>", { silent = true })
 -- Quicker window navigation
-vim.keymap.set("n", "<C-H>", "<C-W>h")
-vim.keymap.set("n", "<C-J>", "<C-W>j")
-vim.keymap.set("n", "<C-K>", "<C-W>k")
-vim.keymap.set("n", "<C-L>", "<C-W>l")
-vim.keymap.set("n", "<BS>", "<C-W>h", { remap = true })
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 -- Terminal mappings
-vim.keymap.set("t", "<C-H>", "<C-\\><C-n><C-W>h")
-vim.keymap.set("t", "<C-J>", "<C-\\><C-n><C-W>j")
-vim.keymap.set("t", "<C-K>", "<C-\\><C-n><C-W>k")
-vim.keymap.set("t", "<C-L>", "<C-\\><C-n><C-W>l")
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
--- MISC other plugin commands
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+-- Toggle file tree with 'T'
 vim.keymap.set("n", "T", nvim_tree_api.tree.toggle, { silent = true })
+-- Toggle undo tree with 'U'
 vim.keymap.set("n", "U", ":UndotreeToggle<CR>", { silent = true })
 
 -- Fuzzy file search
 local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "[  ] Search files" })
 -- the following are taken from kickstart.nvim
 vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
@@ -458,7 +428,8 @@ vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]re
 vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
--- vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "[/] Fuzzily search in current buffer" })
 
 vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
 -- Run tests
@@ -469,19 +440,9 @@ vim.keymap.set("n", "<leader>ta", ":TestSuite<CR>", { desc = "[T]est [a]ll tests
 -- Completion {{{
 local cmp = require("cmp")
 
--- vim.g.UltiSnipsSnippetDirectories = { vim.env.HOME .. "/dev/dotfiles/snippets" }
--- vim.g.UltiSnipsExpandTrigger = "<C-J>"
--- vim.g.UltiSnipsJumpForwardTrigger = "<C-J>"
--- vim.g.UltiSnipsJumpBackwardTrigger = "<C-K>"
-
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 cmp.setup({
---   snippet = {
---     expand = function(args)
---       vim.fn["UltiSnips#Anon"](args.body)
---     end,
---   },
   mapping = cmp.mapping.preset.insert({
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -506,7 +467,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
   }, {
-    -- { name = "buffer" },
+    { name = "buffer" },
   }),
 })
 
