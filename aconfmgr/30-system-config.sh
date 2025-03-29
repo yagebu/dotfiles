@@ -43,6 +43,24 @@ EOF
     # Framework Laptop 13 (12th generation) specific.
     AddPackage fprintd
 
+    # Fix craclke sound, see https://wiki.archlinux.org/title/Framework_Laptop_13#Headset_jack
+    cat >"$(CreateFile /etc/wireplumber/wireplumber.conf.d/51-framework-fix-crackle.conf)" <<EOF
+monitor.alsa.rules = [
+  {
+    matches = [
+      {
+        node.name = "alsa_output.pci-0000_00_1f.3.analog-stereo"
+      }
+    ]
+    actions = {
+      update-props = {
+        audio.format = "S16LE",
+      }
+    }
+  }
+]
+EOF
+
     cat >"$(CreateFile /etc/modprobe.d/framework-als-deactivate.conf)" <<EOF
 blacklist hid_sensor_hub
 EOF
