@@ -65,6 +65,10 @@ monitor.alsa.rules = [
   }
 ]
 EOF
+    cat >"$(CreateFile /etc/tlp.conf/framework-deactivate-sound-powersave.conf)" <<EOF
+SOUND_POWER_SAVE_ON_AC=0
+SOUND_POWER_SAVE_ON_BAT=0
+EOF
 
     cat >"$(CreateFile /etc/modprobe.d/framework-als-deactivate.conf)" <<EOF
 blacklist hid_sensor_hub
