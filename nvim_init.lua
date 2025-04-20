@@ -378,6 +378,9 @@ null_ls.setup({
     -- indent with 2 spaces
     null_ls.builtins.formatting.stylua.with({ extra_args = { "--indent-type", "Spaces", "--indent-width", "2" } }),
 
+    -- Markdown
+    null_ls.builtins.formatting.mdformat.with({ extra_args = { "--wrap", "80" } }),
+
     -- Python
     -- ruff is handled by language server
     -- only run diagnostics on save with mypy since it's not very performant

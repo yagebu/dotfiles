@@ -182,6 +182,7 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage firefox
     AddPackage firefox-i18n-de
     AddPackage gpxsee
+    AddPackage obsidian
 fi
 
 # Printing

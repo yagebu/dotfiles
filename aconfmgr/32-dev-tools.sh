@@ -39,6 +39,7 @@ AddPackage svelte-language-server
 AddPackage typescript-language-server
 
 # Dev: Misc
+AddPackage mdformat
 if [[ "$HOSTNAME" == "js-arch" ]]; then
     # this is a very big package
     AddPackage emscripten
@@ -53,12 +54,12 @@ AddPackage cargo-insta
 AddPackage cargo-outdated
 
 # Dev: Python
-AddPackage flake8
 AddPackage mpdecimal # for Python's decimal
 AddPackage mypy
 AddPackage pre-commit
 AddPackage python-build
 AddPackage python-cheroot
+AddPackage python-flake8
 AddPackage python-flask
 AddPackage python-lsp-server
 AddPackage python-pip
