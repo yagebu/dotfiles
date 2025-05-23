@@ -31,6 +31,7 @@ AddPackage zsh   # Shell previously used by this config
 AddPackage lua   # For z.lua
 
 # Dev: Javascript, Typescript, Svelte
+AddPackage deno
 AddPackage npm
 AddPackage eslint
 AddPackage prettier

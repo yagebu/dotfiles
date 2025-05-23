@@ -1,6 +1,7 @@
 function pipu
     if test -d "$HOME/dev/fava"
         uv tool install  \
+            --no-managed-python \
             --with fava-plugins \
             --with fava_investor \
             --with smart_importer \
