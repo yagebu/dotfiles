@@ -97,6 +97,7 @@ HOME = "/home/jakob"
 REMOVES = [
     ".ICEauthoriy",
     ".adobe",
+    ".bash_history",
     ".bean-shell-history",
     ".bzr.log",
     ".cache/chromium",

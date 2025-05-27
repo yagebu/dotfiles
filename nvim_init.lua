@@ -65,6 +65,7 @@ if empty(glob($XDG_DATA_HOME . '/nvim/site/autoload/plug.vim'))
     augroup END
 endif
 
+
 call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 " }}}
 " Lua library needed by other plugins.
@@ -108,12 +109,7 @@ Plug 'folke/trouble.nvim'
 Plug 'j-hui/fidget.nvim'
 " }}}
 " Autocompletion {{{
-Plug 'hrsh7th/nvim-cmp'
-
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
+Plug 'saghen/blink.cmp'
 " }}}
 " File type specific plugins {{{
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -121,6 +117,7 @@ Plug 'ledger/vim-ledger', { 'for': 'beancount' }
 Plug 'lervag/vimtex'
 Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
 Plug 'mrcjkb/rustaceanvim', { 'tag': '*' }
+Plug 'folke/lazydev.nvim'
 " }}}
 " Color schemes {{{
 Plug 'ellisonleao/gruvbox.nvim'
@@ -170,7 +167,7 @@ require("mini.statusline").setup()
 
 require("todo-comments").setup()
 
-require("fidget").setup()
+require("fidget").setup({})
 
 -- Also enable fastfold for 'expr' folds
 vim.g.fastfold_force = 1
@@ -223,15 +220,15 @@ require("gitsigns").setup({
     -- visual mode
     map("v", "<leader>hs", function()
       gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end, { desc = "stage git hunk" })
+    end, { desc = "git [s]tage hunk" })
     map("v", "<leader>hr", function()
       gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end, { desc = "reset git hunk" })
+    end, { desc = "git [r]eset hunk" })
     -- normal mode
     map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "git [s]tage hunk" })
     map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "git [r]eset hunk" })
     map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "git [S]tage buffer" })
-    map("n", "<leader>hu", gitsigns.undo_stage_hunk, { desc = "git [u]ndo stage hunk" })
+    map("n", "<leader>hu", gitsigns.stage_hunk, { desc = "git [u]ndo stage hunk" })
     map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "git [R]eset buffer" })
     map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git [p]review hunk" })
     map("n", "<leader>hb", gitsigns.blame_line, { desc = "git [b]lame line" })
@@ -241,7 +238,7 @@ require("gitsigns").setup({
     end, { desc = "git [D]iff against last commit" })
     -- Toggles
     map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "[T]oggle git show [b]lame line" })
-    map("n", "<leader>tD", gitsigns.toggle_deleted, { desc = "[T]oggle git show [D]eleted" })
+    map("n", "<leader>tD", gitsigns.preview_hunk_inline, { desc = "[T]oggle git show [D]eleted" })
   end,
 })
 -- }}}
@@ -269,9 +266,6 @@ nvim_tree.setup({
 })
 -- }}}
 -- nvim-lspconfig {{{
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-local lspconfig = require("lspconfig")
-
 -- Keymappings mostly as recommended in
 -- https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L457
 -- which is quite close to
@@ -279,8 +273,6 @@ local lspconfig = require("lspconfig")
 -- but adds descriptions and uses telescope in more places
 --
 -- The formatting is overwritten to not use ts_ls for formatting.
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
@@ -316,13 +308,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-local capabilities = cmp_nvim_lsp.default_capabilities()
-local lsp_setup_args = { capabilities = capabilities }
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-lspconfig.ts_ls.setup(lsp_setup_args)
-lspconfig.svelte.setup(lsp_setup_args)
-lspconfig.eslint.setup(lsp_setup_args)
-lspconfig.pylsp.setup({
+vim.lsp.config("*", { capabilities = capabilities })
+vim.lsp.config("pylsp", {
   capabilities = capabilities,
   settings = {
     pylsp = {
@@ -335,11 +324,25 @@ lspconfig.pylsp.setup({
     },
   },
 })
-lspconfig.ruff.setup(lsp_setup_args)
--- rust_analyzer is setup automatically by rustaceanvim
+vim.lsp.config("lua_ls", {
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      format = {
+        enable = false,
+      },
+    },
+  },
+})
 
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("svelte")
+vim.lsp.enable("eslint")
+vim.lsp.enable("pylsp")
+vim.lsp.enable("ruff")
+-- rust_analyzer is setup automatically by rustaceanvim
 vim.g.rustaceanvim = {
-  ---@type RustaceanLspClientOpts
   server = {
     default_settings = {
       ["rust-analyzer"] = {
@@ -359,7 +362,6 @@ vim.g.rustaceanvim = {
 -- }}}
 -- null-ls (extra linters and formatters) {{{
 local null_ls = require("null-ls")
-
 null_ls.setup({
   sources = {
     -- Javascript, Typescript, Svelte, etc.
@@ -441,55 +443,23 @@ vim.keymap.set("n", "<leader>tf", ":TestFile<CR>", { desc = "[T]est [f]ile" })
 vim.keymap.set("n", "<leader>ta", ":TestSuite<CR>", { desc = "[T]est [a]ll tests" })
 -- }}}
 -- Completion {{{
-local cmp = require("cmp")
+-- vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
-
-cmp.setup({
-  mapping = cmp.mapping.preset.insert({
-    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.abort(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ["<Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
-    ["<S-Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end,
-  }),
-  sources = cmp.config.sources({
-    { name = "nvim_lsp" },
-  }, {
-    { name = "buffer" },
-  }),
-})
-
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ "/", "?" }, {
-  mapping = cmp.mapping.preset.cmdline(),
+require("lazydev").setup()
+local blink = require("blink.cmp")
+blink.setup({
+  fuzzy = { implementation = "lua" },
+  keymap = { preset = "default" },
   sources = {
-    { name = "buffer" },
+    default = { "lsp", "buffer", "path" },
+    per_filetype = {
+      beancount = { "buffer" },
+      lua = { inherit_defaults = true, "lazydev" },
+    },
+    providers = {
+      lazydev = { module = "lazydev.integrations.blink", score_offset = 100 },
+    },
   },
-})
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(":", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = "path" },
-  }, {
-    { name = "cmdline" },
-  }),
 })
 -- }}}
 -- Automatically run make on nvim_init changes {{{

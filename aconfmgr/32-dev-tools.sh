@@ -28,12 +28,15 @@ fi
 AddPackage shfmt # Format shell programs
 AddPackage fish  # Default shell for this config now
 AddPackage zsh   # Shell previously used by this config
-AddPackage lua   # For z.lua
+
+# Dev: Lua (neovim)
+AddPackage lua
+AddPackage lua-language-server
 
 # Dev: Javascript, Typescript, Svelte
 AddPackage deno
-AddPackage npm
 AddPackage eslint
+AddPackage npm
 AddPackage prettier
 AddPackage eslint-language-server
 AddPackage svelte-language-server
@@ -64,8 +67,6 @@ AddPackage python-flake8
 AddPackage python-flask
 AddPackage python-lsp-server
 AddPackage python-pip
-AddPackage python-pipenv
-AddPackage python-pipx
 AddPackage python-pytest
 AddPackage python-tox
 AddPackage python-wheel
