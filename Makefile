@@ -7,7 +7,7 @@ aconfmgr-save:
 	aconfmgr -c aconfmgr --skip-checksums save
 
 .PHONY: system
-system: nvim
+system: configs
 	paru
 	fish install.fish update
 	fish --command pipu
