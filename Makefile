@@ -6,10 +6,6 @@ configs: deps
 aconfmgr-save:
 	aconfmgr -c aconfmgr --skip-checksums save
 
-.PHONY: nvim
-nvim: configs
-	nvim +PlugUpgrade +PlugClean! +PlugUpdate +qa
-
 .PHONY: system
 system: nvim
 	paru

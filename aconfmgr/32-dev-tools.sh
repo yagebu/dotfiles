@@ -38,9 +38,11 @@ AddPackage deno
 AddPackage eslint
 AddPackage npm
 AddPackage prettier
+AddPackage biome
 AddPackage eslint-language-server
 AddPackage svelte-language-server
 AddPackage typescript-language-server
+AddPackage vscode-json-languageserver
 
 # Dev: Misc
 AddPackage mdformat

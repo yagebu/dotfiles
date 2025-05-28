@@ -7,6 +7,7 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage adobe-source-sans-fonts
     AddPackage cantarell-fonts
     AddPackage noto-fonts
+    AddPackage noto-fonts-emoji
     AddPackage otf-fira-mono
     AddPackage otf-fira-sans
     AddPackage otf-font-awesome
@@ -15,7 +16,6 @@ if [[ "$machine_type" == "desktop" ]]; then
     AddPackage ttf-fira-code
     AddPackage ttf-inconsolata
     AddPackage ttf-liberation
-    AddPackage ttf-nerd-fonts-symbols-mono
     AddPackage ttf-ubuntu-font-family
     AddPackage --foreign otf-et-book
     AddPackage --foreign ttf-courier-prime

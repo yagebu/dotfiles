@@ -1,4 +1,10 @@
 -- vim: set foldmethod=marker:
+-- Some helpful references
+--  - an example initial config file with modern nvim plugins:
+--    https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
+--  - Many useful plugins:
+--    https://github.com/echasnovski/mini.nvim
+--
 -- Directories {{{
 vim.opt.backupdir:remove({ "." })
 -- create backup dir if it doesn't exist
@@ -9,11 +15,6 @@ end
 -- disable netrw for nvim-tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
--- }}}
--- Documentation and overview {{{
--- Some helpful references
---  - an example initial config file with modern nvim plugins:
---    https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 -- }}}
 -- Pre-plugin basic configuration {{{
 -- enable 24 bit colors
@@ -33,8 +34,6 @@ vim.g.loaded_ruby_provider = 0
 -- as recommended by vim-stay:
 vim.opt.viewoptions = { "cursor", "folds", "slash", "unix" }
 
--- vim-sleuth is used for auto-detection of tabs and spaces settings
-
 vim.opt.number = true
 vim.opt.undofile = true
 
@@ -52,82 +51,50 @@ vim.opt.inccommand = "split"
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 -- }}}
--- Plugins {{{
--- setup vim-plug automatically if not installed yet {{{
-vim.cmd([[
-if empty(glob($XDG_DATA_HOME . '/nvim/site/autoload/plug.vim'))
-    silent !echo "Installing vim-plug..."
-    silent !curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    augroup plug_install
-        autocmd!
-        autocmd VimEnter * PlugInstall
-    augroup END
-endif
+-- Install mini.deps if not installed {{{
+-- Clone 'mini.nvim' manually in a way that it gets managed by 'mini.deps'
+local path_package = vim.fn.stdpath("data") .. "/site/"
+local mini_path = path_package .. "pack/deps/start/mini.nvim"
+if not vim.uv.fs_stat(mini_path) then
+  vim.cmd('echo "Installing `mini.nvim`" | redraw')
+  local clone_cmd = {
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/echasnovski/mini.nvim",
+    mini_path,
+  }
+  vim.fn.system(clone_cmd)
+  vim.cmd("packadd mini.nvim | helptags ALL")
+  vim.cmd('echo "Installed `mini.nvim`" | redraw')
+end
 
-
-call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
-" }}}
-" Lua library needed by other plugins.
-Plug 'nvim-lua/plenary.nvim'
-
-" Automatically detect tabs/spaces
-Plug 'tpope/vim-sleuth'
-
-" Preview copy/paste registers
-Plug 'junegunn/vim-peekaboo'
-
-Plug 'Konfekt/FastFold'
-" Automatically save editor state
-Plug 'zhimsel/vim-stay'
-" Undotree, opens with `U`.
-Plug 'mbbill/undotree'
-" Color CSS variables.
-Plug 'NvChad/nvim-colorizer.lua'
-" Fuzzy finder
-Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
-" File tree (mapped to `T`)
-Plug 'nvim-tree/nvim-tree.lua'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
-" Allows using <C-a> and <C-x> on dates like `2012-12-12`
-Plug 'tpope/vim-speeddating'
-Plug 'vim-test/vim-test'
-" Show Keymappings
-Plug 'folke/which-key.nvim'
-" Highlight TODO comments
-Plug 'folke/todo-comments.nvim'
-" A collection of various mini plugins. Currently used ones see below.
-" https://github.com/echasnovski/mini.nvim
-Plug 'echasnovski/mini.nvim'
-" git {{{
-Plug 'lewis6991/gitsigns.nvim'
-" }}}
-" Language server and linting {{{
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvimtools/none-ls.nvim'
-Plug 'folke/trouble.nvim'
-Plug 'j-hui/fidget.nvim'
-" }}}
-" Autocompletion {{{
-Plug 'saghen/blink.cmp'
-" }}}
-" File type specific plugins {{{
-Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'ledger/vim-ledger', { 'for': 'beancount' }
-Plug 'lervag/vimtex'
-Plug 'nathangrigg/vim-beancount', { 'for': 'beancount' }
-Plug 'mrcjkb/rustaceanvim', { 'tag': '*' }
-Plug 'folke/lazydev.nvim'
-" }}}
-" Color schemes {{{
-Plug 'ellisonleao/gruvbox.nvim'
-" Plug 'morhetz/gruvbox'
-" }}}
-call plug#end()
-]])
+-- Set up 'mini.deps' (customize to your liking)
+require("mini.deps").setup({ path = { package = path_package } })
+-- }}}
+-- Misc plugins {{{
+-- Preview copy/paste registers
+MiniDeps.add("junegunn/vim-peekaboo")
+-- Automatically save editor state
+MiniDeps.add("zhimsel/vim-stay")
+-- Undotree, opens with `U`.
+MiniDeps.add("mbbill/undotree")
+-- Allows using <C-a> and <C-x> on dates like `2012-12-12`
+MiniDeps.add("tpope/vim-speeddating")
+-- Testing
+MiniDeps.add("vim-test/vim-test")
 -- }}}
 -- nvim-treesitter {{{
+MiniDeps.add({
+  source = "nvim-treesitter/nvim-treesitter",
+  hooks = {
+    post_checkout = function()
+      vim.cmd("TSUpdate")
+    end,
+  },
+})
 local nvim_treesitter_configs = require("nvim-treesitter.configs")
+---@diagnostic disable: missing-fields
 nvim_treesitter_configs.setup({
   ensure_installed = {
     "bash",
@@ -150,49 +117,53 @@ nvim_treesitter_configs.setup({
 })
 -- }}}
 -- Colorscheme gruvbox {{{
--- set colorscheme
+MiniDeps.add("ellisonleao/gruvbox.nvim")
 vim.cmd.colorscheme("gruvbox")
 -- }}}
--- Initialise misc plugins (colorizer, mini.{align,comment,surround,statusline}, todo-comments, fidget, which-key) {{{
--- colorizer colors CSS colors
-require("colorizer").setup({
-  -- only use for css
-  filetypes = { "css", "svelte" },
-  -- enable all CSS color notations
-  user_default_options = { css = true },
-})
+-- Initialise mini.nvim plugins (mini.{align,surround,statusline}) {{{
 require("mini.align").setup()
-require("mini.surround").setup()
+
+MiniDeps.later(function()
+  require("mini.surround").setup()
+end)
+
 require("mini.statusline").setup()
-
-require("todo-comments").setup()
-
-require("fidget").setup({})
-
--- Also enable fastfold for 'expr' folds
-vim.g.fastfold_force = 1
-vim.g.fastfold_fdmhook = 1
-vim.g.fastfold_fold_command_suffixes = {}
-vim.g.fastfold_fold_movement_commands = {}
-
-vim.opt.timeout = true
-vim.opt.timeoutlen = 300
-require("which-key").setup()
-require("which-key").add({
-  { "<leader>s", group = "[S]earch" },
-  { "<leader>w", group = "[W]orkspace" },
-  { "<leader>t", group = "[T]est / Git [T]oggle" },
-  { "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
-})
-
 -- }}}
--- gitsigns {{{
+-- which-key {{{
+-- Show Keymappings
+MiniDeps.later(function()
+  MiniDeps.add("folke/which-key.nvim")
+
+  vim.opt.timeout = true
+  vim.opt.timeoutlen = 300
+
+  local which_key = require("which-key")
+  which_key.setup()
+  which_key.add({
+    { "<leader>s", group = "[S]earch" },
+    { "<leader>w", group = "[W]orkspace" },
+    { "<leader>t", group = "[T]est / Git [T]oggle" },
+    { "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
+  })
+end)
+-- }}}
+-- Highlight TODO comments (todo-comments) {{{
+MiniDeps.later(function()
+  MiniDeps.add({
+    source = "folke/todo-comments.nvim",
+    depends = { "nvim-lua/plenary.nvim" },
+  })
+  local todo_comments = require("todo-comments")
+  todo_comments.setup()
+end)
+-- }}}
+-- gitsigns.nvim {{{
 -- keybindings taken from
 -- https://github.com/nvim-lua/kickstart.nvim/blob/master/lua/kickstart/plugins/gitsigns.lua
-require("gitsigns").setup({
+MiniDeps.add("lewis6991/gitsigns.nvim")
+local gitsigns = require("gitsigns")
+gitsigns.setup({
   on_attach = function(bufnr)
-    local gitsigns = require("gitsigns")
-
     local function map(mode, l, r, opts)
       opts = opts or {}
       opts.buffer = bufnr
@@ -242,7 +213,11 @@ require("gitsigns").setup({
   end,
 })
 -- }}}
--- nvim-tree {{{
+-- File tree (mapped to `T`) - nvim-tree {{{
+MiniDeps.add({
+  source = "nvim-tree/nvim-tree.lua",
+  depends = { "nvim-tree/nvim-web-devicons" },
+})
 local nvim_tree = require("nvim-tree")
 local nvim_tree_api = require("nvim-tree.api")
 
@@ -255,11 +230,6 @@ nvim_tree.setup({
   },
   renderer = {
     icons = {
-      show = {
-        file = false,
-        folder = false,
-        folder_arrow = false,
-      },
       git_placement = "after",
     },
   },
@@ -267,7 +237,7 @@ nvim_tree.setup({
 -- }}}
 -- nvim-lspconfig {{{
 -- Keymappings mostly as recommended in
--- https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L457
+-- https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 -- which is quite close to
 -- https://github.com/neovim/nvim-lspconfig#suggested-configuration
 -- but adds descriptions and uses telescope in more places
@@ -275,6 +245,18 @@ nvim_tree.setup({
 -- The formatting is overwritten to not use ts_ls for formatting.
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+
+-- Show LSP status updates
+MiniDeps.later(function()
+  MiniDeps.add("j-hui/fidget.nvim")
+  require("fidget").setup({})
+end)
+
+MiniDeps.add({
+  source = "nvim-telescope/telescope.nvim",
+  target = "0.1.x",
+  depends = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim" },
+})
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
@@ -290,13 +272,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local map = function(keys, func, desc)
       vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
     end
-    map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-    -- The next are changed to match the default keybindings for these in Neovim 0.11
     map("grr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
     map("gri", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-    map("gO", require("telescope.builtin").lsp_document_symbols, "[Open] Document Symbols")
-    map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-    map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+    map("grd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+    map("grD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+    map("gO", require("telescope.builtin").lsp_document_symbols, "Open Document Symbols")
+    map("gW", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Open Workspace Symbols")
+    map("grt", require("telescope.builtin").lsp_type_definitions, "[G]oto [T]ype Definition")
     map("<leader>f", function()
       vim.lsp.buf.format({
         async = true,
@@ -308,11 +290,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-local capabilities = require("blink.cmp").get_lsp_capabilities()
-
-vim.lsp.config("*", { capabilities = capabilities })
+MiniDeps.add("neovim/nvim-lspconfig")
+vim.lsp.config("jsonls", {
+  init_options = {
+    provideFormatter = false,
+  },
+})
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {
+      format = {
+        enable = false,
+      },
+    },
+  },
+})
 vim.lsp.config("pylsp", {
-  capabilities = capabilities,
   settings = {
     pylsp = {
       plugins = {
@@ -324,23 +317,15 @@ vim.lsp.config("pylsp", {
     },
   },
 })
-vim.lsp.config("lua_ls", {
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      format = {
-        enable = false,
-      },
-    },
-  },
-})
 
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("ts_ls")
-vim.lsp.enable("svelte")
+vim.lsp.enable("biome")
 vim.lsp.enable("eslint")
+vim.lsp.enable("jsonls")
+vim.lsp.enable("lua_ls")
 vim.lsp.enable("pylsp")
 vim.lsp.enable("ruff")
+vim.lsp.enable("svelte")
+vim.lsp.enable("ts_ls")
 -- rust_analyzer is setup automatically by rustaceanvim
 vim.g.rustaceanvim = {
   server = {
@@ -361,6 +346,7 @@ vim.g.rustaceanvim = {
 }
 -- }}}
 -- null-ls (extra linters and formatters) {{{
+MiniDeps.add("nvimtools/none-ls.nvim")
 local null_ls = require("null-ls")
 null_ls.setup({
   sources = {
@@ -391,6 +377,7 @@ null_ls.setup({
 })
 -- }}}
 -- trouble (diagnostics interface) {{{
+MiniDeps.add("folke/trouble.nvim")
 local trouble = require("trouble")
 trouble.setup()
 -- }}}
@@ -442,10 +429,8 @@ vim.keymap.set("n", "<leader>tn", ":TestNearest<CR>", { desc = "[T]est [n]earest
 vim.keymap.set("n", "<leader>tf", ":TestFile<CR>", { desc = "[T]est [f]ile" })
 vim.keymap.set("n", "<leader>ta", ":TestSuite<CR>", { desc = "[T]est [a]ll tests" })
 -- }}}
--- Completion {{{
--- vim.opt.completeopt = { "menu", "menuone", "noselect" }
-
-require("lazydev").setup()
+-- Completion (blink.cmp) {{{
+MiniDeps.add("saghen/blink.cmp")
 local blink = require("blink.cmp")
 blink.setup({
   fuzzy = { implementation = "lua" },
@@ -471,15 +456,15 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   group = group_id,
 })
 -- }}}
--- TODO: write a lua function for this. Is useful to sort Beancount transactions {{{
--- function! SortParagraphs() range
---     execute a:firstline . ',' . a:lastline . 'd'
---     let @@=join(sort(split(substitute(@@, '\n*$', '', ''), "\n\n")), "\n\n")
---     put!
--- endfunction
--- }}}
--- File types {{{
 -- Fold configuration {{{
+-- Improve fold performance
+MiniDeps.add("Konfekt/FastFold")
+-- Also enable fastfold for 'expr' folds
+vim.g.fastfold_force = 1
+vim.g.fastfold_fdmhook = 1
+vim.g.fastfold_fold_command_suffixes = {}
+vim.g.fastfold_fold_movement_commands = {}
+
 vim.api.nvim_create_autocmd("FileType", {
   desc = "Use nvim_treesitter to get folds",
   pattern = {
@@ -498,7 +483,26 @@ vim.api.nvim_create_autocmd("FileType", {
   group = group_id,
 })
 -- }}}
--- Mail {{{
+-- Filetype-specific plugins {{{
+MiniDeps.add("Glench/Vim-Jinja2-Syntax")
+MiniDeps.add("ledger/vim-ledger")
+MiniDeps.add("lervag/vimtex")
+MiniDeps.add("nathangrigg/vim-beancount")
+MiniDeps.add("mrcjkb/rustaceanvim")
+-- }}}
+-- Filetype CSS (colorizer) {{{
+MiniDeps.later(function()
+  MiniDeps.add("NvChad/nvim-colorizer.lua")
+  -- colorizer colors CSS colors
+  require("colorizer").setup({
+    -- only use for css
+    filetypes = { "css", "svelte" },
+    -- enable all CSS color notations
+    user_default_options = { css = true },
+  })
+end)
+-- }}}
+-- Filetype Mail {{{
 vim.api.nvim_create_autocmd("FileType", {
   desc = "Set formatoptions for emails",
   pattern = "mail",
@@ -506,7 +510,7 @@ vim.api.nvim_create_autocmd("FileType", {
   group = group_id,
 })
 -- }}}
--- Latex {{{
+-- Filetype Latex {{{
 -- Better syntax hightlighting
 vim.g.tex_flavor = "latex"
 
@@ -528,7 +532,19 @@ vim.api.nvim_create_autocmd("User", {
   group = group_id,
 })
 -- }}}
--- Beancount (with custom org-mode folding) {{{
+-- Filetype Lua (mainly for neovim config) {{{
+MiniDeps.later(function()
+  MiniDeps.add("folke/lazydev.nvim")
+  local lazydev = require("lazydev")
+  ---@diagnostic disable: missing-fields
+  lazydev.setup({
+    library = {
+      { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+    },
+  })
+end)
+-- }}}
+-- Filetype Beancount (with custom org-mode folding) {{{
 vim.cmd([[
 function! BeancountFold(lnum)
     let l1 = getline(a:lnum)
@@ -570,4 +586,10 @@ vim.api.nvim_create_autocmd("FileType", {
   group = group_id,
 })
 -- }}}
+-- TODO: write a lua function for this. Is useful to sort Beancount transactions {{{
+-- function! SortParagraphs() range
+--     execute a:firstline . ',' . a:lastline . 'd'
+--     let @@=join(sort(split(substitute(@@, '\n*$', '', ''), "\n\n")), "\n\n")
+--     put!
+-- endfunction
 -- }}}
