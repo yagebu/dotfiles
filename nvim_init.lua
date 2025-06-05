@@ -5,7 +5,7 @@
 --  - Many useful plugins:
 --    https://github.com/echasnovski/mini.nvim
 --
--- Directories {{{
+-- Directories (create backupdir if missing) {{{
 vim.opt.backupdir:remove({ "." })
 -- create backup dir if it doesn't exist
 local backup_dir = vim.opt.backupdir:get()[1]
@@ -287,6 +287,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end,
       })
     end, "[F]ormat buffer")
+
+    -- Workaround for https://github.com/sveltejs/language-tools/issues/2008
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client and client.name == "svelte" then
+      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+        pattern = { "*.js", "*.ts" },
+        callback = function(ctx)
+          client:notify("$/onDidChangeTsOrJsFile", {
+            uri = ctx.match,
+          })
+        end,
+      })
+    end
   end,
 })
 
