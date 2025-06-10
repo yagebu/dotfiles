@@ -498,9 +498,6 @@ vim.api.nvim_create_autocmd("FileType", {
 -- }}}
 -- Filetype-specific plugins {{{
 MiniDeps.add("Glench/Vim-Jinja2-Syntax")
-MiniDeps.add("ledger/vim-ledger")
-MiniDeps.add("lervag/vimtex")
-MiniDeps.add("nathangrigg/vim-beancount")
 MiniDeps.add("mrcjkb/rustaceanvim")
 -- }}}
 -- Filetype CSS (colorizer) {{{
@@ -524,6 +521,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 -- }}}
 -- Filetype Latex {{{
+MiniDeps.add("lervag/vimtex")
 -- Better syntax hightlighting
 vim.g.tex_flavor = "latex"
 
@@ -558,6 +556,7 @@ MiniDeps.later(function()
 end)
 -- }}}
 -- Filetype Beancount (with custom org-mode folding) {{{
+MiniDeps.add("nathangrigg/vim-beancount")
 vim.cmd([[
 function! BeancountFold(lnum)
     let l1 = getline(a:lnum)
@@ -589,15 +588,16 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
   group = group_id,
 })
-vim.api.nvim_create_autocmd("FileType", {
-  desc = "Beancount specific config",
-  pattern = "beancount",
-  callback = function(args)
-    local opts = { noremap = true, buffer = args.buf }
-    vim.keymap.set("n", "<leader>t", ":call ledger#transaction_state_toggle(line('.'), '*!')<CR>", opts)
-  end,
-  group = group_id,
-})
+-- MiniDeps.add("ledger/vim-ledger")
+-- vim.api.nvim_create_autocmd("FileType", {
+--   desc = "Beancount specific config",
+--   pattern = "beancount",
+--   callback = function(args)
+--     local opts = { noremap = true, buffer = args.buf }
+--     vim.keymap.set("n", "<leader>t", ":call ledger#transaction_state_toggle(line('.'), '*!')<CR>", opts)
+--   end,
+--   group = group_id,
+-- })
 -- }}}
 -- TODO: write a lua function for this. Is useful to sort Beancount transactions {{{
 -- function! SortParagraphs() range

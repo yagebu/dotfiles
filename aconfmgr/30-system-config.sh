@@ -167,6 +167,9 @@ if [[ "$machine_type" == "desktop" ]]; then
     RemovePackage gnome-music
     RemovePackage gnome-remote-desktop
 
+    # no Gnome Software (had annoying notifications)
+    RemovePackage gnome-software
+
     # no Gnome tour and help
     RemovePackage gnome-tour
     RemovePackage gnome-user-docs
