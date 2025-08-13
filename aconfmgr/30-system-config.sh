@@ -181,6 +181,7 @@ fi
 
 # Desktop Apps
 if [[ "$machine_type" == "desktop" ]]; then
+    AddPackage bitwarden
     AddPackage chromium
     AddPackage firefox
     AddPackage firefox-i18n-de

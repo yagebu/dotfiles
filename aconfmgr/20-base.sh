@@ -37,6 +37,8 @@ CreateLink /etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service /u
 f="$(GetPackageOriginalFile pacman /etc/pacman.conf)"
 sed -i 's/^#Color/Color/g' "$f"
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 5/g' "$f"
+# Currently not in use. To ignore certain packages from upgrade.
+# sed -i 's/^#IgnorePkg   =/IgnorePkg   = nodejs-lts-jod/g' "$f"
 
 # Weekly clearing of pacman cache (keeps the last 3 versions of packages)
 CreateLink /etc/systemd/system/timers.target.wants/paccache.timer /usr/lib/systemd/system/paccache.timer

@@ -9,6 +9,7 @@ AddPackage helix
 
 if [[ "$machine_type" == "desktop" ]]; then
     AddPackage code
+    AddPackage zed
 fi
 
 # Dev: Tools

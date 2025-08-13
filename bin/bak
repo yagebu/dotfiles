@@ -168,6 +168,10 @@ def cleanup() -> None:
     ]
     run(rm_old_undo_and_view_files, quiet=True)
     run(["rm", "--recursive", "--force"] + REMOVES_FULL_PATHS, quiet=True)
+    secho("Prune/cleanup caches (uv, pre-commit, npm)", fg="green")
+    run(["npm", "cache", "verify"], quiet=True)
+    run(["uv", "cache", "prune"], quiet=True)
+    run(["pre-commit", "gc"], quiet=True)
     secho("Done.", fg="green")
 
 
