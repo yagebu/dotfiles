@@ -177,6 +177,7 @@ if [[ "$machine_type" == "desktop" ]]; then
 
     CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/gdm.service
     CreateLink /etc/systemd/user/sockets.target.wants/gnome-keyring-daemon.socket /usr/lib/systemd/user/gnome-keyring-daemon.socket
+    CreateLink /etc/systemd/user/sockets.target.wants/speech-dispatcher.socket /usr/lib/systemd/user/speech-dispatcher.socket
 fi
 
 # Desktop Apps
