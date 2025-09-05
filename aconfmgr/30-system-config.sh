@@ -94,7 +94,7 @@ fi
 ############################################################################################################
 # Base desktop config
 if [[ "$machine_type" == "desktop" ]]; then
-    echo 'Server = https://packages.oth-regensburg.de/archlinux/$repo/os/$arch' >"$(CreateFile /etc/pacman.d/mirrorlist)"
+    echo 'Server = https://berlin.mirror.pkgbuild.com/$repo/os/$arch' >"$(CreateFile /etc/pacman.d/mirrorlist)"
 
     CopyFile /etc/X11/xorg.conf.d/00-keyboard.conf
     CopyFile /etc/X11/xorg.conf.d/10-synaptics.conf

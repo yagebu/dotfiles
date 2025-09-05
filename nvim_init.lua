@@ -3,7 +3,7 @@
 --  - an example initial config file with modern nvim plugins:
 --    https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 --  - Many useful plugins:
---    https://github.com/echasnovski/mini.nvim
+--    https://github.com/nvim-mini/mini.nvim
 --
 -- Directories (create backupdir if missing) {{{
 vim.opt.backupdir:remove({ "." })
@@ -61,7 +61,7 @@ if not vim.uv.fs_stat(mini_path) then
     "git",
     "clone",
     "--filter=blob:none",
-    "https://github.com/echasnovski/mini.nvim",
+    "https://github.com/nvim-mini/mini.nvim",
     mini_path,
   }
   vim.fn.system(clone_cmd)
@@ -350,7 +350,8 @@ vim.g.rustaceanvim = {
             CARGO_TARGET_DIR = "target/rust-analyzer",
           },
         },
-        checkOnSave = {
+        checkOnSave = true,
+        check = {
           command = "clippy",
         },
       },
